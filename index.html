@@ -3,139 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MIKA COFFEE | ሚካ ቡና</title>
+    <title>MIKA COFFEE | ሚካ ቡና — Digital Menu</title>
+    
+    <!-- Favicon & Meta -->
+    <meta name="description" content="Explore MIKA COFFEE's modern bilingual menu. Fresh breakfast, signature burgers, authentic Ethiopian dishes, artisan pasta, detox juices, and specialty mojitos.">
+    <meta name="theme-color" content="#1A0F0A">
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Ethiopic:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-primary: #FAF7F2;
+            --bg-body: #FBF8F4;
+            --bg-surface: #FFFFFF;
             --bg-card: #FFFFFF;
-            --bg-hero: #1A0F0A;
-            --accent-gold: #C8965A;
-            --accent-gold-light: #E8C89E;
-            --accent-warm: #A0522D;
-            --text-primary: #1A0F0A;
-            --text-secondary: #5C4A3A;
-            --text-muted: #8B7355;
-            --text-light: #B8A898;
-            --text-on-dark: #FAF7F2;
-            --border-light: #EDE6DC;
-            --shadow-sm: 0 1px 3px rgba(26, 15, 10, 0.06);
-            --shadow-md: 0 4px 16px rgba(26, 15, 10, 0.08);
-            --shadow-lg: 0 8px 32px rgba(26, 15, 10, 0.12);
-            --radius-sm: 12px;
-            --radius-md: 16px;
+            --bg-subtle: #F3ECE2;
+            --bg-overlay: rgba(26, 15, 10, 0.7);
+
+            --brand-espresso: #1B0F0A;
+            --brand-roast: #2E1B13;
+            --brand-caramel: #C88D48;
+            --brand-caramel-light: #F4E7D3;
+            --brand-gold: #DFAB5E;
+            --brand-cream: #FAF5ED;
+
+            --text-heading: #1B0F0A;
+            --text-body: #4A3A31;
+            --text-muted: #846F62;
+            --text-light: #B2A195;
+
+            --border-soft: #ECE2D5;
+            --border-hover: #D8C6B3;
+
+            --badge-fasting-bg: #EAF7EB;
+            --badge-fasting-text: #217332;
+            --badge-meat-bg: #FFF0EB;
+            --badge-meat-text: #B4381C;
+            --badge-new-bg: #FEF6E4;
+            --badge-new-text: #966108;
+
+            --shadow-xs: 0 1px 3px rgba(27, 15, 10, 0.04);
+            --shadow-sm: 0 4px 12px rgba(27, 15, 10, 0.06);
+            --shadow-md: 0 8px 24px rgba(27, 15, 10, 0.08);
+            --shadow-lg: 0 16px 36px rgba(27, 15, 10, 0.12);
+
+            --radius-xs: 8px;
+            --radius-sm: 14px;
+            --radius-md: 18px;
             --radius-lg: 24px;
+            --radius-full: 999px;
+
+            --font-display: 'Fraunces', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-ethiopic: 'Noto Sans Ethiopic', sans-serif;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body: #110B08;
+                --bg-surface: #1B120E;
+                --bg-card: #201612;
+                --bg-subtle: #2A1D17;
+                --bg-overlay: rgba(0, 0, 0, 0.82);
+
+                --text-heading: #F8F3ED;
+                --text-body: #D4C3B6;
+                --text-muted: #9E8B7F;
+                --text-light: #6E5C52;
+
+                --border-soft: #30221B;
+                --border-hover: #48342B;
+
+                --badge-fasting-bg: #152E1B;
+                --badge-fasting-text: #66DB7F;
+                --badge-meat-bg: #381A14;
+                --badge-meat-text: #FF8F73;
+                --badge-new-bg: #382B14;
+                --badge-new-text: #FFD270;
+
+                --shadow-xs: 0 1px 3px rgba(0,0,0,0.3);
+                --shadow-sm: 0 4px 12px rgba(0,0,0,0.4);
+                --shadow-md: 0 8px 24px rgba(0,0,0,0.5);
+                --shadow-lg: 0 16px 36px rgba(0,0,0,0.6);
+            }
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html {
             scroll-behavior: smooth;
-            -webkit-text-size-adjust: 100%;
         }
 
         body {
-            font-family: 'Inter', 'Noto Sans Ethiopic', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
+            background-color: var(--bg-body);
+            color: var(--text-body);
+            font-family: var(--font-sans), var(--font-ethiopic), system-ui, sans-serif;
+            line-height: 1.5;
+            padding-bottom: 100px;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* ===== HERO SECTION ===== */
+        /* ===== HERO HEADER ===== */
         .hero {
-            background: linear-gradient(160deg, #1A0F0A 0%, #2C1A10 40%, #3D2518 100%);
-            padding: 56px 24px 40px;
-            text-align: center;
             position: relative;
+            background: linear-gradient(175deg, #180D08 0%, #29170E 45%, #3D2215 100%);
+            color: #FFFFFF;
+            padding: 42px 20px 32px;
+            text-align: center;
             overflow: hidden;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+            box-shadow: 0 12px 30px rgba(27, 15, 10, 0.2);
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 50%, rgba(200, 150, 90, 0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(200, 150, 90, 0.05) 0%, transparent 40%);
-            animation: heroGlow 8s ease-in-out infinite alternate;
+            inset: 0;
+            background-image: radial-gradient(circle at 20% 30%, rgba(200, 141, 72, 0.15) 0%, transparent 60%),
+                              radial-gradient(circle at 80% 80%, rgba(223, 171, 94, 0.12) 0%, transparent 50%);
+            pointer-events: none;
         }
 
-        @keyframes heroGlow {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-2%, -1%); }
-        }
-
-        .hero-content {
+        .hero-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
-        .hero-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            display: block;
-            filter: drop-shadow(0 4px 12px rgba(200, 150, 90, 0.3));
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            color: #EFE6DC;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        .hero h1 {
-            font-family: 'Playfair Display', 'Noto Sans Ethiopic', serif;
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ADE80;
+            box-shadow: 0 0 10px #4ADE80;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+
+        .lang-switch {
+            display: flex;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-full);
+            padding: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .lang-btn {
+            border: none;
+            background: transparent;
+            color: #CFC1B5;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn.active {
+            background: var(--brand-caramel);
+            color: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-logo-box {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 8px;
+        }
+
+        .hero-emblem {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 12px;
+            background: linear-gradient(135deg, var(--brand-caramel), var(--brand-gold));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 8px 24px rgba(200, 141, 72, 0.35);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
             font-size: 32px;
-            font-weight: 700;
-            color: var(--accent-gold-light);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #FFF6EC;
+            line-height: 1.1;
         }
 
-        .hero .subtitle-am {
-            font-family: 'Noto Sans Ethiopic', sans-serif;
+        .hero-amharic {
+            font-family: var(--font-ethiopic);
             font-size: 20px;
-            font-weight: 500;
-            color: var(--accent-gold);
-            margin-bottom: 16px;
-            letter-spacing: 4px;
-        }
-
-        .hero-divider {
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
-            margin: 0 auto 16px;
+            font-weight: 700;
+            color: var(--brand-gold);
+            margin-top: 4px;
+            letter-spacing: 1px;
         }
 
         .hero-tagline {
             font-size: 13px;
-            color: rgba(250, 247, 242, 0.5);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            color: #D3BEB0;
+            margin-top: 8px;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
             font-weight: 400;
         }
 
-        /* ===== CATEGORY NAV ===== */
-        .category-nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(250, 247, 242, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-light);
-            padding: 12px 0;
-            transition: box-shadow 0.3s;
+        /* ===== SEARCH & FILTER BAR ===== */
+        .search-container {
+            max-width: 600px;
+            margin: -22px auto 0;
+            padding: 0 16px;
+            position: relative;
+            z-index: 10;
         }
 
-        .category-nav.scrolled {
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 6px 16px;
             box-shadow: var(--shadow-md);
+            gap: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--brand-caramel);
+            box-shadow: 0 8px 26px rgba(200, 141, 72, 0.18);
+        }
+
+        .search-icon {
+            font-size: 18px;
+            color: var(--text-muted);
+        }
+
+        .search-input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-heading);
+            padding: 8px 0;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-light);
+        }
+
+        .search-clear {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        /* ===== CATEGORY TABS (STICKY) ===== */
+        .nav-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 80;
+            background: var(--bg-body);
+            padding: 12px 0 10px;
+            border-bottom: 1px solid var(--border-soft);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background-color: rgba(251, 248, 244, 0.92);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .nav-wrapper {
+                background-color: rgba(17, 11, 8, 0.92);
+            }
         }
 
         .nav-scroll {
@@ -143,7 +325,6 @@
             overflow-x: auto;
             gap: 8px;
             padding: 0 16px;
-            -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
         }
 
@@ -151,1005 +332,1760 @@
             display: none;
         }
 
-        .nav-pill {
+        .nav-chip {
             flex-shrink: 0;
-            padding: 8px 18px;
-            border-radius: 100px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-muted);
-            background: transparent;
-            border: 1.5px solid var(--border-light);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            white-space: nowrap;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            background: var(--bg-surface);
+            border: 1px solid var(--border-soft);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-xs);
         }
 
-        .nav-pill:hover {
-            color: var(--accent-warm);
-            border-color: var(--accent-gold-light);
+        .nav-chip:hover {
+            border-color: var(--brand-caramel);
+            color: var(--brand-caramel);
         }
 
-        .nav-pill.active {
-            background: var(--bg-hero);
-            color: var(--accent-gold-light);
-            border-color: var(--bg-hero);
-            box-shadow: 0 2px 8px rgba(26, 15, 10, 0.2);
+        .nav-chip.active {
+            background: var(--brand-espresso);
+            color: #FFF6EC;
+            border-color: var(--brand-espresso);
+            box-shadow: 0 4px 14px rgba(27, 15, 10, 0.2);
         }
 
-        .nav-pill .nav-emoji {
+        .nav-chip-icon {
             font-size: 15px;
         }
 
-        /* ===== MAIN CONTENT ===== */
-        .menu-container {
-            max-width: 640px;
+        /* Quick Filter Tags (Fasting / Meat) */
+        .filter-tags-row {
+            display: flex;
+            gap: 6px;
+            padding: 12px 16px 4px;
+            max-width: 680px;
             margin: 0 auto;
-            padding: 8px 16px 80px;
+            overflow-x: auto;
+            scrollbar-width: none;
         }
 
-        /* ===== CATEGORY SECTION ===== */
-        .menu-section {
+        .filter-tags-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-pill {
+            flex-shrink: 0;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-soft);
+            background: var(--bg-surface);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-pill.active {
+            background: var(--brand-caramel);
+            color: #FFFFFF;
+            border-color: var(--brand-caramel);
+        }
+
+        /* ===== MAIN MENU CONTAINER ===== */
+        .menu-content {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 10px 16px 20px;
+        }
+
+        .section-wrap {
             margin-top: 32px;
-            scroll-margin-top: 70px;
+            scroll-margin-top: 80px;
         }
 
         .section-header {
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
             margin-bottom: 16px;
             padding: 0 4px;
         }
 
-        .section-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
+        .section-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-icon-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            flex-shrink: 0;
+            font-size: 20px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-soft);
+            box-shadow: var(--shadow-xs);
         }
 
-        .section-icon.fast-food { background: linear-gradient(135deg, #FFF3E0, #FFE0B2); }
-        .section-icon.juice { background: linear-gradient(135deg, #E8F5E9, #C8E6C9); }
-        .section-icon.breakfast { background: linear-gradient(135deg, #FFF8E1, #FFECB3); }
-        .section-icon.main { background: linear-gradient(135deg, #FFEBEE, #FFCDD2); }
-        .section-icon.pasta { background: linear-gradient(135deg, #FFF3E0, #FFD59E); }
-        .section-icon.raw-meat { background: linear-gradient(135deg, #FCE4EC, #F8BBD0); }
-        .section-icon.mojito { background: linear-gradient(135deg, #E0F7FA, #B2EBF2); }
-
-        .section-titles {
-            flex: 1;
-        }
-
-        .section-title-en {
-            font-family: 'Playfair Display', serif;
-            font-size: 22px;
+        .section-titles h2 {
+            font-family: var(--font-display);
+            font-size: 21px;
             font-weight: 700;
-            color: var(--text-primary);
+            color: var(--text-heading);
             line-height: 1.2;
         }
 
-        .section-title-am {
-            font-family: 'Noto Sans Ethiopic', sans-serif;
-            font-size: 15px;
-            font-weight: 500;
+        .section-titles span {
+            font-family: var(--font-ethiopic);
+            font-size: 14px;
+            color: var(--brand-caramel);
+            font-weight: 600;
+        }
+
+        .section-badge-count {
+            font-size: 11px;
+            font-weight: 700;
+            background: var(--bg-subtle);
             color: var(--text-muted);
-            margin-top: 2px;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-soft);
         }
 
-        .section-count {
-            font-size: 12px;
-            color: var(--text-light);
-            background: var(--border-light);
-            padding: 2px 10px;
-            border-radius: 100px;
-            font-weight: 500;
+        /* ===== FOOD ITEM CARDS ===== */
+        .items-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        /* ===== MENU ITEMS ===== */
-        .menu-card {
+        .item-card {
             background: var(--bg-card);
+            border: 1px solid var(--border-soft);
             border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-light);
+            padding: 12px;
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-xs);
+            transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+            position: relative;
             overflow: hidden;
-            margin-bottom: 12px;
-            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .menu-card:active {
-            transform: scale(0.995);
+        .item-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+            border-color: var(--border-hover);
         }
 
-        .menu-item {
+        .item-card:active {
+            transform: scale(0.985);
+        }
+
+        .item-img-wrap {
+            position: relative;
+            width: 104px;
+            height: 104px;
+            flex-shrink: 0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: var(--bg-subtle);
+        }
+
+        .item-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .item-card:hover .item-img {
+            transform: scale(1.06);
+        }
+
+        .item-diet-dot {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 16px 20px;
-            gap: 12px;
-            border-bottom: 1px solid rgba(237, 230, 220, 0.5);
-            transition: background 0.2s;
+            justify-content: center;
+            font-size: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            background: rgba(255, 255, 255, 0.92);
         }
 
-        .menu-item:last-child {
-            border-bottom: none;
-        }
-
-        .item-info {
+        .item-details {
             flex: 1;
             min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .item-name-en {
+        .item-name-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 2px;
+        }
+
+        .item-title-en {
             font-size: 15px;
-            font-weight: 600;
-            color: var(--text-primary);
+            font-weight: 700;
+            color: var(--text-heading);
             line-height: 1.3;
         }
 
-        .item-name-am {
-            font-family: 'Noto Sans Ethiopic', sans-serif;
+        .item-title-am {
+            font-family: var(--font-ethiopic);
             font-size: 13px;
-            font-weight: 400;
-            color: var(--text-secondary);
-            margin-top: 2px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .item-desc {
+            font-size: 12px;
+            color: var(--text-muted);
             line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 8px;
         }
 
-        .item-tag {
-            display: inline-block;
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 2px 8px;
-            border-radius: 6px;
-            margin-top: 4px;
-        }
-
-        .tag-fasting {
-            background: #E8F5E9;
-            color: #2E7D32;
-        }
-
-        .tag-non-fasting {
-            background: #FFF3E0;
-            color: #E65100;
-        }
-
-        .tag-new {
-            background: linear-gradient(135deg, #E8D5B7, #D4A574);
-            color: #1A0F0A;
-        }
-
-        .item-price {
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--accent-warm);
-            white-space: nowrap;
-            flex-shrink: 0;
+        .item-bottom-row {
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-top: auto;
         }
 
-        .price-value {
+        .item-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .tag-pill {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: var(--radius-xs);
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        .tag-pill.fasting {
+            background: var(--badge-fasting-bg);
+            color: var(--badge-fasting-text);
+        }
+
+        .tag-pill.meat {
+            background: var(--badge-meat-bg);
+            color: var(--badge-meat-text);
+        }
+
+        .tag-pill.new {
+            background: var(--badge-new-bg);
+            color: var(--badge-new-text);
+            border: 1px solid rgba(200, 141, 72, 0.3);
+        }
+
+        .tag-pill.special {
+            background: var(--bg-subtle);
+            color: var(--brand-caramel);
+        }
+
+        .item-price-tag {
+            font-family: var(--font-sans);
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--brand-caramel);
+            white-space: nowrap;
             display: flex;
             align-items: baseline;
-            gap: 2px;
+            gap: 3px;
+            background: var(--bg-subtle);
+            padding: 3px 9px;
+            border-radius: var(--radius-xs);
+            border: 1px solid var(--border-soft);
         }
 
-        .price-currency {
-            font-size: 11px;
-            font-weight: 500;
+        .item-price-currency {
+            font-size: 10px;
+            font-weight: 700;
             color: var(--text-muted);
+            letter-spacing: 0.5px;
         }
 
-        /* ===== RAW MEAT TABLE ===== */
-        .portion-table {
-            width: 100%;
-            padding: 16px 20px;
+        /* ===== RAW MEAT TABLE SECTION ===== */
+        .table-portion-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-soft);
+            padding: 16px;
+            box-shadow: var(--shadow-xs);
+            margin-bottom: 12px;
         }
 
-        .portion-table .table-title {
+        .portion-head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
             font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
+            color: var(--text-heading);
             margin-bottom: 12px;
         }
 
         .portion-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 8px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
         }
 
-        .portion-chip {
+        .portion-box {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 14px;
-            background: var(--bg-primary);
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-light);
         }
 
-        .portion-label {
+        .portion-title {
             font-size: 13px;
-            font-weight: 500;
-            color: var(--text-secondary);
+            font-weight: 600;
+            color: var(--text-body);
+        }
+
+        .portion-title-am {
+            font-family: var(--font-ethiopic);
+            font-size: 11px;
+            color: var(--text-muted);
         }
 
         .portion-price {
             font-size: 14px;
+            font-weight: 800;
+            color: var(--brand-caramel);
+        }
+
+        /* ===== DETAIL MODAL (TAP DISH) ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-overlay);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 200;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: var(--bg-surface);
+            width: 100%;
+            max-width: 520px;
+            max-height: 88vh;
+            border-top-left-radius: 28px;
+            border-top-right-radius: 28px;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .modal-overlay.open .modal-card {
+            transform: translateY(0);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.55);
+            color: #FFFFFF;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 5;
+            backdrop-filter: blur(6px);
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-body {
+            padding: 20px 24px 30px;
+        }
+
+        .modal-diet-badge {
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .modal-title-en {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-heading);
+            line-height: 1.2;
+        }
+
+        .modal-title-am {
+            font-family: var(--font-ethiopic);
+            font-size: 17px;
+            color: var(--brand-caramel);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .modal-desc {
+            font-size: 14px;
+            color: var(--text-body);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .modal-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-soft);
+        }
+
+        .modal-price {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--brand-caramel);
+        }
+
+        .modal-price span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .modal-tray-btn {
+            background: var(--brand-espresso);
+            color: #FFF6EC;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-full);
+            font-size: 14px;
             font-weight: 700;
-            color: var(--accent-warm);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-tray-btn:hover {
+            background: var(--brand-caramel);
+            transform: scale(1.02);
+        }
+
+        /* ===== FLOATING ORDER TRAY SUMMARY ===== */
+        .tray-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(120%);
+            width: calc(100% - 32px);
+            max-width: 480px;
+            background: var(--brand-espresso);
+            color: #FFF6EC;
+            border-radius: var(--radius-full);
+            padding: 10px 18px 10px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 12px 30px rgba(27, 15, 10, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 150;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .tray-bar.visible {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .tray-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tray-count-badge {
+            background: var(--brand-caramel);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .tray-text-title {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .tray-text-sub {
+            font-size: 11px;
+            color: #D3BEB0;
+        }
+
+        .tray-action-btn {
+            background: var(--brand-caramel);
+            color: #FFFFFF;
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
         }
 
         /* ===== FOOTER ===== */
         .footer {
             text-align: center;
-            padding: 40px 24px 32px;
-            border-top: 1px solid var(--border-light);
-            margin-top: 16px;
+            padding: 40px 20px 20px;
+            border-top: 1px solid var(--border-soft);
+            margin-top: 40px;
         }
 
         .footer-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 4px;
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-heading);
+            letter-spacing: 1px;
         }
 
-        .footer-logo-am {
-            font-family: 'Noto Sans Ethiopic', sans-serif;
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
+        .footer-amharic {
+            font-family: var(--font-ethiopic);
+            font-size: 15px;
+            color: var(--brand-caramel);
+            font-weight: 600;
+            margin-top: 2px;
         }
 
-        .footer-note {
+        .footer-tagline {
             font-size: 12px;
-            color: var(--text-light);
-            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 12px auto 16px;
+            max-width: 340px;
         }
 
-        .footer-heart {
-            color: #E57373;
+        .footer-info-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
         }
 
-        /* ===== ANIMATIONS ===== */
-        .menu-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .menu-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== LANGUAGE TOGGLE ===== */
-        .lang-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 200;
-            background: var(--bg-hero);
-            color: var(--accent-gold-light);
-            border: none;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(26, 15, 10, 0.3);
+        .info-chip {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-full);
+            padding: 5px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
+            gap: 5px;
         }
 
-        .lang-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 24px rgba(26, 15, 10, 0.4);
-        }
-
-        /* ===== PRICE NOTE BAR ===== */
-        .price-note {
+        .no-results {
+            display: none;
             text-align: center;
-            padding: 12px 16px;
-            background: linear-gradient(135deg, #FFF8E1, #FFF3E0);
-            font-size: 12px;
-            color: var(--text-secondary);
-            border-bottom: 1px solid var(--border-light);
+            padding: 48px 20px;
+            color: var(--text-muted);
         }
 
-        .price-note span {
-            font-family: 'Noto Sans Ethiopic', sans-serif;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (min-width: 640px) {
-            .menu-container {
-                padding: 8px 24px 80px;
-            }
-
-            .hero h1 {
-                font-size: 40px;
-            }
-
-            .hero .subtitle-am {
-                font-size: 24px;
-            }
-
-            .section-title-en {
-                font-size: 26px;
-            }
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-primary: #121010;
-                --bg-card: #1E1A18;
-                --text-primary: #F5F0EB;
-                --text-secondary: #C8B8A8;
-                --text-muted: #8B7B6B;
-                --text-light: #5C4C3C;
-                --border-light: #2A2420;
-                --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
-                --shadow-md: 0 4px 16px rgba(0,0,0,0.3);
-                --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
-            }
-
-            .category-nav {
-                background: rgba(18, 16, 16, 0.92);
-            }
-
-            .section-icon.fast-food { background: linear-gradient(135deg, #3E2F20, #4A3525); }
-            .section-icon.juice { background: linear-gradient(135deg, #1E3A1E, #2A4A2A); }
-            .section-icon.breakfast { background: linear-gradient(135deg, #3E3520, #4A4025); }
-            .section-icon.main { background: linear-gradient(135deg, #3E2025, #4A252A); }
-            .section-icon.pasta { background: linear-gradient(135deg, #3E2F20, #4A3828); }
-            .section-icon.raw-meat { background: linear-gradient(135deg, #3E2028, #4A2530); }
-            .section-icon.mojito { background: linear-gradient(135deg, #1E3A3A, #2A4A4A); }
-
-            .tag-fasting { background: #1E3A1E; color: #66BB6A; }
-            .tag-non-fasting { background: #3E2810; color: #FFB74D; }
-            .tag-new { background: linear-gradient(135deg, #3E2F20, #4A3525); color: #E8C89E; }
-
-            .price-note {
-                background: linear-gradient(135deg, #2A2420, #302820);
-            }
-
-            .portion-chip {
-                background: #151210;
-            }
+        .no-results-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== HERO ===== -->
+    <!-- ===== HERO SECTION ===== -->
     <header class="hero">
-        <div class="hero-content">
-            <span class="hero-icon">☕</span>
-            <h1>MIKA COFFEE</h1>
-            <div class="subtitle-am">ሚካ ቡና</div>
-            <div class="hero-divider"></div>
-            <p class="hero-tagline">Our Menu · የምግብ ዝርዝር</p>
+        <div class="hero-top-row">
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>Open · ክፍት ነው</span>
+            </div>
+
+            <!-- Language Switcher -->
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="setLang('all', this)">Both · ሁለቱም</button>
+                <button class="lang-btn" onclick="setLang('en', this)">EN</button>
+                <button class="lang-btn" onclick="setLang('am', this)">አማ</button>
+            </div>
+        </div>
+
+        <div class="hero-logo-box">
+            <div class="hero-emblem">☕</div>
+            <h1 class="hero-title">MIKA COFFEE</h1>
+            <div class="hero-amharic">ሚካ ቡና</div>
+            <p class="hero-tagline">Authentic Flavors · Fresh Ingredients · Artisan Coffee &amp; Food</p>
         </div>
     </header>
 
-    <!-- ===== PRICE NOTE ===== -->
-    <div class="price-note">
-        All prices in Ethiopian Birr (ETB) · <span>ዋጋ በኢትዮጵያ ብር</span>
+    <!-- ===== SEARCH BAR ===== -->
+    <div class="search-container">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="menuSearch" class="search-input" placeholder="Search dish, food, or drinks... / ምግብ ይፈልጉ" oninput="filterMenu()">
+            <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+        </div>
     </div>
 
-    <!-- ===== CATEGORY NAV ===== -->
-    <nav class="category-nav" id="categoryNav">
+    <!-- ===== STICKY CATEGORY NAV ===== -->
+    <div class="nav-wrapper" id="navWrapper">
         <div class="nav-scroll">
-            <a href="#fast-food" class="nav-pill active">
-                <span class="nav-emoji">🍔</span> Fast Food
+            <a href="#fast-food" class="nav-chip active" onclick="smoothNav(event, 'fast-food')">
+                <span class="nav-chip-icon">🍔</span> Fast Food
             </a>
-            <a href="#breakfast" class="nav-pill">
-                <span class="nav-emoji">🍳</span> Breakfast
+            <a href="#breakfast" class="nav-chip" onclick="smoothNav(event, 'breakfast')">
+                <span class="nav-chip-icon">🍳</span> Breakfast · ቁርስ
             </a>
-            <a href="#main-dishes" class="nav-pill">
-                <span class="nav-emoji">🍛</span> Main Dishes
+            <a href="#main-dishes" class="nav-chip" onclick="smoothNav(event, 'main-dishes')">
+                <span class="nav-chip-icon">🍛</span> Main · ምግብ
             </a>
-            <a href="#pasta" class="nav-pill">
-                <span class="nav-emoji">🍝</span> Pasta
+            <a href="#pasta" class="nav-chip" onclick="smoothNav(event, 'pasta')">
+                <span class="nav-chip-icon">🍝</span> Pasta · ፓስታ
             </a>
-            <a href="#juice" class="nav-pill">
-                <span class="nav-emoji">🥤</span> Juice
+            <a href="#juice" class="nav-chip" onclick="smoothNav(event, 'juice')">
+                <span class="nav-chip-icon">🥤</span> Juices &amp; Shakes
             </a>
-            <a href="#mojito" class="nav-pill">
-                <span class="nav-emoji">🍹</span> Mojito
+            <a href="#mojito" class="nav-chip" onclick="smoothNav(event, 'mojito')">
+                <span class="nav-chip-icon">🍹</span> Mojitos
             </a>
-            <a href="#raw-meat" class="nav-pill">
-                <span class="nav-emoji">🥩</span> Raw Meat
+            <a href="#raw-meat" class="nav-chip" onclick="smoothNav(event, 'raw-meat')">
+                <span class="nav-chip-icon">🥩</span> Raw Meat · ጨዉ
             </a>
         </div>
-    </nav>
 
-    <!-- ===== MENU CONTENT ===== -->
-    <main class="menu-container">
+        <!-- Dietary Filter Pills -->
+        <div class="filter-tags-row">
+            <button class="filter-pill active" onclick="filterDiet('all', this)">All Items</button>
+            <button class="filter-pill" onclick="filterDiet('fasting', this)">🌱 Fasting (የፆም)</button>
+            <button class="filter-pill" onclick="filterDiet('meat', this)">🥩 Non-Fasting (የፍስክ)</button>
+            <button class="filter-pill" onclick="filterDiet('new', this)">✦ New Items</button>
+        </div>
+    </div>
 
-        <!-- ══════ FAST FOOD ══════ -->
-        <section class="menu-section" id="fast-food">
+    <!-- ===== NO RESULTS STATE ===== -->
+    <div class="no-results" id="noResults">
+        <div class="no-results-icon">🍽️</div>
+        <h3>No matching dishes found</h3>
+        <p>ምንም የሚስማማ ምግብ አልተገኘም — Please try another keyword</p>
+    </div>
+
+    <!-- ===== MAIN MENU CONTENT ===== -->
+    <main class="menu-content" id="menuContent">
+
+        <!-- ═══════════ 1. FAST FOOD ═══════════ -->
+        <section class="section-wrap" id="fast-food">
             <div class="section-header">
-                <div class="section-icon fast-food">🍔</div>
-                <div class="section-titles">
-                    <div class="section-title-en">Fast Food</div>
-                    <div class="section-title-am">ፋስት ፉድ</div>
+                <div class="section-header-left">
+                    <div class="section-icon-badge">🍔</div>
+                    <div class="section-titles">
+                        <h2>Fast Food</h2>
+                        <span>ፋስት ፉድ</span>
+                    </div>
                 </div>
-                <span class="section-count">7</span>
+                <span class="section-badge-count">7 Items</span>
             </div>
-            <div class="menu-card">
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Mika Burger</div>
-                        <div class="item-name-am">ሚካ በርገር</div>
+
+            <div class="items-grid">
+                <!-- Mika Burger -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Mika Burger', 'ሚካ በርገር', 'House special juicy prime beef burger with melted cheese, caramelized onions, crisp lettuce & signature Mika sauce on toasted brioche.', '450', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&auto=format&fit=crop&q=80" alt="Mika Burger" class="item-img" loading="lazy">
+                        <span class="item-diet-dot" title="Meat">🥩</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">450 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Mika Burger</h3>
+                        </div>
+                        <div class="item-title-am">ሚካ በርገር</div>
+                        <p class="item-desc">Juicy grilled beef patty with cheddar cheese, caramelized onions, crisp lettuce &amp; house Mika sauce.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags">
+                                <span class="tag-pill special">⭐ Popular</span>
+                            </div>
+                            <div class="item-price-tag">450 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Cheese Burger</div>
-                        <div class="item-name-am">ቺዝ በርገር</div>
+                </article>
+
+                <!-- Cheese Burger -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Cheese Burger', 'ቺዝ በርገር', 'Charbroiled beef patty loaded with double melted cheddar cheese, pickled cucumbers, and rich creamy burger spread.', '450', 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&auto=format&fit=crop&q=80" alt="Cheese Burger" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🥩</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">450 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Cheese Burger</h3>
+                        </div>
+                        <div class="item-title-am">ቺዝ በርገር</div>
+                        <p class="item-desc">Double melted cheese over grilled beef patty with crunchy lettuce, pickles, and creamy house dressing.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill meat">Cheesy</span></div>
+                            <div class="item-price-tag">450 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Mika Original Wrap</div>
-                        <div class="item-name-am">ሚካ ኦርጅናል ራፕ</div>
+                </article>
+
+                <!-- Mika Original Wrap -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Mika Original Wrap', 'ሚካ ኦርጅናል ራፕ', 'Tender sautéed meats, bell peppers, fresh garden greens, and garlic yogurt sauce wrapped in a warm toasted tortilla.', '300', 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&auto=format&fit=crop&q=80" alt="Mika Original Wrap" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">300 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Mika Original Wrap</h3>
+                        </div>
+                        <div class="item-title-am">ሚካ ኦርጅናል ራፕ</div>
+                        <p class="item-desc">Warm toasted flatbread wrap filled with seasoned grilled meats, fresh salad, and garlic sauce.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill special">House Wrap</span></div>
+                            <div class="item-price-tag">300 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Crispy Sandwich</div>
-                        <div class="item-name-am">ክሪስፒ ሳንድዊች</div>
+                </article>
+
+                <!-- Crispy Sandwich -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Crispy Sandwich', 'ክሪስፒ ሳንድዊች', 'Crunchy golden crispy fillet nestled in a fresh baguette with fresh coleslaw, tomato, and tangy mustard sauce.', '250', 'https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=400&auto=format&fit=crop&q=80" alt="Crispy Sandwich" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Crispy Sandwich</h3>
+                        </div>
+                        <div class="item-title-am">ክሪስፒ ሳንድዊች</div>
+                        <p class="item-desc">Deep-fried golden crunch fillet with crunchy slaw and honey-mustard drizzle in toasted bread.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Crispy</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Egg Scramble</div>
-                        <div class="item-name-am">እንቁላል እስክስ</div>
+                </article>
+
+                <!-- Egg Scramble -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Egg Scramble', 'እንቁላል እስክስ', 'Soft and buttery scrambled farm eggs seasoned with fresh ground pepper and fragrant herbs.', '200', 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&auto=format&fit=crop&q=80', 'egg')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&auto=format&fit=crop&q=80" alt="Egg Scramble" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">200 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Egg Scramble</h3>
+                        </div>
+                        <div class="item-title-am">እንቁላል እስክስ</div>
+                        <p class="item-desc">Silky farm eggs gently scrambled with butter and fresh herbs, served hot.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Breakfast</span></div>
+                            <div class="item-price-tag">200 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Normal Original Wrap</div>
-                        <div class="item-name-am">ኖርማል ኦርጅናል ራፕ</div>
+                </article>
+
+                <!-- Normal Original Wrap -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Normal Original Wrap', 'ኖርማል ኦርጅናል ራፕ', 'Light and wholesome rolled tortilla packed with fresh sautéed vegetables and savory dressing.', '150', 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&auto=format&fit=crop&q=80" alt="Normal Original Wrap" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">150 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Normal Original Wrap</h3>
+                        </div>
+                        <div class="item-title-am">ኖርማል ኦርጅናል ራፕ</div>
+                        <p class="item-desc">Healthy vegetarian wrap packed with sautéed peppers, onions, and herbs.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">🌱 Veg</span></div>
+                            <div class="item-price-tag">150 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Club Sandwich</div>
-                        <div class="item-name-am">ክለብ ሳንድዊች</div>
+                </article>
+
+                <!-- Club Sandwich -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Club Sandwich', 'ክለብ ሳንድዊች', 'Multi-layer toasted club sandwich loaded with tender roasted chicken, fried egg, cheddar cheese, tomato & lettuce.', '400', 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&auto=format&fit=crop&q=80" alt="Club Sandwich" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🥩</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">400 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Club Sandwich</h3>
+                        </div>
+                        <div class="item-title-am">ክለብ ሳንድዊች</div>
+                        <p class="item-desc">Triple decker toasted sandwich with roasted chicken, egg, cheese, and fresh garden salad.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill meat">Loaded</span></div>
+                            <div class="item-price-tag">400 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
+                </article>
             </div>
         </section>
 
-        <!-- ══════ BREAKFAST ══════ -->
-        <section class="menu-section" id="breakfast">
+        <!-- ═══════════ 2. BREAKFAST (ቁርስ) ═══════════ -->
+        <section class="section-wrap" id="breakfast">
             <div class="section-header">
-                <div class="section-icon breakfast">🍳</div>
-                <div class="section-titles">
-                    <div class="section-title-en">Breakfast</div>
-                    <div class="section-title-am">ቁርስ</div>
+                <div class="section-header-left">
+                    <div class="section-icon-badge">🍳</div>
+                    <div class="section-titles">
+                        <h2>Breakfast</h2>
+                        <span>ቁርስ</span>
+                    </div>
                 </div>
-                <span class="section-count">15</span>
+                <span class="section-badge-count">15 Items</span>
             </div>
-            <div class="menu-card">
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Afuun</div>
-                        <div class="item-name-am">አፉን</div>
+
+            <div class="items-grid">
+                <!-- Afuun -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Afuun', 'አፉን', 'Special traditional breakfast sauté with rich spiced butter, red chili, and tender meat bites, served bubbling hot.', '450', 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80" alt="Afuun" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">450 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Afuun</h3>
+                        </div>
+                        <div class="item-title-am">አፉን</div>
+                        <p class="item-desc">Traditional hot breakfast delicacy sautéed with pure spiced butter (nitir kibe) and tender meat.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill special">Traditional</span></div>
+                            <div class="item-price-tag">450 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Normal Chechebsa</div>
-                        <div class="item-name-am">ናርማል ጨጨብሳ</div>
+                </article>
+
+                <!-- Normal Chechebsa -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Normal Chechebsa', 'ናርማል ጨጨብሳ', 'Shredded pan flatbread gently tossed in fragrant spiced butter and berbere spice.', '250', 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400&auto=format&fit=crop&q=80" alt="Chechebsa" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Normal Chechebsa</h3>
+                        </div>
+                        <div class="item-title-am">ናርማል ጨጨብሳ</div>
+                        <p class="item-desc">Freshly torn flatbread sautéed with berbere and aromatic herbal butter.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Classic</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Special Chechebsa</div>
-                        <div class="item-name-am">ስፔሻል ጨጨብሳ</div>
+                </article>
+
+                <!-- Special Chechebsa -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Special Chechebsa', 'ስፔሻል ጨጨብሳ', 'Decadent chechebsa sautéed in fragrant butter and berbere, drizzled with sweet natural honey and served with rich fresh yogurt.', '300', 'https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600&auto=format&fit=crop&q=80', 'special')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&auto=format&fit=crop&q=80" alt="Special Chechebsa" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">300 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Special Chechebsa</h3>
+                        </div>
+                        <div class="item-title-am">ስፔሻል ጨጨብሳ</div>
+                        <p class="item-desc">Torn bread in spiced butter, garnished with natural honey and fresh curd (ergo).</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill special">🍯 Honey &amp; Yogurt</span></div>
+                            <div class="item-price-tag">300 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Quntan Firfir</div>
-                        <div class="item-name-am">ቁንጣን ፍርፍር</div>
+                </article>
+
+                <!-- Quntan Firfir -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Quntan Firfir', 'ቁንጣን ፍርፍር', 'Savory shredded injera simmered with dried spiced jerky beef (quanta) in aromatic caramelized onion and berbere sauce.', '400', 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=400&auto=format&fit=crop&q=80" alt="Quntan Firfir" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🥩</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">400 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Quntan Firfir</h3>
+                        </div>
+                        <div class="item-title-am">ቁንጣን ፍርፍር</div>
+                        <p class="item-desc">Dried cured beef (quanta) stewed with onion, garlic, and berbere, tossed with fresh injera.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill meat">🥩 Beef Quanta</span></div>
+                            <div class="item-price-tag">400 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Genfo</div>
-                        <div class="item-name-am">ገንፎ</div>
+                </article>
+
+                <!-- Genfo -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Genfo', 'ገንፎ', 'Traditional hot barley porridge shaped with a center pool of clarified spiced butter and authentic berbere spice.', '400', 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&auto=format&fit=crop&q=80', 'special')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=400&auto=format&fit=crop&q=80" alt="Genfo" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">400 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Genfo</h3>
+                        </div>
+                        <div class="item-title-am">ገንፎ</div>
+                        <p class="item-desc">Wholesome barley porridge served with a hot pool of spiced butter and berbere in the middle.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill special">Wholesome</span></div>
+                            <div class="item-price-tag">400 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Special Ful</div>
-                        <div class="item-name-am">ስፔሻል ፉል</div>
+                </article>
+
+                <!-- Special Ful -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Special Ful', 'ስፔሻል ፉል', 'Slow-cooked fava beans mashed and topped with fresh tomatoes, onions, green chili, boiled egg, crumbled cheese & warm pita.', '250', 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop&q=80" alt="Special Ful" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Special Ful</h3>
+                        </div>
+                        <div class="item-title-am">ስፔሻል ፉል</div>
+                        <p class="item-desc">Creamy fava bean stew topped with diced veggies, boiled egg, cheese, and fresh warm bread.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill special">Fava Beans</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Enqulal Ful</div>
-                        <div class="item-name-am">እንቁላል ፉል</div>
+                </article>
+
+                <!-- Enqulal Ful -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Enqulal Ful', 'እንቁላል ፉል', 'Savory mashed fava beans cooked directly with fresh scrambled eggs, olive oil, and herbs.', '300', 'https://images.unsplash.com/photo-1510693206972-df098062cb71?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1510693206972-df098062cb71?w=400&auto=format&fit=crop&q=80" alt="Enqulal Ful" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">300 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Enqulal Ful</h3>
+                        </div>
+                        <div class="item-title-am">እንቁላል ፉል</div>
+                        <p class="item-desc">Hearty mashed fava beans pan-cooked with scrambled eggs and olive oil.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Egg &amp; Bean</span></div>
+                            <div class="item-price-tag">300 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Ful</div>
-                        <div class="item-name-am">ፉል</div>
+                </article>
+
+                <!-- Plain Ful -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Ful', 'ፉል', 'Classic hearty fava beans drizzled with extra virgin olive oil, chopped onions, and hot green jalapeño peppers.', '200', 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&auto=format&fit=crop&q=80" alt="Ful" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">200 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Ful</h3>
+                        </div>
+                        <div class="item-title-am">ፉል</div>
+                        <p class="item-desc">Simmered fava beans with olive oil, raw onion, and fresh green chili.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">🌱 Vegan</span></div>
+                            <div class="item-price-tag">200 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Mika Firfir</div>
-                        <div class="item-name-am">ሚካ ፍርፍር | ያሶም</div>
-                        <span class="item-tag tag-fasting">☘ Fasting · ፆም</span>
+                </article>
+
+                <!-- Mika Firfir (Fasting) -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Mika Firfir (Fasting)', 'ሚካ ፍርፍር | ያሶም', 'House special 100% plant-based firfir stewed in slow-cooked berbere and onions, tossed with fresh injera.', '350', 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop&q=80" alt="Mika Firfir Fasting" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🌱</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">350 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Mika Firfir</h3>
+                        </div>
+                        <div class="item-title-am">ሚካ ፍርፍር | ያሶም</div>
+                        <p class="item-desc">Aromatic spicy vegan injera stew made with onions, garlic, and berbere.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">🌱 Fasting · ፆም</span></div>
+                            <div class="item-price-tag">350 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Mika Firfir</div>
-                        <div class="item-name-am">ሚካ ፍርፍር | ያፍጥር</div>
-                        <span class="item-tag tag-non-fasting">🔥 Non-Fasting · ፍስክ</span>
+                </article>
+
+                <!-- Mika Firfir (Non-Fasting) -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Mika Firfir (Non-Fasting)', 'ሚካ ፍርፍር | ያፍጥር', 'Indulgent meat firfir prepared with rich spiced beef gravy, clarified butter, and tender morsels of beef.', '450', 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=400&auto=format&fit=crop&q=80" alt="Mika Firfir Non-Fasting" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🥩</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">450 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Mika Firfir</h3>
+                        </div>
+                        <div class="item-title-am">ሚካ ፍርፍር | ያፍጥር</div>
+                        <p class="item-desc">Injera stewed in rich spiced beef gravy with clarified herbal butter.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill meat">🥩 Non-Fasting · ፍስክ</span></div>
+                            <div class="item-price-tag">450 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Omelet</div>
-                        <div class="item-name-am">አሞሌት</div>
+                </article>
+
+                <!-- Omelet -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Omelet', 'አሞሌት', 'Fluffy rolled omelet packed with diced red tomatoes, sweet onions, green peppers, and melted cheese.', '300', 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&auto=format&fit=crop&q=80" alt="Omelet" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">300 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Omelet</h3>
+                        </div>
+                        <div class="item-title-am">አሞሌት</div>
+                        <p class="item-desc">Golden farm-egg omelet loaded with diced tomatoes, onions, and melted cheese.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Cheese Omelet</span></div>
+                            <div class="item-price-tag">300 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Egg Sandwich</div>
-                        <div class="item-name-am">እንቁላል ሳንድዊች</div>
+                </article>
+
+                <!-- Egg Sandwich -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Egg Sandwich', 'እንቁላል ሳንድዊች', 'Fresh toasted bread sandwich stuffed with savory scrambled egg, tomato slices, lettuce, and light mayo spread.', '300', 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&auto=format&fit=crop&q=80" alt="Egg Sandwich" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">300 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Egg Sandwich</h3>
+                        </div>
+                        <div class="item-title-am">እንቁላል ሳንድዊች</div>
+                        <p class="item-desc">Toasted sandwich stuffed with hot seasoned scrambled eggs, tomato, and mayo.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Warm Toast</span></div>
+                            <div class="item-price-tag">300 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Egg Firfir</div>
-                        <div class="item-name-am">እንቁላል ፍርፍር</div>
+                </article>
+
+                <!-- Egg Firfir -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Egg Firfir', 'እንቁላል ፍርፍር', 'Delicious comfort dish blending scrambled eggs and torn injera simmered in onion and tomato spices.', '200', 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400&auto=format&fit=crop&q=80" alt="Egg Firfir" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">200 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Egg Firfir</h3>
+                        </div>
+                        <div class="item-title-am">እንቁላል ፍርፍር</div>
+                        <p class="item-desc">Scrambled eggs tossed with tender shredded injera in spiced tomato sauce.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Comfort</span></div>
+                            <div class="item-price-tag">200 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Egg with Vegetables</div>
-                        <div class="item-name-am">እንቁላል በ አትክልት</div>
+                </article>
+
+                <!-- Egg with Vegetables -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Egg with Vegetables', 'እንቁላል በ አትክልት', 'Nutritious medley of carrots, sweet green peppers, onions, and scrambled eggs gently seasoned.', '200', 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop&q=80" alt="Egg with Veggies" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">200 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Egg with Vegetables</h3>
+                        </div>
+                        <div class="item-title-am">እንቁላል በ አትክልት</div>
+                        <p class="item-desc">Healthy pan scramble of fresh garden vegetables and scrambled eggs.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Veg &amp; Egg</span></div>
+                            <div class="item-price-tag">200 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Kitfo</div>
-                        <div class="item-name-am">ክትፎ</div>
+                </article>
+
+                <!-- Kitfo -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Kitfo', 'ክትፎ', 'Premium lean minced beef gently warmed with herbal spiced clarified butter (nitir kibe) and fiery mitmita chili.', '400', 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80" alt="Kitfo" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🥩</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">400 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Kitfo</h3>
+                        </div>
+                        <div class="item-title-am">ክትፎ</div>
+                        <p class="item-desc">Finely minced tender beef blended with mitmita and herbal clarified spiced butter.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill meat">👑 Signature Kitfo</span></div>
+                            <div class="item-price-tag">400 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
+                </article>
             </div>
         </section>
 
-        <!-- ══════ MAIN DISHES ══════ -->
-        <section class="menu-section" id="main-dishes">
+        <!-- ═══════════ 3. MAIN DISHES (ምግብ) ═══════════ -->
+        <section class="section-wrap" id="main-dishes">
             <div class="section-header">
-                <div class="section-icon main">🍛</div>
-                <div class="section-titles">
-                    <div class="section-title-en">Main Dishes</div>
-                    <div class="section-title-am">ምግብ</div>
+                <div class="section-header-left">
+                    <div class="section-icon-badge">🍛</div>
+                    <div class="section-titles">
+                        <h2>Main Dishes</h2>
+                        <span>ምግብ</span>
+                    </div>
                 </div>
-                <span class="section-count">11</span>
+                <span class="section-badge-count">11 Items</span>
             </div>
-            <div class="menu-card">
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Half-Half (Shiro · Misir · Gomen)</div>
-                        <div class="item-name-am">ሀፍ ሀፍ | ሸሮ | ምስር | ገመን</div>
+
+            <div class="items-grid">
+                <!-- Half-Half -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Half-Half (Shiro · Misir · Gomen)', 'ሀፍ ሀፍ | ሸሮ | ምስር | ገመን', 'Trio of Ethiopian classics: creamy roasted chickpea shiro, slow-cooked red lentil wot, and sautéed collard greens.', '300', 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&auto=format&fit=crop&q=80" alt="Half Half Platter" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🌱</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">300 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Half-Half</h3>
+                        </div>
+                        <div class="item-title-am">ሀፍ ሀፍ | ሸሮ | ምስር | ገመን</div>
+                        <p class="item-desc">Authentic combination platter: flavorful shiro, spicy red lentils (misir), and greens (gomen).</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">🌱 Fasting Feast</span></div>
+                            <div class="item-price-tag">300 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Mika Special</div>
-                        <div class="item-name-am">ሚካ ስር | ያሶም</div>
-                        <span class="item-tag tag-fasting">☘ Fasting · ፆም</span>
+                </article>
+
+                <!-- Mika Special (Fasting) -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Mika Special (Fasting)', 'ሚካ ስር | ያሶም', 'House signature fasting platter featuring savory vegetable curries, spiced pulses, and garden greens on injera.', '300', 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&auto=format&fit=crop&q=80" alt="Mika Special Fasting" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🌱</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">300 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Mika Special</h3>
+                        </div>
+                        <div class="item-title-am">ሚካ ስር | ያሶም</div>
+                        <p class="item-desc">Mika's signature vegan banquet with savory vegetable stews on fresh injera.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">🌱 Fasting · ፆም</span></div>
+                            <div class="item-price-tag">300 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Mika Special</div>
-                        <div class="item-name-am">ሚካ ስር | ያፍጥር</div>
-                        <span class="item-tag tag-non-fasting">🔥 Non-Fasting · ፍስክ</span>
+                </article>
+
+                <!-- Mika Special (Non-Fasting) -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Mika Special (Non-Fasting)', 'ሚካ ስር | ያፍጥር', 'Savory meat special with tender sautéed beef cubes, spicy stewed sauces, and house seasonings.', '350', 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80" alt="Mika Special Meat" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🥩</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">350 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Mika Special</h3>
+                        </div>
+                        <div class="item-title-am">ሚካ ስር | ያፍጥር</div>
+                        <p class="item-desc">Tender pan-seared beef bites simmered with garlic, rosemary, and rich sauce.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill meat">🥩 Non-Fasting · ፍስክ</span></div>
+                            <div class="item-price-tag">350 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Mika Kemta</div>
-                        <div class="item-name-am">ሚካ ከምጣ | ያሶም</div>
-                        <span class="item-tag tag-fasting">☘ Fasting · ፆም</span>
+                </article>
+
+                <!-- Mika Kemta (Fasting) -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Mika Kemta (Fasting)', 'ሚካ ከምጣ | ያሶም', 'Generous shared table platter laden with assorted traditional vegan delicacies and vegetable curries.', '500', 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&auto=format&fit=crop&q=80" alt="Mika Kemta Fasting" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🌱</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">500 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Mika Kemta</h3>
+                        </div>
+                        <div class="item-title-am">ሚካ ከምጣ | ያሶም</div>
+                        <p class="item-desc">Grand sharing table platter with multiple plant-based stews and vegetables.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">🌱 Grand Platter</span></div>
+                            <div class="item-price-tag">500 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Mika Kemta</div>
-                        <div class="item-name-am">ሚካ ከምጣ | ያፍጥር</div>
-                        <span class="item-tag tag-non-fasting">🔥 Non-Fasting · ፍስክ</span>
+                </article>
+
+                <!-- Mika Kemta (Non-Fasting) -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Mika Kemta (Non-Fasting)', 'ሚካ ከምጣ | ያፍጥር', 'Royal feast platter loaded with sizzling tibs, spiced beef wot, kitfo bites, and fresh injera rolls.', '850', 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&auto=format&fit=crop&q=80" alt="Mika Kemta Royal Feast" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🥩</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">850 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Mika Kemta</h3>
+                        </div>
+                        <div class="item-title-am">ሚካ ከምጣ | ያፍጥር</div>
+                        <p class="item-desc">The ultimate carnivore platter: sizzling beef tibs, stewed meats, and spiced butter accompaniments.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill meat">👑 Royal Platter</span></div>
+                            <div class="item-price-tag">850 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Dulet</div>
-                        <div class="item-name-am">ዱለት</div>
+                </article>
+
+                <!-- Dulet -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Dulet', 'ዱለት', 'Finely minced beef tripe, liver & lean meat pan-sautéed with diced onions, jalapeños, and spiced herbal butter.', '400', 'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=400&auto=format&fit=crop&q=80" alt="Dulet" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🥩</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">400 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Dulet</h3>
+                        </div>
+                        <div class="item-title-am">ዱለት</div>
+                        <p class="item-desc">Minced liver, tripe, and lean meat pan-seared with mitmita, kibe, and jalapeños.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill meat">🥩 Traditional</span></div>
+                            <div class="item-price-tag">400 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Timen Kubs</div>
-                        <div class="item-name-am">ጥመን ኩብስ</div>
+                </article>
+
+                <!-- Timen Kubs -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Timen Kubs', 'ጥመን ኩብስ', 'Fragrant seasoned basmati rice tossed with savory meat cuts and spiced sauce reduction.', '250', 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop&q=80" alt="Timen Kubs" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Timen Kubs</h3>
+                        </div>
+                        <div class="item-title-am">ጥመን ኩብስ</div>
+                        <p class="item-desc">Aromatic rice dish infused with cardamom and simmered with seasoned meat.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Rice Dish</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Tegogo</div>
-                        <div class="item-name-am">ተጎጎ</div>
+                </article>
+
+                <!-- Tegogo -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Tegogo', 'ተጎጎ', 'Traditional crisp skillet bread sautéed in rich savory herbs and sauce.', '250', 'https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&auto=format&fit=crop&q=80" alt="Tegogo" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Tegogo</h3>
+                        </div>
+                        <div class="item-title-am">ተጎጎ</div>
+                        <p class="item-desc">Traditional clay-pan baked bread cooked in herbal broth and spices.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Artisan</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Bezena</div>
-                        <div class="item-name-am">በዘና</div>
+                </article>
+
+                <!-- Bezena -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Bezena', 'በዘና', 'Slow-braised rich beef cubes simmered with garlic, caramelized onions, and fragrant berbere.', '350', 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80" alt="Bezena" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🥩</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">350 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Bezena</h3>
+                        </div>
+                        <div class="item-title-am">በዘና</div>
+                        <p class="item-desc">Slow-braised tender beef stew cooked in caramelized red onions and rich spices.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill meat">🥩 Beef Stew</span></div>
+                            <div class="item-price-tag">350 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Dirkosh Firfir</div>
-                        <div class="item-name-am">ድርቆሽ ፍርፍር</div>
+                </article>
+
+                <!-- Dirkosh Firfir -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Dirkosh Firfir', 'ድርቆሽ ፍርፍር', 'Sun-crisped dried injera tossed into a hot, spicy tomato and berbere sauce.', '250', 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=400&auto=format&fit=crop&q=80" alt="Dirkosh Firfir" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Dirkosh Firfir</h3>
+                        </div>
+                        <div class="item-title-am">ድርቆሽ ፍርፍር</div>
+                        <p class="item-desc">Crunchy sun-dried injera cooked in rich tomato and onion gravy.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">🌱 Fasting</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Firfir</div>
-                        <div class="item-name-am">ፍርፍር</div>
+                </article>
+
+                <!-- Firfir -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Firfir', 'ፍርፍር', 'Warm, soft shredded injera tossed in classic spiced pepper, onion, and garlic reduction.', '200', 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400&auto=format&fit=crop&q=80" alt="Firfir" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">200 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Firfir</h3>
+                        </div>
+                        <div class="item-title-am">ፍርፍር</div>
+                        <p class="item-desc">Classic Ethiopian comforting injera tossed with berbere sauce.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">🌱 Classic</span></div>
+                            <div class="item-price-tag">200 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
+                </article>
             </div>
         </section>
 
-        <!-- ══════ PASTA (NEW) ══════ -->
-        <section class="menu-section" id="pasta">
+        <!-- ═══════════ 4. PASTA (NEW ITEMS) ═══════════ -->
+        <section class="section-wrap" id="pasta">
             <div class="section-header">
-                <div class="section-icon pasta">🍝</div>
-                <div class="section-titles">
-                    <div class="section-title-en">Pasta</div>
-                    <div class="section-title-am">ፓስታ</div>
+                <div class="section-header-left">
+                    <div class="section-icon-badge">🍝</div>
+                    <div class="section-titles">
+                        <h2>Pasta</h2>
+                        <span>ፓስታ</span>
+                    </div>
                 </div>
-                <span class="section-count">3</span>
+                <span class="section-badge-count">3 New Items</span>
             </div>
-            <div class="menu-card">
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Pasta with Sauce</div>
-                        <div class="item-name-am">ፓስታ በ ስጎ</div>
-                        <span class="item-tag tag-new">✦ New</span>
+
+            <div class="items-grid">
+                <!-- Pasta with Sauce -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Pasta with Sauce', 'ፓስታ በ ስጎ', 'Al dente spaghetti smothered in our house-simmered plum tomato & garlic sauce with fresh Italian herbs and sweet basil.', '250', 'https://images.unsplash.com/photo-1621996346565-e3d5d6281292?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1621996346565-e3d5d6281292?w=400&auto=format&fit=crop&q=80" alt="Pasta with Sauce" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🌱</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Pasta with Sauce</h3>
+                        </div>
+                        <div class="item-title-am">ፓስታ በ ስጎ</div>
+                        <p class="item-desc">Freshly cooked spaghetti in rich, slow-simmered plum tomato sauce, garlic, and fresh basil.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags">
+                                <span class="tag-pill new">✦ New</span>
+                                <span class="tag-pill fasting">🌱 Fasting</span>
+                            </div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Pasta with Meat</div>
-                        <div class="item-name-am">ፓስታ በ ስጋ</div>
-                        <span class="item-tag tag-new">✦ New</span>
+                </article>
+
+                <!-- Pasta with Meat -->
+                <article class="item-card" data-diet="meat" onclick="openModal('Pasta with Meat', 'ፓስታ በ ስጋ', 'Steaming spaghetti coated with rich minced beef Bolognese, sweet sautéed onions, garlic, and aromatic herbs.', '300', 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600&auto=format&fit=crop&q=80', 'meat')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&auto=format&fit=crop&q=80" alt="Pasta with Meat" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🥩</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">300 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Pasta with Meat</h3>
+                        </div>
+                        <div class="item-title-am">ፓስታ በ ስጋ</div>
+                        <p class="item-desc">Savory minced beef Bolognese sauce simmered with ripe tomatoes over al dente pasta.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags">
+                                <span class="tag-pill new">✦ New</span>
+                                <span class="tag-pill meat">🥩 Beef Bolognese</span>
+                            </div>
+                            <div class="item-price-tag">300 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Pasta with Vegetables</div>
-                        <div class="item-name-am">ፓስታ በ አትክልት</div>
-                        <span class="item-tag tag-new">✦ New</span>
+                </article>
+
+                <!-- Pasta with Vegetables -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Pasta with Vegetables', 'ፓስታ በ አትክልት', 'Tender pasta tossed with colorful pan-roasted zucchini, sweet bell peppers, carrots, sweet corn, and extra virgin olive oil.', '250', 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&auto=format&fit=crop&q=80" alt="Pasta with Veggies" class="item-img" loading="lazy">
+                        <span class="item-diet-dot">🌱</span>
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Pasta with Vegetables</h3>
+                        </div>
+                        <div class="item-title-am">ፓስታ በ አትክልት</div>
+                        <p class="item-desc">Pan-roasted bell peppers, zucchini, carrots, and sweet corn tossed in light olive oil sauce.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags">
+                                <span class="tag-pill new">✦ New</span>
+                                <span class="tag-pill fasting">🌱 Garden Veg</span>
+                            </div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
+                </article>
             </div>
         </section>
 
-        <!-- ══════ JUICE & SHAKES ══════ -->
-        <section class="menu-section" id="juice">
+        <!-- ═══════════ 5. JUICES & SHAKES (ጁስ) ═══════════ -->
+        <section class="section-wrap" id="juice">
             <div class="section-header">
-                <div class="section-icon juice">🥤</div>
-                <div class="section-titles">
-                    <div class="section-title-en">Juice &amp; Shakes</div>
-                    <div class="section-title-am">ጁስ</div>
+                <div class="section-header-left">
+                    <div class="section-icon-badge">🥤</div>
+                    <div class="section-titles">
+                        <h2>Juice &amp; Shakes</h2>
+                        <span>ጁስ እና ሼክ</span>
+                    </div>
                 </div>
-                <span class="section-count">7</span>
+                <span class="section-badge-count">7 Items</span>
             </div>
-            <div class="menu-card">
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Bodybuilder</div>
-                        <div class="item-name-am">ቦዲ ቢውልድር</div>
+
+            <div class="items-grid">
+                <!-- Bodybuilder -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Bodybuilder', 'ቦዲ ቢውልድር', 'High-calorie powerhouse shake made with creamy avocado, sweet banana, dates, roasted peanuts, and pure honey.', '250', 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&auto=format&fit=crop&q=80', 'smoothie')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400&auto=format&fit=crop&q=80" alt="Bodybuilder Shake" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Bodybuilder</h3>
+                        </div>
+                        <div class="item-title-am">ቦዲ ቢውልድር</div>
+                        <p class="item-desc">High-energy dense shake with avocado, banana, dates, peanuts, and natural honey.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill special">⚡ High Energy</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Protein Shake</div>
-                        <div class="item-name-am">ፕሮቲን ሼክ</div>
+                </article>
+
+                <!-- Protein Shake -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Protein Shake', 'ፕሮቲን ሼክ', 'Smooth recovery shake blended with fresh milk, rolled oats, banana, and natural protein booster.', '250', 'https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600&auto=format&fit=crop&q=80', 'shake')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1577805947697-89e18249d767?w=400&auto=format&fit=crop&q=80" alt="Protein Shake" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Protein Shake</h3>
+                        </div>
+                        <div class="item-title-am">ፕሮቲን ሼክ</div>
+                        <p class="item-desc">Creamy workout recovery shake with milk, wholesome oats, and sweet banana.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Fitness</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Power</div>
-                        <div class="item-name-am">ፓወር</div>
+                </article>
+
+                <!-- Power -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Power', 'ፓወር', 'Zesty revitalizing smoothie packed with tropical fruits, fresh ginger zest, lime, and mountain honey.', '250', 'https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=600&auto=format&fit=crop&q=80', 'smoothie')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=400&auto=format&fit=crop&q=80" alt="Power Drink" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Power</h3>
+                        </div>
+                        <div class="item-title-am">ፓወር</div>
+                        <p class="item-desc">Vitality booster blended with fresh seasonal fruit cocktail, ginger, and honey.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill special">Booster</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Digest</div>
-                        <div class="item-name-am">ዳይጀስት</div>
+                </article>
+
+                <!-- Digest -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Digest', 'ዳይጀስት', 'Refreshing soothing gut elixir crafted from golden ripe papaya, lemon drop, fresh mint, and sweet pineapple.', '250', 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=600&auto=format&fit=crop&q=80', 'smoothie')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1556881286-fc6915169721?w=400&auto=format&fit=crop&q=80" alt="Digest Juice" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Digest</h3>
+                        </div>
+                        <div class="item-title-am">ዳይጀስት</div>
+                        <p class="item-desc">Detoxifying elixir with papaya, pineapple, fresh lemon, and cooling mint.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">🌱 Detox</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Telba Shake</div>
-                        <div class="item-name-am">ተልባ ሼክ</div>
+                </article>
+
+                <!-- Telba Shake -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Telba Shake', 'ተልባ ሼክ', 'Traditional Ethiopian roasted flaxseed shake, velvety smooth, rich in natural omega-3 and sweetened with pure honey.', '250', 'https://images.unsplash.com/photo-1546173159-315724a31696?w=600&auto=format&fit=crop&q=80', 'shake')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1546173159-315724a31696?w=400&auto=format&fit=crop&q=80" alt="Telba Shake" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Telba Shake</h3>
+                        </div>
+                        <div class="item-title-am">ተልባ ሼክ</div>
+                        <p class="item-desc">Authentic roasted flaxseed blended into a silky, nutty shake with honey.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill special">🌾 Ethiopian Telba</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Pineapple</div>
-                        <div class="item-name-am">አናናስ</div>
+                </article>
+
+                <!-- Pineapple -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Pineapple Juice', 'አናናስ', 'Pure, freshly extracted tropical golden pineapple juice, chilled and served with a lime slice.', '250', 'https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=600&auto=format&fit=crop&q=80', 'juice')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=400&auto=format&fit=crop&q=80" alt="Pineapple Juice" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Pineapple</h3>
+                        </div>
+                        <div class="item-title-am">አናናስ</div>
+                        <p class="item-desc">100% pure fresh pineapple juice, sweet, vibrant, and refreshingly cold.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">🌱 100% Fresh</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Papaya</div>
-                        <div class="item-name-am">ፓፓያ</div>
+                </article>
+
+                <!-- Papaya -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Papaya Juice', 'ፓፓያ', 'Rich, thick, sun-ripened papaya purée with a fresh splash of natural lime juice on top.', '250', 'https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=600&auto=format&fit=crop&q=80', 'juice')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=400&auto=format&fit=crop&q=80" alt="Papaya Juice" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">250 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Papaya</h3>
+                        </div>
+                        <div class="item-title-am">ፓፓያ</div>
+                        <p class="item-desc">Creamy thick papaya juice served cold with fresh squeezed lime.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">🌱 Fresh Fruit</span></div>
+                            <div class="item-price-tag">250 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
+                </article>
             </div>
         </section>
 
-        <!-- ══════ MOJITO ══════ -->
-        <section class="menu-section" id="mojito">
+        <!-- ═══════════ 6. MOJITO (ሞጂቶ) ═══════════ -->
+        <section class="section-wrap" id="mojito">
             <div class="section-header">
-                <div class="section-icon mojito">🍹</div>
-                <div class="section-titles">
-                    <div class="section-title-en">Mojito</div>
-                    <div class="section-title-am">ሞጂቶ</div>
+                <div class="section-header-left">
+                    <div class="section-icon-badge">🍹</div>
+                    <div class="section-titles">
+                        <h2>Mojito</h2>
+                        <span>ሞጂቶ</span>
+                    </div>
                 </div>
-                <span class="section-count">4</span>
+                <span class="section-badge-count">4 Flavors</span>
             </div>
-            <div class="menu-card">
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Strawberry Mojito</div>
-                        <div class="item-name-am">ስትሮቤሪ ሞጂቶ</div>
+
+            <div class="items-grid">
+                <!-- Strawberry Mojito -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Strawberry Mojito', 'ስትሮቤሪ ሞጂቶ', 'Fresh ripe strawberries muddled with mint leaves, lime wedges, and sparkling soda over crushed ice.', '200', 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600&auto=format&fit=crop&q=80', 'mojito')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&auto=format&fit=crop&q=80" alt="Strawberry Mojito" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">200 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Strawberry Mojito</h3>
+                        </div>
+                        <div class="item-title-am">ስትሮቤሪ ሞጂቶ</div>
+                        <p class="item-desc">Muddled fresh sweet strawberries, fragrant mint, lime, and fizzy soda.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill special">🍓 Berry Fizz</span></div>
+                            <div class="item-price-tag">200 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Pineapple Mojito</div>
-                        <div class="item-name-am">አናናስ ሞጂቶ</div>
+                </article>
+
+                <!-- Pineapple Mojito -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Pineapple Mojito', 'አናናስ ሞጂቶ', 'Tropical pineapple chunks bruised with fresh mint sprigs, lime citrus, and chilled sparkling tonic.', '200', 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80', 'mojito')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=400&auto=format&fit=crop&q=80" alt="Pineapple Mojito" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">200 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Pineapple Mojito</h3>
+                        </div>
+                        <div class="item-title-am">አናናስ ሞጂቶ</div>
+                        <p class="item-desc">Sweet tropical pineapple chunks crushed with mint, lime, and crisp sparkling soda.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Tropical</span></div>
+                            <div class="item-price-tag">200 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Cinnamon Mojito</div>
-                        <div class="item-name-am">ቀረፋ ሞጂቶ</div>
+                </article>
+
+                <!-- Cinnamon Mojito -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Cinnamon Mojito', 'ቀረፋ ሞጂቶ', 'Warm sweet cinnamon stick infusion balanced with icy lime juice, crushed garden mint, and soda.', '200', 'https://images.unsplash.com/photo-1536935338788-846bb9981813?w=600&auto=format&fit=crop&q=80', 'mojito')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?w=400&auto=format&fit=crop&q=80" alt="Cinnamon Mojito" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">200 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Cinnamon Mojito</h3>
+                        </div>
+                        <div class="item-title-am">ቀረፋ ሞጂቶ</div>
+                        <p class="item-desc">Unique aromatic cinnamon spice blended with tangy lime, mint, and fizzy soda.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill special">Spiced Twist</span></div>
+                            <div class="item-price-tag">200 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <div class="item-name-en">Classic Mojito</div>
-                        <div class="item-name-am">ክላሲክ ሞጂቶ</div>
+                </article>
+
+                <!-- Classic Mojito -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Classic Mojito', 'ክላሲክ ሞጂቶ', 'The timeless cooler: freshly mashed garden spearmint, lime wedges, cane sugar syrup, and soda on ice.', '200', 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80', 'mojito')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=400&auto=format&fit=crop&q=80" alt="Classic Mojito" class="item-img" loading="lazy">
                     </div>
-                    <div class="item-price">
-                        <div class="price-value">200 <span class="price-currency">ETB</span></div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Classic Mojito</h3>
+                        </div>
+                        <div class="item-title-am">ክላሲክ ሞጂቶ</div>
+                        <p class="item-desc">Freshly crushed mint, zesty lime wedges, pure cane sweetness, and ice-cold fizz.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill">Classic</span></div>
+                            <div class="item-price-tag">200 <span class="item-price-currency">ETB</span></div>
+                        </div>
                     </div>
-                </div>
+                </article>
             </div>
         </section>
 
-        <!-- ══════ RAW MEAT / TABLE ══════ -->
-        <section class="menu-section" id="raw-meat">
+        <!-- ═══════════ 7. RAW MEAT & TABLE PLATTERS (ጨዉ) ═══════════ -->
+        <section class="section-wrap" id="raw-meat">
             <div class="section-header">
-                <div class="section-icon raw-meat">🥩</div>
-                <div class="section-titles">
-                    <div class="section-title-en">Raw Meat &amp; Table Platters</div>
-                    <div class="section-title-am">ጨዉ | ቲኩስ | ቀንጣዛ ሙሉ ጠረጴ</div>
-                </div>
-            </div>
-            <div class="menu-card">
-                <div class="portion-table">
-                    <div class="table-title">Chew (Raw Meat) · ጨዉ</div>
-                    <div class="portion-grid">
-                        <div class="portion-chip">
-                            <span class="portion-label">½ kg · ግማሽ ኪሎ</span>
-                            <span class="portion-price">50 ETB</span>
-                        </div>
-                        <div class="portion-chip">
-                            <span class="portion-label">1 kg · አንድ ኪሎ</span>
-                            <span class="portion-price">60 ETB</span>
-                        </div>
-                        <div class="portion-chip">
-                            <span class="portion-label">2 kg · ሁለት ኪሎ</span>
-                            <span class="portion-price">70 ETB</span>
-                        </div>
+                <div class="section-header-left">
+                    <div class="section-icon-badge">🥩</div>
+                    <div class="section-titles">
+                        <h2>Raw Meat &amp; Table Feasts</h2>
+                        <span>ጨዉ | ቲኩስ | ቀንጣዛ ሙሉ ጠረጴ</span>
                     </div>
                 </div>
-                <div class="portion-table" style="border-top: 1px solid var(--border-light);">
-                    <div class="table-title">Add-ons · ተጨማሪ</div>
-                    <div class="portion-grid">
-                        <div class="portion-chip">
-                            <span class="portion-label">Shiro · ሸሮ</span>
-                            <span class="portion-price">50 ETB</span>
+            </div>
+
+            <!-- Butcher Cuts Portion Card -->
+            <div class="table-portion-card">
+                <div class="portion-head">
+                    <span>🥩</span> Chew Cuts · ጨዉ (ትኩስ የበሬ ስጋ)
+                </div>
+                <div class="portion-grid">
+                    <div class="portion-box">
+                        <div>
+                            <div class="portion-title">½ kg · ግማሽ ኪሎ</div>
+                            <div class="portion-title-am">Half Kilogram</div>
                         </div>
-                        <div class="portion-chip">
-                            <span class="portion-label">Awaze · አዋዜ</span>
-                            <span class="portion-price">110 ETB</span>
+                        <div class="portion-price">50 ETB</div>
+                    </div>
+                    <div class="portion-box">
+                        <div>
+                            <div class="portion-title">1 kg · አንድ ኪሎ</div>
+                            <div class="portion-title-am">One Kilogram</div>
                         </div>
-                        <div class="portion-chip">
-                            <span class="portion-label">Injera · እንጀራ</span>
-                            <span class="portion-price">80 ETB</span>
+                        <div class="portion-price">60 ETB</div>
+                    </div>
+                    <div class="portion-box">
+                        <div>
+                            <div class="portion-title">2 kg · ሁለት ኪሎ</div>
+                            <div class="portion-title-am">Two Kilograms</div>
                         </div>
-                        <div class="portion-chip">
-                            <span class="portion-label">Suf · ሱፍ</span>
-                            <span class="portion-price">80 ETB</span>
+                        <div class="portion-price">70 ETB</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Sides & Add-ons -->
+            <div class="table-portion-card">
+                <div class="portion-head">
+                    <span>🍽️</span> Table Sides &amp; Extras · ተጨማሪዎች
+                </div>
+                <div class="portion-grid">
+                    <div class="portion-box">
+                        <div>
+                            <div class="portion-title">Shiro · ሸሮ</div>
+                            <div class="portion-title-am">Chickpea Puree</div>
                         </div>
+                        <div class="portion-price">50 ETB</div>
+                    </div>
+                    <div class="portion-box">
+                        <div>
+                            <div class="portion-title">Awaze · አዋዜ</div>
+                            <div class="portion-title-am">Spiced Pepper Dip</div>
+                        </div>
+                        <div class="portion-price">110 ETB</div>
+                    </div>
+                    <div class="portion-box">
+                        <div>
+                            <div class="portion-title">Injera · እንጀራ</div>
+                            <div class="portion-title-am">Traditional Sourdough</div>
+                        </div>
+                        <div class="portion-price">80 ETB</div>
+                    </div>
+                    <div class="portion-box">
+                        <div>
+                            <div class="portion-title">Suf · ሱፍ</div>
+                            <div class="portion-title-am">Sunflower Dressing</div>
+                        </div>
+                        <div class="portion-price">80 ETB</div>
                     </div>
                 </div>
             </div>
@@ -1157,84 +2093,234 @@
 
     </main>
 
+    <!-- ===== DISH DETAIL MODAL (TAP ANY ITEM) ===== -->
+    <div class="modal-overlay" id="dishModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeModal()" aria-label="Close">✕</button>
+            <img src="" alt="" id="modalImg" class="modal-img">
+            <div class="modal-body">
+                <div id="modalDietBadge" class="modal-diet-badge"></div>
+                <h3 id="modalTitleEn" class="modal-title-en"></h3>
+                <div id="modalTitleAm" class="modal-title-am"></div>
+                <p id="modalDesc" class="modal-desc"></p>
+                <div class="modal-info-row">
+                    <div class="modal-price" id="modalPrice"></div>
+                    <button class="modal-tray-btn" onclick="addToTrayFromModal()">
+                        <span>➕ Add to Tray</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FLOATING TRAY BAR ===== -->
+    <aside class="tray-bar" id="trayBar">
+        <div class="tray-info">
+            <div class="tray-count-badge" id="trayCount">0</div>
+            <div>
+                <div class="tray-text-title" id="trayTitle">My Order Tray</div>
+                <div class="tray-text-sub" id="traySub">Ready to order from your waiter</div>
+            </div>
+        </div>
+        <button class="tray-action-btn" onclick="viewTrayAlert()">
+            <span id="trayTotal">0 ETB</span>
+        </button>
+    </aside>
+
     <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="footer-logo">MIKA COFFEE</div>
-        <div class="footer-logo-am">ሚካ ቡና</div>
-        <p class="footer-note">
-            Thank you for dining with us! · ስለመረጡን እናመሰግናለን!<br>
-            <span class="footer-heart">♥</span> Made with love
+        <div class="footer-amharic">ሚካ ቡና</div>
+        <p class="footer-tagline">
+            Crafted with warmth &amp; passion. Thank you for dining with us!<br>
+            ስለመረጡን ከልብ እናመሰግናለን!
+        </p>
+        <div class="footer-info-chips">
+            <span class="info-chip">📶 Free High-Speed Wi-Fi</span>
+            <span class="info-chip">💳 Cash &amp; Mobile Banking (CBE / Telebirr)</span>
+            <span class="info-chip">✨ Freshly Prepared Daily</span>
+        </div>
+        <p style="font-size: 11px; color: var(--text-light);">
+            © 2026 MIKA COFFEE. All Rights Reserved.
         </p>
     </footer>
 
-    <!-- ===== SCRIPTS ===== -->
+    <!-- ===== INTERACTIVE JAVASCRIPT ===== -->
     <script>
-        // Intersection Observer for section animations
-        const sections = document.querySelectorAll('.menu-section');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+        // State
+        let trayItems = [];
+        let currentModalItem = null;
+        let currentDietFilter = 'all';
+
+        // Open Modal
+        function openModal(titleEn, titleAm, desc, price, imgUrl, diet) {
+            currentModalItem = { titleEn, titleAm, price, imgUrl };
+            document.getElementById('modalImg').src = imgUrl;
+            document.getElementById('modalTitleEn').textContent = titleEn;
+            document.getElementById('modalTitleAm').textContent = titleAm;
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('modalPrice').innerHTML = `${price} <span>ETB</span>`;
+
+            const badgeElem = document.getElementById('modalDietBadge');
+            if (diet === 'fasting') {
+                badgeElem.innerHTML = '<span class="tag-pill fasting">🌱 100% Fasting / ፆም</span>';
+            } else if (diet === 'meat') {
+                badgeElem.innerHTML = '<span class="tag-pill meat">🥩 Non-Fasting / ፍስክ</span>';
+            } else {
+                badgeElem.innerHTML = '<span class="tag-pill special">✨ Chef Choice</span>';
+            }
+
+            document.getElementById('dishModal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('dishModal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnOverlay(e) {
+            if (e.target.id === 'dishModal') {
+                closeModal();
+            }
+        }
+
+        // Add to Tray
+        function addToTrayFromModal() {
+            if (currentModalItem) {
+                trayItems.push(currentModalItem);
+                updateTrayUI();
+                closeModal();
+            }
+        }
+
+        function updateTrayUI() {
+            const trayBar = document.getElementById('trayBar');
+            const trayCount = document.getElementById('trayCount');
+            const trayTotal = document.getElementById('trayTotal');
+
+            if (trayItems.length > 0) {
+                trayBar.classList.add('visible');
+                trayCount.textContent = trayItems.length;
+                const total = trayItems.reduce((sum, item) => sum + parseInt(item.price), 0);
+                trayTotal.textContent = `${total} ETB · View`;
+            } else {
+                trayBar.classList.remove('visible');
+            }
+        }
+
+        function viewTrayAlert() {
+            if (trayItems.length === 0) return;
+            const names = trayItems.map(i => `• ${i.titleEn} (${i.titleAm}) — ${i.price} ETB`).join('\n');
+            const total = trayItems.reduce((sum, item) => sum + parseInt(item.price), 0);
+            const msg = `📋 Your Selected Order / ያዘዙት ምግብ:\n\n${names}\n\nTotal / ጠቅላላ: ${total} ETB\n\nShow this summary to your server or at the counter! ☕\n\nWould you like to clear the tray?`;
+            if (confirm(msg)) {
+                trayItems = [];
+                updateTrayUI();
+            }
+        }
+
+        // Search & Filter
+        function filterMenu() {
+            const query = document.getElementById('menuSearch').value.toLowerCase().trim();
+            const clearBtn = document.getElementById('searchClear');
+            clearBtn.style.display = query.length > 0 ? 'block' : 'none';
+
+            const cards = document.querySelectorAll('.item-card');
+            let matchCount = 0;
+
+            cards.forEach(card => {
+                const en = card.querySelector('.item-title-en').textContent.toLowerCase();
+                const am = card.querySelector('.item-title-am').textContent.toLowerCase();
+                const desc = card.querySelector('.item-desc').textContent.toLowerCase();
+                const diet = card.getAttribute('data-diet') || '';
+
+                const matchesQuery = query === '' || en.includes(query) || am.includes(query) || desc.includes(query);
+                const matchesDiet = currentDietFilter === 'all' || 
+                                    (currentDietFilter === 'fasting' && diet === 'fasting') ||
+                                    (currentDietFilter === 'meat' && diet === 'meat') ||
+                                    (currentDietFilter === 'new' && card.querySelector('.tag-pill.new'));
+
+                if (matchesQuery && matchesDiet) {
+                    card.style.display = 'flex';
+                    matchCount++;
+                } else {
+                    card.style.display = 'none';
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-        sections.forEach(section => observer.observe(section));
+            // Handle sections with zero visible items
+            document.querySelectorAll('.section-wrap').forEach(section => {
+                const visibleInSec = section.querySelectorAll('.item-card[style="display: flex;"]');
+                if (visibleInSec.length === 0 && query !== '') {
+                    section.style.display = 'none';
+                } else {
+                    section.style.display = 'block';
+                }
+            });
 
-        // Sticky nav shadow
-        const nav = document.getElementById('categoryNav');
+            document.getElementById('noResults').style.display = matchCount === 0 ? 'block' : 'none';
+        }
+
+        function clearSearch() {
+            document.getElementById('menuSearch').value = '';
+            filterMenu();
+        }
+
+        function filterDiet(type, btn) {
+            currentDietFilter = type;
+            document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterMenu();
+        }
+
+        // Language Switcher
+        function setLang(lang, btn) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const enElements = document.querySelectorAll('.item-title-en');
+            const amElements = document.querySelectorAll('.item-title-am');
+
+            if (lang === 'en') {
+                enElements.forEach(el => el.style.display = 'block');
+                amElements.forEach(el => el.style.display = 'none');
+            } else if (lang === 'am') {
+                enElements.forEach(el => el.style.display = 'none');
+                amElements.forEach(el => el.style.display = 'block');
+            } else {
+                enElements.forEach(el => el.style.display = 'block');
+                amElements.forEach(el => el.style.display = 'block');
+            }
+        }
+
+        // Smooth Scroll for Nav
+        function smoothNav(e, id) {
+            e.preventDefault();
+            const target = document.getElementById(id);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Active tab on scroll
         window.addEventListener('scroll', () => {
-            nav.classList.toggle('scrolled', window.scrollY > 200);
-        });
+            const sections = document.querySelectorAll('.section-wrap');
+            const navChips = document.querySelectorAll('.nav-chip');
+            let current = '';
 
-        // Active nav pill on scroll
-        const navPills = document.querySelectorAll('.nav-pill');
-        const sectionIds = Array.from(navPills).map(pill => pill.getAttribute('href').slice(1));
-
-        const updateActiveNav = () => {
-            let currentSection = sectionIds[0];
-            sectionIds.forEach(id => {
-                const section = document.getElementById(id);
-                if (section) {
-                    const rect = section.getBoundingClientRect();
-                    if (rect.top <= 120) {
-                        currentSection = id;
-                    }
+            sections.forEach(sec => {
+                const top = sec.getBoundingClientRect().top;
+                if (top <= 140) {
+                    current = sec.getAttribute('id');
                 }
             });
 
-            navPills.forEach(pill => {
-                pill.classList.toggle('active', pill.getAttribute('href') === '#' + currentSection);
+            navChips.forEach(chip => {
+                const href = chip.getAttribute('href').replace('#', '');
+                chip.classList.toggle('active', href === current);
             });
-        };
-
-        window.addEventListener('scroll', updateActiveNav, { passive: true });
-
-        // Smooth scroll for nav pills
-        navPills.forEach(pill => {
-            pill.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = pill.getAttribute('href').slice(1);
-                const target = document.getElementById(targetId);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-                    // Scroll the pill into view in nav
-                    pill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                }
-            });
-        });
-
-        // Trigger initial visibility check
-        setTimeout(() => {
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top < window.innerHeight) {
-                    section.classList.add('visible');
-                }
-            });
-        }, 100);
+        }, { passive: true });
     </script>
 </body>
 </html>
-
