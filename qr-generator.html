@@ -187,7 +187,7 @@
 
     <div class="input-group">
         <label>Menu URL</label>
-        <input type="url" id="menuUrl" placeholder="https://your-domain.com/menu" value="">
+        <input type="url" id="menuUrl" placeholder="https://yetnora1.github.io/MIKA-Coffee/" value="https://yetnora1.github.io/MIKA-Coffee/">
     </div>
 
     <button class="generate-btn" onclick="generateQR()">Generate QR Code</button>
@@ -236,6 +236,10 @@
                 document.getElementById('qrOutput').style.display = 'block';
             });
         }
+
+        window.onload = function() {
+            generateQR();
+        };
     </script>
 </body>
 </html>
