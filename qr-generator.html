@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator — MIKA COFFEE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Noto+Sans+Ethiopic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #FAF7F2;
+            color: #1A0F0A;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #1A0F0A;
+        }
+
+        .subtitle {
+            color: #8B7355;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        .input-group {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 24px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #5C4A3A;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #EDE6DC;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            background: white;
+            color: #1A0F0A;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #C8965A;
+        }
+
+        .generate-btn {
+            padding: 14px 40px;
+            background: #1A0F0A;
+            color: #E8C89E;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 40px;
+        }
+
+        .generate-btn:hover {
+            background: #2C1A10;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(26, 15, 10, 0.2);
+        }
+
+        /* ===== PRINTABLE QR CARD ===== */
+        .qr-output {
+            display: none;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .qr-card {
+            background: white;
+            border-radius: 24px;
+            padding: 48px 40px;
+            text-align: center;
+            box-shadow: 0 8px 40px rgba(26, 15, 10, 0.1);
+            border: 1px solid #EDE6DC;
+        }
+
+        .qr-card .brand-icon { font-size: 36px; margin-bottom: 12px; }
+
+        .qr-card .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #1A0F0A;
+        }
+
+        .qr-card .brand-name-am {
+            font-family: 'Noto Sans Ethiopic', sans-serif;
+            font-size: 16px;
+            color: #8B7355;
+            margin-bottom: 24px;
+        }
+
+        .qr-canvas-wrap {
+            display: inline-block;
+            padding: 16px;
+            background: white;
+            border-radius: 16px;
+            border: 2px solid #EDE6DC;
+            margin-bottom: 24px;
+        }
+
+        .qr-canvas-wrap canvas {
+            display: block;
+        }
+
+        .qr-card .scan-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1A0F0A;
+            margin-bottom: 4px;
+        }
+
+        .qr-card .scan-text-am {
+            font-family: 'Noto Sans Ethiopic', sans-serif;
+            font-size: 15px;
+            color: #8B7355;
+            margin-bottom: 16px;
+        }
+
+        .qr-card .divider {
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #C8965A, transparent);
+            margin: 0 auto 16px;
+        }
+
+        .qr-card .wifi-note {
+            font-size: 12px;
+            color: #B8A898;
+        }
+
+        .print-btn {
+            margin-top: 24px;
+            padding: 14px 40px;
+            background: #C8965A;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .print-btn:hover {
+            background: #A0522D;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .input-group, .generate-btn, .subtitle, h1, .print-btn { display: none !important; }
+            .qr-output { display: block !important; margin: 0 auto; }
+            .qr-card { box-shadow: none; border: none; padding: 60px 40px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>QR Code Generator</h1>
+    <p class="subtitle">Enter your hosted menu URL to generate a printable QR code for your tables</p>
+
+    <div class="input-group">
+        <label>Menu URL</label>
+        <input type="url" id="menuUrl" placeholder="https://your-domain.com/menu" value="">
+    </div>
+
+    <button class="generate-btn" onclick="generateQR()">Generate QR Code</button>
+
+    <div class="qr-output" id="qrOutput">
+        <div class="qr-card">
+            <div class="brand-icon">☕</div>
+            <div class="brand-name">MIKA COFFEE</div>
+            <div class="brand-name-am">ሚካ ቡና</div>
+            <div class="qr-canvas-wrap">
+                <canvas id="qrCanvas"></canvas>
+            </div>
+            <div class="scan-text">Scan to View Menu</div>
+            <div class="scan-text-am">ሜኑን ለማየት ይቃኙ</div>
+            <div class="divider"></div>
+            <div class="wifi-note">Point your phone camera at the QR code</div>
+        </div>
+        <div style="text-align: center;">
+            <button class="print-btn" onclick="window.print()">🖨 Print QR Code</button>
+        </div>
+    </div>
+
+    <script>
+        function generateQR() {
+            const url = document.getElementById('menuUrl').value.trim();
+            if (!url) {
+                alert('Please enter your menu URL');
+                return;
+            }
+
+            const canvas = document.getElementById('qrCanvas');
+            QRCode.toCanvas(canvas, url, {
+                width: 240,
+                margin: 2,
+                color: {
+                    dark: '#1A0F0A',
+                    light: '#FFFFFF'
+                },
+                errorCorrectionLevel: 'H'
+            }, function (error) {
+                if (error) {
+                    console.error(error);
+                    alert('Error generating QR code');
+                    return;
+                }
+                document.getElementById('qrOutput').style.display = 'block';
+            });
+        }
+    </script>
+</body>
+</html>
+
