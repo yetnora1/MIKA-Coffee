@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MIKA COFFEE — Admin Portal &amp; QR Generator</title>
+    <meta name="description" content="MIKA COFFEE Admin portal and table QR code stand generator.">
+    <meta name="theme-color" content="#1B0F0A">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Noto+Sans+Ethiopic:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- QRCode.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+    <style>
+        :root {
+            --bg-body: #FBF8F4;
+            --bg-card: #FFFFFF;
+            --bg-subtle: #F4ECE1;
+            --brand-espresso: #1B0F0A;
+            --brand-roast: #2E1B13;
+            --brand-caramel: #C88D48;
+            --brand-gold: #DFAB5E;
+            --text-heading: #1B0F0A;
+            --text-body: #4A3A31;
+            --text-muted: #846F62;
+            --border-soft: #E9DFD3;
+            --border-focus: #C88D48;
+            --shadow-sm: 0 4px 14px rgba(27, 15, 10, 0.06);
+            --shadow-md: 0 10px 30px rgba(27, 15, 10, 0.1);
+            --shadow-lg: 0 18px 45px rgba(27, 15, 10, 0.16);
+            --radius-sm: 12px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
+            --radius-full: 999px;
+            --font-display: 'Fraunces', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-ethiopic: 'Noto Sans Ethiopic', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-body);
+            font-family: var(--font-sans), var(--font-ethiopic), system-ui, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.5;
+        }
+
+        /* ===== TOP ADMIN HEADER ===== */
+        .admin-nav {
+            background: linear-gradient(135deg, #180D08 0%, #29170E 100%);
+            color: #FFFFFF;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .admin-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #FFFFFF;
+        }
+
+        .admin-logo-emblem {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--brand-caramel), var(--brand-gold));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(200, 141, 72, 0.35);
+        }
+
+        .admin-brand-text h1 {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #FFF6EC;
+            line-height: 1.1;
+        }
+
+        .admin-brand-text span {
+            font-family: var(--font-ethiopic);
+            font-size: 12px;
+            color: var(--brand-gold);
+            font-weight: 600;
+        }
+
+        .admin-badge {
+            background: rgba(200, 141, 72, 0.2);
+            border: 1px solid var(--brand-gold);
+            color: #FFD270;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+        }
+
+        .admin-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.12);
+            color: #FFF6EC;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+            border-color: var(--brand-gold);
+            transform: translateY(-1px);
+        }
+
+        .nav-btn.logout-btn {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #FCA5A5;
+        }
+
+        .nav-btn.logout-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+            color: #FFFFFF;
+        }
+
+        /* ===== LOGIN GATE OVERLAY ===== */
+        .login-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(24, 13, 8, 0.96) 0%, rgba(41, 23, 14, 0.98) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .login-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .login-card {
+            background: #FFFFFF;
+            width: 100%;
+            max-width: 420px;
+            border-radius: var(--radius-lg);
+            padding: 40px 32px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .login-card.shake {
+            animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        .login-emblem {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, var(--brand-caramel), var(--brand-gold));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 10px 24px rgba(200, 141, 72, 0.3);
+        }
+
+        .login-card h2 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--brand-espresso);
+            margin-bottom: 4px;
+        }
+
+        .login-card .login-amharic {
+            font-family: var(--font-ethiopic);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--brand-caramel);
+            margin-bottom: 8px;
+        }
+
+        .login-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+
+        .login-input-wrap {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 20px;
+            letter-spacing: 6px;
+            text-align: center;
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            background: var(--bg-subtle);
+            color: var(--brand-espresso);
+            font-weight: 800;
+            outline: none;
+            transition: all 0.25s ease;
+            font-family: var(--font-sans);
+        }
+
+        .login-input:focus {
+            border-color: var(--brand-caramel);
+            background: #FFFFFF;
+            box-shadow: 0 0 0 4px rgba(200, 141, 72, 0.15);
+        }
+
+        .login-error {
+            color: #DC2626;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            min-height: 18px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #1B0F0A 0%, #3D2215 100%);
+            color: #FFF6EC;
+            border: none;
+            border-radius: var(--radius-full);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 20px rgba(27, 15, 10, 0.25);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #2E1B13 0%, #4D2B1A 100%);
+            box-shadow: 0 8px 24px rgba(27, 15, 10, 0.35);
+        }
+
+        .login-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
+
+        /* ===== MAIN DASHBOARD LAYOUT ===== */
+        .dashboard-container {
+            max-width: 1280px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
+            flex: 1;
+        }
+
+        .dashboard-header {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h2 {
+            font-family: var(--font-display);
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--text-heading);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .dashboard-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 28px;
+        }
+
+        @media (min-width: 960px) {
+            .dashboard-grid {
+                grid-template-columns: 460px 1fr;
+                align-items: start;
+            }
+        }
+
+        /* ===== SETTINGS PANEL ===== */
+        .settings-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title-icon {
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-heading);
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-family: inherit;
+            background: var(--bg-subtle);
+            color: var(--text-heading);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--brand-caramel);
+            background: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(200, 141, 72, 0.12);
+        }
+
+        .form-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Preset Table Buttons */
+        .preset-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .preset-pill {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-full);
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-body);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset-pill:hover, .preset-pill.active {
+            background: var(--brand-caramel);
+            color: #FFFFFF;
+            border-color: var(--brand-caramel);
+        }
+
+        /* Color Selection Radios */
+        .color-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .color-option {
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            padding: 10px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--bg-subtle);
+        }
+
+        .color-option.active {
+            border-color: var(--brand-caramel);
+            background: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(200, 141, 72, 0.15);
+        }
+
+        .color-circle {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            margin: 0 auto 6px;
+        }
+
+        .color-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-body);
+        }
+
+        /* Action Buttons */
+        .btn-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--brand-caramel), #A06429);
+            color: #FFFFFF;
+            border: none;
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 16px rgba(200, 141, 72, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(200, 141, 72, 0.35);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            background: #FFFFFF;
+            color: var(--brand-espresso);
+            border: 1.5px solid var(--border-soft);
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-subtle);
+            border-color: var(--brand-caramel);
+        }
+
+        /* ===== LIVE STAND PREVIEW AREA ===== */
+        .preview-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .preview-header-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .preview-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== THE PHYSICAL PRINTABLE STAND CARD ===== */
+        .stand-card {
+            background: #FFFFFF;
+            width: 100%;
+            max-width: 440px;
+            border-radius: 28px;
+            padding: 44px 36px 40px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid #ECE2D5;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .stand-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--brand-caramel), transparent);
+            border-radius: 2px;
+        }
+
+        /* Brand on Top of QR */
+        .brand-top-box {
+            margin-bottom: 22px;
+        }
+
+        .stand-emblem {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 12px;
+            background: linear-gradient(135deg, var(--brand-caramel), var(--brand-gold));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 8px 22px rgba(200, 141, 72, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .stand-brand-title {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--brand-espresso);
+            line-height: 1.1;
+        }
+
+        .stand-brand-amharic {
+            font-family: var(--font-ethiopic);
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--brand-caramel);
+            margin-top: 3px;
+            letter-spacing: 1px;
+        }
+
+        .stand-table-badge {
+            display: inline-block;
+            background: #1B0F0A;
+            color: #FFD270;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        .stand-tagline {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* QR Canvas Wrap */
+        .qr-canvas-holder {
+            display: inline-block;
+            background: #FFFFFF;
+            padding: 16px;
+            border-radius: 20px;
+            border: 2px solid #EDE4D8;
+            margin: 18px 0;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .qr-canvas-holder canvas {
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* Instructions Under QR */
+        .stand-instructions {
+            margin-top: 8px;
+        }
+
+        .stand-scan-headline {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--brand-espresso);
+            margin-bottom: 2px;
+        }
+
+        .stand-scan-amharic {
+            font-family: var(--font-ethiopic);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--brand-caramel);
+            margin-bottom: 8px;
+        }
+
+        .stand-subtext {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .stand-divider {
+            width: 48px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--brand-caramel), transparent);
+            margin: 0 auto 16px;
+        }
+
+        /* Features / Footnote on Stand */
+        .stand-footer-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .stand-chip {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-soft);
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1B0F0A;
+            color: #FFF6EC;
+            padding: 12px 24px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid var(--brand-gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* ===== PRINT STYLING (CLEAN STAND CARD ONLY) ===== */
+        @media print {
+            body {
+                background: #FFFFFF !important;
+                padding: 0 !important;
+            }
+
+            .admin-nav,
+            .dashboard-header,
+            .settings-card,
+            .preview-header-bar,
+            .login-overlay,
+            .toast {
+                display: none !important;
+            }
+
+            .dashboard-container {
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .dashboard-grid {
+                display: block !important;
+            }
+
+            .preview-area {
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                min-height: 100vh !important;
+            }
+
+            .stand-card {
+                box-shadow: none !important;
+                border: 2px dashed #BCA897 !important;
+                max-width: 420px !important;
+                margin: 40px auto !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP ADMIN NAVIGATION ===== -->
+    <header class="admin-nav">
+        <a href="../" class="admin-brand">
+            <div class="admin-logo-emblem">☕</div>
+            <div class="admin-brand-text">
+                <h1>MIKA COFFEE <span class="admin-badge">Admin</span></h1>
+                <span>ሚካ ቡና · አስተዳዳሪ</span>
+            </div>
+        </a>
+
+        <div class="admin-actions">
+            <a href="../" class="nav-btn">
+                <span>🍽️</span> <span>Live Menu</span>
+            </a>
+            <button class="nav-btn logout-btn" onclick="logoutAdmin()" title="Log out">
+                <span>🔒</span> <span>Lock</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== PASSWORD GATEWAY (1234) ===== -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-card" id="loginCard">
+            <div class="login-emblem">🔐</div>
+            <h2>Admin Portal</h2>
+            <div class="login-amharic">የአስተዳዳሪ መግቢያ</div>
+            <p>Please enter the admin PIN to access table QR generation and settings.</p>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="login-input-wrap">
+                    <input type="password" id="adminPassword" class="login-input" placeholder="••••" maxlength="8" autofocus autocomplete="current-password">
+                </div>
+                <div class="login-error" id="loginError"></div>
+                <button type="submit" class="login-btn">Unlock Portal · ግባ</button>
+            </form>
+            <div class="login-hint">Default passcode: 1234</div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN DASHBOARD ===== -->
+    <main class="dashboard-container">
+        <div class="dashboard-header">
+            <h2>Table QR Code Generator</h2>
+            <p>Design, customize, and print high-resolution table QR stands with the MIKA COFFEE brand.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Settings Panel -->
+            <section class="settings-card">
+                <div class="card-title">
+                    <span class="card-title-icon">⚙️</span>
+                    <span>QR Stand Customization</span>
+                </div>
+
+                <!-- Menu URL -->
+                <div class="form-group">
+                    <label class="form-label" for="menuUrlInput">Target Menu URL</label>
+                    <input type="url" id="menuUrlInput" class="form-input" value="https://yetnora1.github.io/MIKA-Coffee/" placeholder="https://..." oninput="generateQR()">
+                    <div class="form-hint">Customers will instantly open this URL when scanning the QR code.</div>
+                </div>
+
+                <!-- Table Identifier -->
+                <div class="form-group">
+                    <label class="form-label" for="tableInput">Table Label / Identifier (Optional)</label>
+                    <input type="text" id="tableInput" class="form-input" placeholder="e.g. Table 01, VIP Lounge, Counter" oninput="updateTableBadge()">
+                    <div class="preset-pills">
+                        <button type="button" class="preset-pill" onclick="setTablePreset('')">All Tables (General)</button>
+                        <button type="button" class="preset-pill" onclick="setTablePreset('Table 01')">Table 01</button>
+                        <button type="button" class="preset-pill" onclick="setTablePreset('Table 02')">Table 02</button>
+                        <button type="button" class="preset-pill" onclick="setTablePreset('Table 03')">Table 03</button>
+                        <button type="button" class="preset-pill" onclick="setTablePreset('VIP Area')">VIP Area</button>
+                    </div>
+                </div>
+
+                <!-- QR Code Dark Color Theme -->
+                <div class="form-group">
+                    <label class="form-label">QR Code Accent Color</label>
+                    <div class="color-options">
+                        <div class="color-option active" onclick="setColorTheme('#1B0F0A', this)">
+                            <div class="color-circle" style="background: #1B0F0A;"></div>
+                            <div class="color-label">Espresso Dark</div>
+                        </div>
+                        <div class="color-option" onclick="setColorTheme('#C88D48', this)">
+                            <div class="color-circle" style="background: #C88D48;"></div>
+                            <div class="color-label">Caramel Gold</div>
+                        </div>
+                        <div class="color-option" onclick="setColorTheme('#2E1B13', this)">
+                            <div class="color-circle" style="background: #2E1B13;"></div>
+                            <div class="color-label">Roast Brown</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wi-Fi note toggle -->
+                <div class="form-group">
+                    <label class="form-label">Bottom Information Chips</label>
+                    <input type="text" id="wifiInput" class="form-input" value="📶 Free Wi-Fi · 💳 Mobile Banking · ☕ Fresh Daily" oninput="updateFooterChips()">
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="btn-stack">
+                    <button type="button" class="btn-primary" onclick="window.print()">
+                        <span>🖨️</span> <span>Print Table Stand (PDF)</span>
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="downloadQRImage()">
+                        <span>📥</span> <span>Download QR Image (PNG)</span>
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="copyMenuUrl()">
+                        <span>📋</span> <span>Copy Menu Link</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Live Printable Table Stand Card Preview -->
+            <section class="preview-area">
+                <div class="preview-header-bar">
+                    <span class="preview-title">Table Stand Preview · የጠረጴዛ ስታንድ እይታ</span>
+                </div>
+
+                <!-- Physical Card -->
+                <div class="stand-card" id="standCard">
+                    <!-- Brand on Top of QR -->
+                    <div class="brand-top-box">
+                        <div class="stand-emblem">☕</div>
+                        <h2 class="stand-brand-title">MIKA COFFEE</h2>
+                        <div class="stand-brand-amharic">ሚካ ቡና</div>
+                        <div class="stand-table-badge" id="previewTableBadge" style="display: none;">Table 01</div>
+                        <p class="stand-tagline">Authentic Flavors · Artisan Coffee · Fresh Food</p>
+                    </div>
+
+                    <!-- The QR Canvas -->
+                    <div class="qr-canvas-holder">
+                        <canvas id="qrCanvas"></canvas>
+                    </div>
+
+                    <!-- Instructions below QR -->
+                    <div class="stand-instructions">
+                        <div class="stand-scan-headline">Scan for Digital Menu</div>
+                        <div class="stand-scan-amharic">ሜኑን ለማየት በስልክዎ ይቃኙ</div>
+                        <div class="stand-subtext">Point your mobile camera at the QR code above</div>
+                        <div class="stand-divider"></div>
+                        <div class="stand-footer-chips" id="previewChips">
+                            <span class="stand-chip">📶 Free Wi-Fi</span>
+                            <span class="stand-chip">💳 Telebirr &amp; CBE</span>
+                            <span class="stand-chip">✨ Fresh Daily</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Toast Notice -->
+    <div class="toast" id="toastNotice">
+        <span>✓</span> <span id="toastMsg">Menu link copied to clipboard!</span>
+    </div>
+
+    <!-- ===== JAVASCRIPT LOGIC ===== -->
+    <script>
+        const REQUIRED_PASS = '1234';
+        let currentQRColor = '#1B0F0A';
+
+        // Authentication Checking
+        function checkAuth() {
+            const isAuth = sessionStorage.getItem('mika_admin_auth') === 'true';
+            const overlay = document.getElementById('loginOverlay');
+            if (isAuth) {
+                overlay.classList.add('hidden');
+            } else {
+                overlay.classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('adminPassword').focus();
+                }, 200);
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const passInput = document.getElementById('adminPassword');
+            const errorElem = document.getElementById('loginError');
+            const card = document.getElementById('loginCard');
+
+            if (passInput.value.trim() === REQUIRED_PASS) {
+                sessionStorage.setItem('mika_admin_auth', 'true');
+                errorElem.textContent = '';
+                document.getElementById('loginOverlay').classList.add('hidden');
+                showToast('Welcome to MIKA COFFEE Admin Portal');
+                generateQR();
+            } else {
+                errorElem.textContent = 'Incorrect passcode. Please try again.';
+                card.classList.remove('shake');
+                void card.offsetWidth; // Trigger reflow for animation restart
+                card.classList.add('shake');
+                passInput.value = '';
+                passInput.focus();
+            }
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem('mika_admin_auth');
+            document.getElementById('loginOverlay').classList.remove('hidden');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('loginError').textContent = '';
+            document.getElementById('adminPassword').focus();
+        }
+
+        // Table Identifier Sync
+        function updateTableBadge() {
+            const val = document.getElementById('tableInput').value.trim();
+            const badge = document.getElementById('previewTableBadge');
+            if (val) {
+                badge.textContent = `✦ ${val.toUpperCase()} ✦`;
+                badge.style.display = 'inline-block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function setTablePreset(preset) {
+            document.getElementById('tableInput').value = preset;
+            updateTableBadge();
+            document.querySelectorAll('.preset-pill').forEach(pill => {
+                pill.classList.toggle('active', pill.textContent.includes(preset) && preset !== '');
+            });
+        }
+
+        // QR Color Theme
+        function setColorTheme(color, elem) {
+            currentQRColor = color;
+            document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
+            elem.classList.add('active');
+            generateQR();
+        }
+
+        // Footer chips
+        function updateFooterChips() {
+            const val = document.getElementById('wifiInput').value;
+            const container = document.getElementById('previewChips');
+            const parts = val.split('·').map(s => s.trim()).filter(Boolean);
+            container.innerHTML = parts.map(p => `<span class="stand-chip">${p}</span>`).join(' ');
+        }
+
+        // Generate QR code
+        function generateQR() {
+            const urlInput = document.getElementById('menuUrlInput');
+            const rawUrl = urlInput.value.trim() || 'https://yetnora1.github.io/MIKA-Coffee/';
+            const canvas = document.getElementById('qrCanvas');
+
+            QRCode.toCanvas(canvas, rawUrl, {
+                width: 250,
+                margin: 2,
+                color: {
+                    dark: currentQRColor,
+                    light: '#FFFFFF'
+                },
+                errorCorrectionLevel: 'H'
+            }, function (error) {
+                if (error) {
+                    console.error('QR generation error:', error);
+                }
+            });
+        }
+
+        // Download PNG Image
+        function downloadQRImage() {
+            const canvas = document.getElementById('qrCanvas');
+            const link = document.createElement('a');
+            const tableVal = document.getElementById('tableInput').value.trim();
+            const filename = tableVal ? `mika-coffee-qr-${tableVal.toLowerCase().replace(/\s+/g, '-')}.png` : 'mika-coffee-menu-qr.png';
+            
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            showToast('QR Code image downloaded successfully!');
+        }
+
+        // Copy Menu URL
+        function copyMenuUrl() {
+            const urlInput = document.getElementById('menuUrlInput');
+            navigator.clipboard.writeText(urlInput.value).then(() => {
+                showToast('Menu URL copied to clipboard!');
+            }).catch(() => {
+                urlInput.select();
+                document.execCommand('copy');
+                showToast('Menu URL copied!');
+            });
+        }
+
+        // Toast feedback
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotice');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Init on load
+        window.onload = function() {
+            checkAuth();
+            generateQR();
+        };
+    </script>
+</body>
+</html>
