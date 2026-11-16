@@ -9,6 +9,19 @@
     <meta name="description" content="Explore MIKA COFFEE's modern bilingual menu. Fresh breakfast, signature burgers, authentic Ethiopian dishes, artisan pasta, detox juices, and specialty mojitos.">
     <meta name="theme-color" content="#1A0F0A">
 
+    <!-- Anti-flash theme script -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('mika_theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else {
+                const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.setAttribute('data-theme', systemPrefersDark ? 'dark' : 'light');
+            }
+        })();
+    </script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,34 +73,33 @@
             --font-ethiopic: 'Noto Sans Ethiopic', sans-serif;
         }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-body: #110B08;
-                --bg-surface: #1B120E;
-                --bg-card: #201612;
-                --bg-subtle: #2A1D17;
-                --bg-overlay: rgba(0, 0, 0, 0.82);
+        /* Explicit Dark Mode */
+        [data-theme="dark"] {
+            --bg-body: #110B08;
+            --bg-surface: #1B120E;
+            --bg-card: #201612;
+            --bg-subtle: #2A1D17;
+            --bg-overlay: rgba(0, 0, 0, 0.82);
 
-                --text-heading: #F8F3ED;
-                --text-body: #D4C3B6;
-                --text-muted: #9E8B7F;
-                --text-light: #6E5C52;
+            --text-heading: #F8F3ED;
+            --text-body: #D4C3B6;
+            --text-muted: #9E8B7F;
+            --text-light: #6E5C52;
 
-                --border-soft: #30221B;
-                --border-hover: #48342B;
+            --border-soft: #30221B;
+            --border-hover: #48342B;
 
-                --badge-fasting-bg: #152E1B;
-                --badge-fasting-text: #66DB7F;
-                --badge-meat-bg: #381A14;
-                --badge-meat-text: #FF8F73;
-                --badge-new-bg: #382B14;
-                --badge-new-text: #FFD270;
+            --badge-fasting-bg: #152E1B;
+            --badge-fasting-text: #66DB7F;
+            --badge-meat-bg: #381A14;
+            --badge-meat-text: #FF8F73;
+            --badge-new-bg: #382B14;
+            --badge-new-text: #FFD270;
 
-                --shadow-xs: 0 1px 3px rgba(0,0,0,0.3);
-                --shadow-sm: 0 4px 12px rgba(0,0,0,0.4);
-                --shadow-md: 0 8px 24px rgba(0,0,0,0.5);
-                --shadow-lg: 0 16px 36px rgba(0,0,0,0.6);
-            }
+            --shadow-xs: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.4);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.5);
+            --shadow-lg: 0 16px 36px rgba(0,0,0,0.6);
         }
 
         * {
@@ -143,6 +155,56 @@
             max-width: 1320px;
             margin-left: auto;
             margin-right: auto;
+            gap: 12px;
+        }
+
+        .hero-top-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Dark & Day Mode Button */
+        .theme-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #FFF6EC;
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+            font-family: inherit;
+        }
+
+        .theme-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+            border-color: var(--brand-gold);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            color: #FFFFFF;
+        }
+
+        .theme-toggle-btn:active {
+            transform: scale(0.96);
+        }
+
+        .theme-icon {
+            font-size: 14px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+            line-height: 1;
+        }
+
+        .theme-toggle-btn:hover .theme-icon {
+            transform: scale(1.15) rotate(15deg);
         }
 
         .status-badge {
@@ -198,6 +260,38 @@
             background: var(--brand-caramel);
             color: #FFFFFF;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        @media (max-width: 560px) {
+            .hero-top-row {
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: space-between;
+            }
+            .hero-top-controls {
+                gap: 8px;
+            }
+            .theme-toggle-btn {
+                padding: 5px 11px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 390px) {
+            .theme-toggle-btn .theme-text {
+                display: none;
+            }
+            .theme-toggle-btn {
+                padding: 6px 10px;
+            }
+            .lang-btn {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+            .status-badge {
+                padding: 5px 10px;
+                font-size: 11px;
+            }
         }
 
         .hero-logo-box {
@@ -1009,6 +1103,57 @@
             font-size: 40px;
             margin-bottom: 12px;
         }
+
+        /* ===== COMPONENT DARK MODE REFINEMENTS ===== */
+        [data-theme="dark"] .nav-wrapper {
+            background-color: rgba(17, 11, 8, 0.94);
+            border-bottom-color: #30221B;
+        }
+
+        [data-theme="dark"] .nav-chip.active {
+            background: var(--brand-caramel);
+            color: #FFFFFF;
+            border-color: var(--brand-caramel);
+            box-shadow: 0 4px 14px rgba(200, 141, 72, 0.35);
+        }
+
+        [data-theme="dark"] .item-diet-dot {
+            background: rgba(36, 25, 20, 0.95);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+        }
+
+        [data-theme="dark"] .item-price-tag {
+            background: #2A1D17;
+            border-color: #38271F;
+            color: var(--brand-gold);
+        }
+
+        [data-theme="dark"] .modal-card {
+            background: #1C130E;
+        }
+
+        [data-theme="dark"] .modal-tray-btn {
+            background: var(--brand-caramel);
+            color: #FFFFFF;
+        }
+
+        [data-theme="dark"] .modal-price {
+            color: var(--brand-gold);
+        }
+
+        [data-theme="dark"] .tray-bar {
+            background: #251812;
+            border-color: rgba(200, 141, 72, 0.35);
+        }
+
+        [data-theme="dark"] .footer {
+            border-top-color: #261811;
+        }
+
+        [data-theme="dark"] .info-chip {
+            background: #201612;
+            border-color: #30221B;
+        }
     </style>
 </head>
 <body>
@@ -1021,11 +1166,19 @@
                 <span>Open · ክፍት ነው</span>
             </div>
 
-            <!-- Language Switcher -->
-            <div class="lang-switch">
-                <button class="lang-btn active" onclick="setLang('all', this)">Both · ሁለቱም</button>
-                <button class="lang-btn" onclick="setLang('en', this)">EN</button>
-                <button class="lang-btn" onclick="setLang('am', this)">አማ</button>
+            <div class="hero-top-controls">
+                <!-- Theme Toggle Button (Dark & Day Mode) -->
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle Dark and Day Mode" title="Toggle Day/Dark mode">
+                    <span class="theme-icon" id="themeIcon">🌙</span>
+                    <span class="theme-text" id="themeText">Dark</span>
+                </button>
+
+                <!-- Language Switcher -->
+                <div class="lang-switch">
+                    <button class="lang-btn active" onclick="setLang('all', this)">Both · ሁለቱም</button>
+                    <button class="lang-btn" onclick="setLang('en', this)">EN</button>
+                    <button class="lang-btn" onclick="setLang('am', this)">አማ</button>
+                </div>
             </div>
         </div>
 
@@ -2414,6 +2567,37 @@
                 chip.classList.toggle('active', href === current);
             });
         }, { passive: true });
+
+        // ===== THEME TOGGLE (DARK & DAY MODE) =====
+        function updateThemeUI(theme) {
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
+            if (theme === 'dark') {
+                if (themeIcon) themeIcon.textContent = '☀️';
+                if (themeText) themeText.textContent = 'Day';
+                if (metaThemeColor) metaThemeColor.setAttribute('content', '#110B08');
+            } else {
+                if (themeIcon) themeIcon.textContent = '🌙';
+                if (themeText) themeText.textContent = 'Dark';
+                if (metaThemeColor) metaThemeColor.setAttribute('content', '#1A0F0A');
+            }
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', nextTheme);
+            localStorage.setItem('mika_theme', nextTheme);
+            updateThemeUI(nextTheme);
+        }
+
+        // Sync button text and icon with initial theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            updateThemeUI(currentTheme);
+        });
     </script>
 </body>
 </html>
