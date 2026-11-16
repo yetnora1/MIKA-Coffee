@@ -140,6 +140,9 @@
             margin-bottom: 20px;
             position: relative;
             z-index: 2;
+            max-width: 1320px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .status-badge {
@@ -247,9 +250,9 @@
 
         /* ===== SEARCH & FILTER BAR ===== */
         .search-container {
-            max-width: 600px;
-            margin: -22px auto 0;
-            padding: 0 16px;
+            max-width: 760px;
+            margin: -24px auto 0;
+            padding: 0 20px;
             position: relative;
             z-index: 10;
         }
@@ -260,7 +263,7 @@
             background: var(--bg-surface);
             border: 1px solid var(--border-soft);
             border-radius: var(--radius-md);
-            padding: 6px 16px;
+            padding: 8px 18px;
             box-shadow: var(--shadow-md);
             gap: 12px;
             transition: all 0.2s ease;
@@ -323,8 +326,10 @@
         .nav-scroll {
             display: flex;
             overflow-x: auto;
-            gap: 8px;
-            padding: 0 16px;
+            gap: 10px;
+            padding: 0 20px;
+            max-width: 1320px;
+            margin: 0 auto;
             scrollbar-width: none;
         }
 
@@ -337,7 +342,7 @@
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            padding: 8px 16px;
+            padding: 9px 18px;
             border-radius: var(--radius-full);
             background: var(--bg-surface);
             border: 1px solid var(--border-soft);
@@ -368,12 +373,21 @@
         /* Quick Filter Tags (Fasting / Meat) */
         .filter-tags-row {
             display: flex;
-            gap: 6px;
-            padding: 12px 16px 4px;
-            max-width: 680px;
+            gap: 8px;
+            padding: 12px 20px 4px;
+            max-width: 1320px;
             margin: 0 auto;
             overflow-x: auto;
             scrollbar-width: none;
+        }
+
+        @media (min-width: 860px) {
+            .nav-scroll {
+                justify-content: center;
+            }
+            .filter-tags-row {
+                justify-content: center;
+            }
         }
 
         .filter-tags-row::-webkit-scrollbar {
@@ -384,7 +398,7 @@
             flex-shrink: 0;
             font-size: 12px;
             font-weight: 600;
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: var(--radius-full);
             border: 1px solid var(--border-soft);
             background: var(--bg-surface);
@@ -401,22 +415,24 @@
 
         /* ===== MAIN MENU CONTAINER ===== */
         .menu-content {
-            max-width: 680px;
+            max-width: 1320px;
             margin: 0 auto;
-            padding: 10px 16px 20px;
+            padding: 16px 20px 40px;
+            width: 100%;
         }
 
         .section-wrap {
-            margin-top: 32px;
-            scroll-margin-top: 80px;
+            margin-top: 36px;
+            scroll-margin-top: 90px;
         }
 
         .section-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
-            padding: 0 4px;
+            margin-bottom: 20px;
+            padding: 0 4px 12px;
+            border-bottom: 2px solid var(--border-soft);
         }
 
         .section-header-left {
@@ -426,13 +442,13 @@
         }
 
         .section-icon-badge {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 22px;
             background: var(--bg-subtle);
             border: 1px solid var(--border-soft);
             box-shadow: var(--shadow-xs);
@@ -440,55 +456,71 @@
 
         .section-titles h2 {
             font-family: var(--font-display);
-            font-size: 21px;
-            font-weight: 700;
+            font-size: 23px;
+            font-weight: 800;
             color: var(--text-heading);
             line-height: 1.2;
         }
 
         .section-titles span {
             font-family: var(--font-ethiopic);
-            font-size: 14px;
+            font-size: 15px;
             color: var(--brand-caramel);
             font-weight: 600;
         }
 
         .section-badge-count {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             background: var(--bg-subtle);
             color: var(--text-muted);
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: var(--radius-full);
             border: 1px solid var(--border-soft);
         }
 
         /* ===== FOOD ITEM CARDS ===== */
         .items-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+
+        @media (min-width: 640px) {
+            .items-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+        }
+
+        @media (min-width: 1080px) {
+            .items-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 22px;
+            }
         }
 
         .item-card {
             background: var(--bg-card);
             border: 1px solid var(--border-soft);
             border-radius: var(--radius-md);
-            padding: 12px;
+            padding: 14px;
             display: flex;
             gap: 14px;
             align-items: center;
             cursor: pointer;
             box-shadow: var(--shadow-xs);
-            transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.25s ease, border-color 0.2s ease;
             position: relative;
             overflow: hidden;
+            height: 100%;
+            box-sizing: border-box;
         }
 
         .item-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
-            border-color: var(--border-hover);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--brand-caramel);
         }
 
         .item-card:active {
@@ -497,8 +529,8 @@
 
         .item-img-wrap {
             position: relative;
-            width: 104px;
-            height: 104px;
+            width: 108px;
+            height: 108px;
             flex-shrink: 0;
             border-radius: var(--radius-sm);
             overflow: hidden;
@@ -510,11 +542,11 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.3s ease;
+            transition: transform 0.35s ease;
         }
 
         .item-card:hover .item-img {
-            transform: scale(1.06);
+            transform: scale(1.08);
         }
 
         .item-diet-dot {
@@ -663,15 +695,15 @@
 
         .portion-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
         }
 
         .portion-box {
             background: var(--bg-subtle);
             border: 1px solid var(--border-soft);
             border-radius: var(--radius-sm);
-            padding: 10px 12px;
+            padding: 12px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -732,6 +764,24 @@
 
         .modal-overlay.open .modal-card {
             transform: translateY(0);
+        }
+
+        @media (min-width: 640px) {
+            .modal-overlay {
+                align-items: center;
+                padding: 24px;
+            }
+
+            .modal-card {
+                border-radius: 28px;
+                max-width: 560px;
+                transform: scale(0.92) translateY(20px);
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .modal-overlay.open .modal-card {
+                transform: scale(1) translateY(0);
+            }
         }
 
         .modal-close-btn {
@@ -2251,7 +2301,7 @@
 
             // Handle sections with zero visible items
             document.querySelectorAll('.section-wrap').forEach(section => {
-                const visibleInSec = section.querySelectorAll('.item-card[style="display: flex;"]');
+                const visibleInSec = Array.from(section.querySelectorAll('.item-card')).filter(c => c.style.display !== 'none');
                 if (visibleInSec.length === 0 && query !== '') {
                     section.style.display = 'none';
                 } else {
