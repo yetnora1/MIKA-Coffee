@@ -123,17 +123,17 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* ===== HERO HEADER ===== */
+        /* ===== COMPACT HERO HEADER (75% Vertical Space Reduction) ===== */
         .hero {
             position: relative;
             background: linear-gradient(175deg, #07170F 0%, #0D2619 45%, #153E2A 100%);
             color: #FFFFFF;
-            padding: 42px 20px 32px;
-            text-align: center;
+            padding: 10px 16px;
             overflow: hidden;
-            border-bottom-left-radius: 32px;
-            border-bottom-right-radius: 32px;
-            box-shadow: 0 12px 30px rgba(11, 32, 22, 0.25);
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 6px 20px rgba(11, 32, 22, 0.22);
+            z-index: 50;
         }
 
         .hero::before {
@@ -145,23 +145,107 @@
             pointer-events: none;
         }
 
-        .hero-top-row {
+        .hero-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
             position: relative;
             z-index: 2;
             max-width: 1320px;
-            margin-left: auto;
-            margin-right: auto;
-            gap: 12px;
+            margin: 0 auto;
+            gap: 10px;
         }
 
-        .hero-top-controls {
+        .hero-brand {
             display: flex;
             align-items: center;
             gap: 10px;
+            min-width: 0;
+        }
+
+        /* Compact Skeuomorphic Stamped Coin Emblem */
+        .hero-emblem {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            background: linear-gradient(145deg, #22C55E 0%, #166534 55%, #0B2016 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(11, 32, 22, 0.35),
+                        inset 0 2px 3px rgba(255, 255, 255, 0.5),
+                        inset 0 -2px 3px rgba(0, 0, 0, 0.45);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-brand-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        .hero-title-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            line-height: 1.1;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: #F0FDF4;
+            white-space: nowrap;
+        }
+
+        .hero-amharic {
+            font-family: var(--font-ethiopic);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--brand-gold);
+            line-height: 1.1;
+            letter-spacing: 0.3px;
+        }
+
+        .status-badge-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(34, 197, 94, 0.18);
+            border: 1px solid rgba(74, 222, 128, 0.35);
+            padding: 2px 7px;
+            border-radius: var(--radius-full);
+            font-size: 10px;
+            font-weight: 700;
+            color: #86EFAC;
+            white-space: nowrap;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4ADE80;
+            box-shadow: 0 0 8px #4ADE80, 0 0 3px #22C55E;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+
+        .hero-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
         }
 
         /* ===== GLASSMORPHISM, CLAYMORPHISM & SKEUOMORPHISM DESIGN SYSTEM ===== */
@@ -170,15 +254,15 @@
         .theme-toggle-btn {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
+            gap: 5px;
             background: rgba(255, 255, 255, 0.14);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border: 1px solid rgba(255, 255, 255, 0.28);
             color: #F0FDF4;
-            padding: 7px 16px;
+            padding: 6px 12px;
             border-radius: var(--radius-full);
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -201,7 +285,7 @@
         }
 
         .theme-icon {
-            font-size: 14px;
+            font-size: 13px;
             display: inline-block;
             transition: transform 0.3s ease;
             line-height: 1;
@@ -211,43 +295,13 @@
             transform: scale(1.15) rotate(15deg);
         }
 
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            padding: 7px 16px;
-            border-radius: var(--radius-full);
-            font-size: 12px;
-            font-weight: 700;
-            color: #E8F5EE;
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #4ADE80;
-            box-shadow: 0 0 10px #4ADE80, 0 0 4px #22C55E;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 0.7; }
-        }
-
         .lang-switch {
             display: flex;
             background: rgba(255, 255, 255, 0.14);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border-radius: var(--radius-full);
-            padding: 3px;
+            padding: 2px;
             border: 1px solid rgba(255, 255, 255, 0.22);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(0, 0, 0, 0.2);
         }
@@ -256,9 +310,9 @@
             border: none;
             background: transparent;
             color: #C2DEC9;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            padding: 5px 14px;
+            padding: 4px 10px;
             border-radius: var(--radius-full);
             cursor: pointer;
             transition: all 0.2s ease;
@@ -267,100 +321,39 @@
         .lang-btn.active {
             background: linear-gradient(135deg, #1E7E4E, #166534);
             color: #FFFFFF;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.45);
         }
 
-        @media (max-width: 560px) {
-            .hero-top-row {
-                flex-wrap: wrap;
-                gap: 10px;
-                justify-content: space-between;
-            }
-            .hero-top-controls {
-                gap: 8px;
-            }
-            .theme-toggle-btn {
-                padding: 5px 11px;
-                font-size: 11px;
-            }
-        }
-
-        @media (max-width: 390px) {
+        @media (max-width: 440px) {
             .theme-toggle-btn .theme-text {
                 display: none;
             }
             .theme-toggle-btn {
-                padding: 6px 10px;
+                padding: 6px 9px;
             }
             .lang-btn {
-                padding: 4px 8px;
+                padding: 4px 7px;
+                font-size: 10px;
+            }
+            .hero-title {
+                font-size: 14px;
+            }
+            .hero-amharic {
                 font-size: 11px;
             }
-            .status-badge {
-                padding: 5px 10px;
-                font-size: 11px;
+            .status-badge-inline .status-text {
+                display: none;
             }
-        }
-
-        .hero-logo-box {
-            position: relative;
-            z-index: 2;
-            margin-bottom: 8px;
-        }
-
-        /* Skeuomorphic Stamped Coin Emblem with 3D Bevels */
-        .hero-emblem {
-            width: 62px;
-            height: 62px;
-            margin: 0 auto 14px;
-            background: linear-gradient(145deg, #22C55E 0%, #166534 55%, #0B2016 100%);
-            border-radius: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 10px 25px rgba(11, 32, 22, 0.4),
-                        inset 0 3px 5px rgba(255, 255, 255, 0.5),
-                        inset 0 -3px 5px rgba(0, 0, 0, 0.45);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
-        }
-
-        .hero-title {
-            font-family: var(--font-display);
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            color: #F0FDF4;
-            line-height: 1.1;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-        }
-
-        .hero-amharic {
-            font-family: var(--font-ethiopic);
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--brand-gold);
-            margin-top: 4px;
-            letter-spacing: 1px;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-tagline {
-            font-size: 13px;
-            color: #C2DEC9;
-            margin-top: 8px;
-            max-width: 340px;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: 400;
+            .status-badge-inline {
+                padding: 3px;
+            }
         }
 
         /* ===== SEARCH BAR (Glassmorphism + Skeuomorphic Inset Well) ===== */
         .search-container {
             max-width: 760px;
-            margin: -24px auto 0;
-            padding: 0 20px;
+            margin: 10px auto 0;
+            padding: 0 16px;
             position: relative;
             z-index: 10;
         }
@@ -1259,16 +1252,27 @@
 </head>
 <body>
 
-    <!-- ===== HERO SECTION ===== -->
+    <!-- ===== COMPACT HERO SECTION (75% Vertical Space Reduction) ===== -->
     <header class="hero">
-        <div class="hero-top-row">
-            <div class="status-badge">
-                <span class="status-dot"></span>
-                <span>Open · ክፍት ነው</span>
+        <div class="hero-bar">
+            <!-- Left: Brand + Status -->
+            <div class="hero-brand">
+                <div class="hero-emblem">☕</div>
+                <div class="hero-brand-text">
+                    <div class="hero-title-row">
+                        <span class="hero-title">MIKA COFFEE</span>
+                        <span class="status-badge-inline" title="Open Now · ክፍት ነው">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Open</span>
+                        </span>
+                    </div>
+                    <div class="hero-amharic">ሚካ ቡና</div>
+                </div>
             </div>
 
-            <div class="hero-top-controls">
-                <!-- Theme Toggle Button (Dark & Day Mode) -->
+            <!-- Right: Controls (Theme + Lang) -->
+            <div class="hero-controls">
+                <!-- Theme Toggle Button -->
                 <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle Dark and Day Mode" title="Toggle Day/Dark mode">
                     <span class="theme-icon" id="themeIcon">🌙</span>
                     <span class="theme-text" id="themeText">Dark</span>
@@ -1276,18 +1280,11 @@
 
                 <!-- Language Switcher -->
                 <div class="lang-switch">
-                    <button class="lang-btn active" onclick="setLang('all', this)">Both · ሁለቱም</button>
-                    <button class="lang-btn" onclick="setLang('en', this)">EN</button>
-                    <button class="lang-btn" onclick="setLang('am', this)">አማ</button>
+                    <button class="lang-btn active" onclick="setLang('all', this)" title="All / ሁለቱም">ሁለቱም</button>
+                    <button class="lang-btn" onclick="setLang('en', this)" title="English">EN</button>
+                    <button class="lang-btn" onclick="setLang('am', this)" title="አማርኛ">አማ</button>
                 </div>
             </div>
-        </div>
-
-        <div class="hero-logo-box">
-            <div class="hero-emblem">☕</div>
-            <h1 class="hero-title">MIKA COFFEE</h1>
-            <div class="hero-amharic">ሚካ ቡና</div>
-            <p class="hero-tagline">Authentic Flavors · Fresh Ingredients · Artisan Coffee &amp; Food</p>
         </div>
     </header>
 
@@ -1436,9 +1433,9 @@
                 </article>
 
                 <!-- Egg Scramble -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Egg Scramble', 'እንቁላል ስክራምብል', 'Soft, buttery farm-fresh scrambled eggs gently cooked with a touch of pepper and aromatic herbs.', '200', 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&auto=format&fit=crop&q=80', 'egg')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Egg Scramble', 'እንቁላል ስክራምብል', 'Soft, buttery farm-fresh scrambled eggs gently cooked with a touch of pepper and aromatic herbs.', '200', 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=600&auto=format&fit=crop&q=80', 'egg')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&auto=format&fit=crop&q=80" alt="Egg Scramble" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&auto=format&fit=crop&q=80" alt="Egg Scramble" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -1454,9 +1451,9 @@
                 </article>
 
                 <!-- Normal Original Wrap -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Normal Original Wrap', 'ኖርማል ኦርጅናል ራፕ', 'Light and wholesome rolled tortilla packed with fresh sautéed vegetables and savory dressing.', '150', 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Normal Original Wrap', 'ኖርማል ኦርጅናል ራፕ', 'Light and wholesome rolled tortilla packed with fresh sautéed vegetables and savory dressing.', '150', 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600&auto=format&fit=crop&q=80', 'fasting')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&auto=format&fit=crop&q=80" alt="Normal Original Wrap" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1561651823-34feb02250e4?w=400&auto=format&fit=crop&q=80" alt="Normal Original Wrap" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -1507,9 +1504,9 @@
 
             <div class="items-grid">
                 <!-- Afuun / Afugn -->
-                <article class="item-card" data-diet="meat" onclick="openModal('Afuun', 'አፉኝ', 'Special traditional breakfast sauté with rich spiced butter, red chili, and tender meat bites, served bubbling hot.', '450', 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80', 'meat')">
+                <article class="item-card" data-diet="meat" onclick="openModal('Afuun', 'አፉኝ', 'Special traditional breakfast sauté with rich spiced butter, red chili, and tender meat bites, served bubbling hot.', '450', 'https://images.unsplash.com/photo-1504973960431-1c467e159aa4?w=600&auto=format&fit=crop&q=80', 'meat')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80" alt="Afuun" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1504973960431-1c467e159aa4?w=400&auto=format&fit=crop&q=80" alt="Afuun" class="item-img" loading="lazy">
                         <span class="item-diet-dot">🥩</span>
                     </div>
                     <div class="item-details">
@@ -1526,9 +1523,9 @@
                 </article>
 
                 <!-- Normal Chechebsa -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Normal Chechebsa', 'ኖርማል ጨጨብሳ', 'Shredded pan flatbread gently tossed in fragrant spiced butter and berbere spice.', '250', 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Normal Chechebsa', 'ኖርማል ጨጨብሳ', 'Shredded pan flatbread gently tossed in fragrant spiced butter and berbere spice.', '250', 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&auto=format&fit=crop&q=80', 'fasting')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400&auto=format&fit=crop&q=80" alt="Chechebsa" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=400&auto=format&fit=crop&q=80" alt="Chechebsa" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -1562,9 +1559,9 @@
                 </article>
 
                 <!-- Quanta Firfir -->
-                <article class="item-card" data-diet="meat" onclick="openModal('Quanta Firfir', 'ቋንጣ ፍርፍር', 'Savory shredded injera simmered with dried spiced jerky beef (quanta) in aromatic caramelized onion and berbere sauce.', '400', 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600&auto=format&fit=crop&q=80', 'meat')">
+                <article class="item-card" data-diet="meat" onclick="openModal('Quanta Firfir', 'ቋንጣ ፍርፍር', 'Savory shredded injera simmered with dried spiced jerky beef (quanta) in aromatic caramelized onion and berbere sauce.', '400', 'https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&auto=format&fit=crop&q=80', 'meat')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=400&auto=format&fit=crop&q=80" alt="Quanta Firfir" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=400&auto=format&fit=crop&q=80" alt="Quanta Firfir" class="item-img" loading="lazy">
                         <span class="item-diet-dot">🥩</span>
                     </div>
                     <div class="item-details">
@@ -1581,9 +1578,9 @@
                 </article>
 
                 <!-- Tibs Firfir -->
-                <article class="item-card" data-diet="meat" onclick="openModal('Tibs Firfir', 'ጥብስ ፍርፍር', 'Sizzling pan-seared tender beef cubes tossed directly into spicy berbere injera firfir.', '400', 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80', 'meat')">
+                <article class="item-card" data-diet="meat" onclick="openModal('Tibs Firfir', 'ጥብስ ፍርፍር', 'Sizzling pan-seared tender beef cubes tossed directly into spicy berbere injera firfir.', '400', 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600&auto=format&fit=crop&q=80', 'meat')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80" alt="Tibs Firfir" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=400&auto=format&fit=crop&q=80" alt="Tibs Firfir" class="item-img" loading="lazy">
                         <span class="item-diet-dot">🥩</span>
                     </div>
                     <div class="item-details">
@@ -1600,9 +1597,9 @@
                 </article>
 
                 <!-- Special Ful -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Special Ful', 'ስፔሻል ፉል', 'Slow-cooked fava beans mashed and topped with fresh tomatoes, onions, green chili, boiled egg, crumbled cheese & warm bread.', '250', 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Special Ful', 'ስፔሻል ፉል', 'Slow-cooked fava beans mashed and topped with fresh tomatoes, onions, green chili, boiled egg, crumbled cheese & warm bread.', '250', 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=600&auto=format&fit=crop&q=80', 'fasting')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop&q=80" alt="Special Ful" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1590301157890-4810ed352733?w=400&auto=format&fit=crop&q=80" alt="Special Ful" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -1673,9 +1670,9 @@
                 </article>
 
                 <!-- Mika Firfir (Non-Fasting) -->
-                <article class="item-card" data-diet="meat" onclick="openModal('Mika Firfir (Non-Fasting)', 'ሚካ ፍርፍር | የፍስክ', 'Indulgent meat firfir prepared with rich spiced beef gravy, clarified butter, and tender morsels of beef.', '450', 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600&auto=format&fit=crop&q=80', 'meat')">
+                <article class="item-card" data-diet="meat" onclick="openModal('Mika Firfir (Non-Fasting)', 'ሚካ ፍርፍር | የፍስክ', 'Indulgent meat firfir prepared with rich spiced beef gravy, clarified butter, and tender morsels of beef.', '450', 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=600&auto=format&fit=crop&q=80', 'meat')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=400&auto=format&fit=crop&q=80" alt="Mika Firfir Non-Fasting" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=400&auto=format&fit=crop&q=80" alt="Mika Firfir Non-Fasting" class="item-img" loading="lazy">
                         <span class="item-diet-dot">🥩</span>
                     </div>
                     <div class="item-details">
@@ -1692,9 +1689,9 @@
                 </article>
 
                 <!-- Omelet -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Omelet', 'ኦምሌት', 'Fluffy rolled omelet packed with diced red tomatoes, sweet onions, green peppers, and melted cheese.', '300', 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Omelet', 'ኦምሌት', 'Fluffy rolled omelet packed with diced red tomatoes, sweet onions, green peppers, and melted cheese.', '300', 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&auto=format&fit=crop&q=80', 'fasting')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&auto=format&fit=crop&q=80" alt="Omelet" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&auto=format&fit=crop&q=80" alt="Omelet" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -1710,9 +1707,9 @@
                 </article>
 
                 <!-- Egg Sandwich -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Egg Sandwich', 'እንቁላል ሳንድዊች', 'Fresh toasted bread sandwich stuffed with savory scrambled egg, tomato slices, lettuce, and light mayo spread.', '300', 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Egg Sandwich', 'እንቁላል ሳንድዊች', 'Fresh toasted bread sandwich stuffed with savory scrambled egg, tomato slices, lettuce, and light mayo spread.', '300', 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&auto=format&fit=crop&q=80', 'fasting')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&auto=format&fit=crop&q=80" alt="Egg Sandwich" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&auto=format&fit=crop&q=80" alt="Egg Sandwich" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -1728,9 +1725,9 @@
                 </article>
 
                 <!-- Egg Firfir -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Egg Firfir', 'እንቁላል ፍርፍር', 'Delicious comfort dish blending scrambled eggs and torn injera simmered in onion and tomato spices.', '200', 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Egg Firfir', 'እንቁላል ፍርፍር', 'Delicious comfort dish blending scrambled eggs and torn injera simmered in onion and tomato spices.', '200', 'https://images.unsplash.com/photo-1594998893017-36147cbcae05?w=600&auto=format&fit=crop&q=80', 'fasting')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400&auto=format&fit=crop&q=80" alt="Egg Firfir" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1594998893017-36147cbcae05?w=400&auto=format&fit=crop&q=80" alt="Egg Firfir" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -1746,9 +1743,9 @@
                 </article>
 
                 <!-- Egg with Vegetables -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Egg with Vegetables', 'እንቁላል በአትክልት', 'Nutritious medley of carrots, sweet green peppers, onions, and scrambled eggs gently seasoned.', '250', 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Egg with Vegetables', 'እንቁላል በአትክልት', 'Nutritious medley of carrots, sweet green peppers, onions, and scrambled eggs gently seasoned.', '250', 'https://images.unsplash.com/photo-1592417817098-8f3d69109853?w=600&auto=format&fit=crop&q=80', 'fasting')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop&q=80" alt="Egg with Veggies" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1592417817098-8f3d69109853?w=400&auto=format&fit=crop&q=80" alt="Egg with Veggies" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -1764,9 +1761,9 @@
                 </article>
 
                 <!-- Tibs -->
-                <article class="item-card" data-diet="meat" onclick="openModal('Tibs', 'ጥብስ', 'Sizzling prime beef cubes pan-seared with rosemary, sliced onions, and jalapeños, served with mitmita and awaze.', '450', 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80', 'meat')">
+                <article class="item-card" data-diet="meat" onclick="openModal('Tibs', 'ጥብስ', 'Sizzling prime beef cubes pan-seared with rosemary, sliced onions, and jalapeños, served with mitmita and awaze.', '450', 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=600&auto=format&fit=crop&q=80', 'meat')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80" alt="Tibs" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&auto=format&fit=crop&q=80" alt="Tibs" class="item-img" loading="lazy">
                         <span class="item-diet-dot">🥩</span>
                     </div>
                     <div class="item-details">
@@ -1856,9 +1853,9 @@
                 </article>
 
                 <!-- Mika Shiro (Non-Fasting) -->
-                <article class="item-card" data-diet="meat" onclick="openModal('Mika Shiro (Non-Fasting)', 'ሚካ ሽሮ | የፍስክ', 'Rich seasoned chickpea shiro enriched with aromatic spiced butter (niter kibe) for deep authentic flavor.', '300', 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80', 'meat')">
+                <article class="item-card" data-diet="meat" onclick="openModal('Mika Shiro (Non-Fasting)', 'ሚካ ሽሮ | የፍስክ', 'Rich seasoned chickpea shiro enriched with aromatic spiced butter (niter kibe) for deep authentic flavor.', '300', 'https://images.unsplash.com/photo-1547496502-affa22d38842?w=600&auto=format&fit=crop&q=80', 'meat')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&auto=format&fit=crop&q=80" alt="Mika Shiro Non-Fasting" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1547496502-affa22d38842?w=400&auto=format&fit=crop&q=80" alt="Mika Shiro Non-Fasting" class="item-img" loading="lazy">
                         <span class="item-diet-dot">🥩</span>
                     </div>
                     <div class="item-details">
@@ -1913,9 +1910,9 @@
                 </article>
 
                 <!-- Gomen Tibs -->
-                <article class="item-card" data-diet="meat" onclick="openModal('Gomen Tibs', 'ጎመን ጥብስ', 'Tender collard greens flash-sautéed with tender beef strips, sweet red onions, garlic, and sliced green peppers.', '250', 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80', 'meat')">
+                <article class="item-card" data-diet="meat" onclick="openModal('Gomen Tibs', 'ጎመን ጥብስ', 'Tender collard greens flash-sautéed with tender beef strips, sweet red onions, garlic, and sliced green peppers.', '250', 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&auto=format&fit=crop&q=80', 'meat')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop&q=80" alt="Gomen Tibs" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&auto=format&fit=crop&q=80" alt="Gomen Tibs" class="item-img" loading="lazy">
                         <span class="item-diet-dot">🥩</span>
                     </div>
                     <div class="item-details">
@@ -1932,9 +1929,9 @@
                 </article>
 
                 <!-- Tegabino -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Tegabino', 'ተጋቢኖ', 'Thick, bubbling roasted chickpea stew served in a sizzling traditional clay pot with green chilies.', '250', 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Tegabino', 'ተጋቢኖ', 'Thick, bubbling roasted chickpea stew served in a sizzling traditional clay pot with green chilies.', '250', 'https://images.unsplash.com/photo-1547592180-85f173990554?w=600&auto=format&fit=crop&q=80', 'fasting')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&auto=format&fit=crop&q=80" alt="Tegabino" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=400&auto=format&fit=crop&q=80" alt="Tegabino" class="item-img" loading="lazy">
                         <span class="item-diet-dot">🌱</span>
                     </div>
                     <div class="item-details">
@@ -1951,9 +1948,9 @@
                 </article>
 
                 <!-- Bozena Shiro -->
-                <article class="item-card" data-diet="meat" onclick="openModal('Bozena Shiro', 'ቦዘና ሽሮ', 'Simmering spiced roasted chickpea stew cooked with tender marinated beef bits and infused with spiced butter.', '350', 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80', 'meat')">
+                <article class="item-card" data-diet="meat" onclick="openModal('Bozena Shiro', 'ቦዘና ሽሮ', 'Simmering spiced roasted chickpea stew cooked with tender marinated beef bits and infused with spiced butter.', '350', 'https://images.unsplash.com/photo-1572448862537-07436a8bbccb?w=600&auto=format&fit=crop&q=80', 'meat')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80" alt="Bozena Shiro" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1572448862537-07436a8bbccb?w=400&auto=format&fit=crop&q=80" alt="Bozena Shiro" class="item-img" loading="lazy">
                         <span class="item-diet-dot">🥩</span>
                     </div>
                     <div class="item-details">
@@ -1970,9 +1967,9 @@
                 </article>
 
                 <!-- Dirkosh Firfir -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Dirkosh Firfir', 'ድርቆሽ ፍርፍር', 'Sun-crisped dried injera tossed into a hot, spicy tomato and berbere sauce.', '250', 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Dirkosh Firfir', 'ድርቆሽ ፍርፍር', 'Sun-crisped dried injera tossed into a hot, spicy tomato and berbere sauce.', '250', 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=600&auto=format&fit=crop&q=80', 'fasting')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=400&auto=format&fit=crop&q=80" alt="Dirkosh Firfir" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&auto=format&fit=crop&q=80" alt="Dirkosh Firfir" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -1988,9 +1985,9 @@
                 </article>
 
                 <!-- Firfir -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Firfir', 'ፍርፍር', 'Warm, soft shredded injera tossed in classic spiced pepper, onion, and garlic reduction.', '200', 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Firfir', 'ፍርፍር', 'Warm, soft shredded injera tossed in classic spiced pepper, onion, and garlic reduction.', '200', 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=600&auto=format&fit=crop&q=80', 'fasting')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400&auto=format&fit=crop&q=80" alt="Firfir" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=400&auto=format&fit=crop&q=80" alt="Firfir" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -2264,9 +2261,9 @@
                 </article>
 
                 <!-- Pineapple Mojito -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Pineapple Mojito', 'አናናስ ሞጂቶ', 'Tropical pineapple chunks bruised with fresh mint sprigs, lime citrus, and chilled sparkling tonic.', '200', 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80', 'mojito')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Pineapple Mojito', 'አናናስ ሞጂቶ', 'Tropical pineapple chunks bruised with fresh mint sprigs, lime citrus, and chilled sparkling tonic.', '200', 'https://images.unsplash.com/photo-1546171753-97d7676e4602?w=600&auto=format&fit=crop&q=80', 'mojito')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=400&auto=format&fit=crop&q=80" alt="Pineapple Mojito" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1546171753-97d7676e4602?w=400&auto=format&fit=crop&q=80" alt="Pineapple Mojito" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -2420,14 +2417,14 @@
                         </div>
                         <div class="portion-price">50 ETB</div>
                     </div>
-                    <div class="portion-box" onclick="openModal('Bottled Water (1L)', 'ዉሀ 1ሊ', 'Pure, refreshingly chilled natural spring bottled water 1 liter.', '60', 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=600&auto=format&fit=crop&q=80', 'fasting')" style="cursor: pointer;">
+                    <div class="portion-box" onclick="openModal('Bottled Water (1L)', 'ዉሀ 1ሊ', 'Pure, refreshingly chilled natural spring bottled water 1 liter.', '60', 'https://images.unsplash.com/photo-1523362628745-0c100150b504?w=600&auto=format&fit=crop&q=80', 'fasting')" style="cursor: pointer;">
                         <div>
                             <div class="portion-title">1 Liter · አንድ ሊትር</div>
                             <div class="portion-title-am">ዉሀ 1ሊ</div>
                         </div>
                         <div class="portion-price">60 ETB</div>
                     </div>
-                    <div class="portion-box" onclick="openModal('Bottled Water (2L)', 'ዉሀ 2ሊ', 'Pure, refreshingly chilled natural spring bottled water 2 liters family size.', '70', 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=600&auto=format&fit=crop&q=80', 'fasting')" style="cursor: pointer;">
+                    <div class="portion-box" onclick="openModal('Bottled Water (2L)', 'ዉሀ 2ሊ', 'Pure, refreshingly chilled natural spring bottled water 2 liters family size.', '70', 'https://images.unsplash.com/photo-1560023907-5f339617ea30?w=600&auto=format&fit=crop&q=80', 'fasting')" style="cursor: pointer;">
                         <div>
                             <div class="portion-title">2 Liters · ሁለት ሊትር</div>
                             <div class="portion-title-am">ዉሀ 2ሊ</div>
