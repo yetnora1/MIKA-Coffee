@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MIKA COFFEE — Admin Portal &amp; QR Generator</title>
-    <meta name="description" content="MIKA COFFEE Admin portal and table QR code stand generator.">
+    <title>MIKA COFFEE — Admin Dashboard</title>
+    <meta name="description" content="MIKA COFFEE Admin dashboard — manage menu, orders, QR codes, and settings.">
     <meta name="theme-color" content="#1B0F0A">
 
     <!-- Google Fonts -->
@@ -12,14 +12,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Noto+Sans+Ethiopic:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- QRCode.js Library -->
+    <!-- QRCode.js -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
     <style>
         :root {
-            --bg-body: #FBF8F4;
+            --bg-body: #F6F2ED;
             --bg-card: #FFFFFF;
             --bg-subtle: #F4ECE1;
+            --bg-sidebar: #1B0F0A;
+            --bg-sidebar-hover: #2E1B13;
             --brand-espresso: #1B0F0A;
             --brand-roast: #2E1B13;
             --brand-caramel: #C88D48;
@@ -27,1042 +29,1609 @@
             --text-heading: #1B0F0A;
             --text-body: #4A3A31;
             --text-muted: #846F62;
+            --text-sidebar: #D3C5B8;
+            --text-sidebar-active: #FFFFFF;
             --border-soft: #E9DFD3;
             --border-focus: #C88D48;
-            --shadow-sm: 0 4px 14px rgba(27, 15, 10, 0.06);
-            --shadow-md: 0 10px 30px rgba(27, 15, 10, 0.1);
-            --shadow-lg: 0 18px 45px rgba(27, 15, 10, 0.16);
-            --radius-sm: 12px;
-            --radius-md: 18px;
-            --radius-lg: 24px;
+            --shadow-sm: 0 2px 8px rgba(27, 15, 10, 0.06);
+            --shadow-md: 0 8px 24px rgba(27, 15, 10, 0.1);
+            --shadow-lg: 0 16px 40px rgba(27, 15, 10, 0.14);
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
             --radius-full: 999px;
             --font-display: 'Fraunces', serif;
             --font-sans: 'Plus Jakarta Sans', sans-serif;
             --font-ethiopic: 'Noto Sans Ethiopic', sans-serif;
+            --sidebar-w: 260px;
+            --success: #22C55E;
+            --success-bg: #ECFDF5;
+            --danger: #EF4444;
+            --danger-bg: #FEF2F2;
+            --warning: #F59E0B;
+            --warning-bg: #FFFBEB;
+            --info: #3B82F6;
+            --info-bg: #EFF6FF;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
         body {
-            background-color: var(--bg-body);
+            background: var(--bg-body);
             color: var(--text-body);
             font-family: var(--font-sans), var(--font-ethiopic), system-ui, sans-serif;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
             line-height: 1.5;
-        }
-
-        /* ===== TOP ADMIN HEADER ===== */
-        .admin-nav {
-            background: linear-gradient(135deg, #180D08 0%, #29170E 100%);
-            color: #FFFFFF;
-            padding: 16px 24px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .admin-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: #FFFFFF;
-        }
-
-        .admin-logo-emblem {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--brand-caramel), var(--brand-gold));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 4px 12px rgba(200, 141, 72, 0.35);
-        }
-
-        .admin-brand-text h1 {
-            font-family: var(--font-display);
-            font-size: 18px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: #FFF6EC;
-            line-height: 1.1;
-        }
-
-        .admin-brand-text span {
-            font-family: var(--font-ethiopic);
-            font-size: 12px;
-            color: var(--brand-gold);
-            font-weight: 600;
-        }
-
-        .admin-badge {
-            background: rgba(200, 141, 72, 0.2);
-            border: 1px solid var(--brand-gold);
-            color: #FFD270;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: var(--radius-full);
-            letter-spacing: 0.5px;
-            margin-left: 8px;
-        }
-
-        .admin-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .nav-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.12);
-            color: #FFF6EC;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 8px 16px;
-            border-radius: var(--radius-full);
-            font-size: 13px;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.22);
-            border-color: var(--brand-gold);
-            transform: translateY(-1px);
-        }
-
-        .nav-btn.logout-btn {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: rgba(239, 68, 68, 0.3);
-            color: #FCA5A5;
-        }
-
-        .nav-btn.logout-btn:hover {
-            background: rgba(239, 68, 68, 0.3);
-            color: #FFFFFF;
-        }
-
-        /* ===== LOGIN GATE OVERLAY ===== */
+        /* ===== LOGIN OVERLAY ===== */
         .login-overlay {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(24, 13, 8, 0.96) 0%, rgba(41, 23, 14, 0.98) 100%);
+            position: fixed; inset:0;
+            background: linear-gradient(135deg, rgba(24,13,8,.96), rgba(41,23,14,.98));
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            z-index: 9999;
+            display: flex; align-items:center; justify-content:center;
             padding: 20px;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity .3s, visibility .3s;
         }
-
-        .login-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
+        .login-overlay.hidden { opacity:0; visibility:hidden; pointer-events:none; }
 
         .login-card {
-            background: #FFFFFF;
-            width: 100%;
-            max-width: 420px;
-            border-radius: var(--radius-lg);
-            padding: 40px 32px;
-            text-align: center;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
+            background: #FFF; width:100%; max-width:420px;
+            border-radius: var(--radius-lg); padding:40px 32px;
+            text-align:center;
+            box-shadow: 0 25px 60px rgba(0,0,0,.45);
         }
-
-        .login-card.shake {
-            animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-        }
-
+        .login-card.shake { animation: shake .45s cubic-bezier(.36,.07,.19,.97) both; }
         @keyframes shake {
-            10%, 90% { transform: translate3d(-2px, 0, 0); }
-            20%, 80% { transform: translate3d(4px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
-            40%, 60% { transform: translate3d(6px, 0, 0); }
+            10%,90%{transform:translate3d(-2px,0,0)}
+            20%,80%{transform:translate3d(4px,0,0)}
+            30%,50%,70%{transform:translate3d(-6px,0,0)}
+            40%,60%{transform:translate3d(6px,0,0)}
         }
-
         .login-emblem {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 16px;
-            background: linear-gradient(135deg, var(--brand-caramel), var(--brand-gold));
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            box-shadow: 0 10px 24px rgba(200, 141, 72, 0.3);
+            width:64px;height:64px;margin:0 auto 16px;
+            background:linear-gradient(135deg,var(--brand-caramel),var(--brand-gold));
+            border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:32px;
+            box-shadow:0 10px 24px rgba(200,141,72,.3);
         }
-
-        .login-card h2 {
-            font-family: var(--font-display);
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--brand-espresso);
-            margin-bottom: 4px;
-        }
-
-        .login-card .login-amharic {
-            font-family: var(--font-ethiopic);
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--brand-caramel);
-            margin-bottom: 8px;
-        }
-
-        .login-card p {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 28px;
-        }
-
-        .login-input-wrap {
-            margin-bottom: 18px;
-            position: relative;
-        }
-
+        .login-card h2 { font-family:var(--font-display);font-size:24px;font-weight:800;color:var(--brand-espresso);margin-bottom:4px; }
+        .login-amharic { font-family:var(--font-ethiopic);font-size:15px;font-weight:600;color:var(--brand-caramel);margin-bottom:8px; }
+        .login-card p { font-size:13px;color:var(--text-muted);margin-bottom:28px; }
         .login-input {
-            width: 100%;
-            padding: 16px 20px;
-            font-size: 20px;
-            letter-spacing: 6px;
-            text-align: center;
-            border: 2px solid var(--border-soft);
-            border-radius: var(--radius-md);
-            background: var(--bg-subtle);
-            color: var(--brand-espresso);
-            font-weight: 800;
-            outline: none;
-            transition: all 0.25s ease;
-            font-family: var(--font-sans);
+            width:100%;padding:16px 20px;font-size:20px;letter-spacing:6px;text-align:center;
+            border:2px solid var(--border-soft);border-radius:var(--radius-md);background:var(--bg-subtle);
+            color:var(--brand-espresso);font-weight:800;outline:none;transition:all .25s;font-family:var(--font-sans);
+            margin-bottom:18px;
         }
-
-        .login-input:focus {
-            border-color: var(--brand-caramel);
-            background: #FFFFFF;
-            box-shadow: 0 0 0 4px rgba(200, 141, 72, 0.15);
-        }
-
-        .login-error {
-            color: #DC2626;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            min-height: 18px;
-        }
-
+        .login-input:focus { border-color:var(--brand-caramel);background:#FFF;box-shadow:0 0 0 4px rgba(200,141,72,.15); }
+        .login-error { color:#DC2626;font-size:12px;font-weight:600;margin-bottom:16px;min-height:18px; }
         .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #1B0F0A 0%, #3D2215 100%);
-            color: #FFF6EC;
-            border: none;
-            border-radius: var(--radius-full);
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 6px 20px rgba(27, 15, 10, 0.25);
+            width:100%;padding:15px;
+            background:linear-gradient(135deg,#1B0F0A,#3D2215);color:#FFF6EC;
+            border:none;border-radius:var(--radius-full);font-size:15px;font-weight:700;
+            cursor:pointer;transition:all .25s;box-shadow:0 6px 20px rgba(27,15,10,.25);
+        }
+        .login-btn:hover { transform:translateY(-2px);background:linear-gradient(135deg,#2E1B13,#4D2B1A); }
+        .login-hint { font-size:11px;color:var(--text-muted);margin-top:16px; }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: var(--sidebar-w);
+            background: var(--bg-sidebar);
+            min-height: 100vh;
+            position: fixed; left:0; top:0; bottom:0;
+            z-index: 100;
+            display: flex; flex-direction: column;
+            transition: transform .3s cubic-bezier(.16,1,.3,1);
+            box-shadow: 4px 0 20px rgba(0,0,0,.2);
+        }
+        .sidebar-brand {
+            padding: 24px 20px 20px;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+        }
+        .sidebar-brand-row { display:flex; align-items:center; gap:12px; text-decoration:none; color:#FFF; }
+        .sidebar-logo {
+            width:40px;height:40px;
+            background:linear-gradient(135deg,var(--brand-caramel),var(--brand-gold));
+            border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;
+            box-shadow:0 4px 12px rgba(200,141,72,.35);
+        }
+        .sidebar-brand h1 {
+            font-family:var(--font-display);font-size:16px;font-weight:800;
+            letter-spacing:1px;color:#FFF6EC;line-height:1.1;
+        }
+        .sidebar-brand-sub {
+            font-family:var(--font-ethiopic);font-size:11px;color:var(--brand-gold);font-weight:600;
+        }
+        .admin-pill {
+            display:inline-block;background:rgba(200,141,72,.2);border:1px solid var(--brand-gold);
+            color:#FFD270;font-size:9px;font-weight:700;padding:2px 8px;border-radius:var(--radius-full);
+            letter-spacing:.5px;margin-left:6px;vertical-align:middle;
         }
 
-        .login-btn:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(135deg, #2E1B13 0%, #4D2B1A 100%);
-            box-shadow: 0 8px 24px rgba(27, 15, 10, 0.35);
+        .sidebar-nav { flex:1; padding:16px 12px; display:flex; flex-direction:column; gap:4px; }
+        .nav-item {
+            display:flex;align-items:center;gap:12px;padding:11px 16px;
+            border-radius:var(--radius-sm);color:var(--text-sidebar);
+            font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;
+            border:none;background:none;width:100%;text-align:left;
+            font-family:inherit;
+        }
+        .nav-item:hover { background:var(--bg-sidebar-hover);color:#FFF; }
+        .nav-item.active {
+            background:linear-gradient(135deg,var(--brand-caramel),#A06429);
+            color:#FFF;box-shadow:0 4px 14px rgba(200,141,72,.3);
+        }
+        .nav-item-icon { font-size:18px;width:24px;text-align:center; }
+        .nav-item-label { flex:1; }
+        .nav-badge {
+            background:rgba(255,255,255,.15);font-size:10px;font-weight:800;
+            padding:2px 8px;border-radius:var(--radius-full);
+        }
+        .nav-item.active .nav-badge { background:rgba(255,255,255,.25); }
+
+        .sidebar-footer {
+            padding:16px 12px;border-top:1px solid rgba(255,255,255,.08);
+        }
+        .sidebar-footer-btn {
+            display:flex;align-items:center;gap:10px;padding:10px 16px;
+            border-radius:var(--radius-sm);color:#FCA5A5;font-size:13px;font-weight:600;
+            cursor:pointer;border:none;background:rgba(239,68,68,.1);width:100%;text-align:left;
+            font-family:inherit;transition:all .2s;
+        }
+        .sidebar-footer-btn:hover { background:rgba(239,68,68,.2);color:#FFF; }
+
+        /* Mobile hamburger */
+        .mobile-topbar {
+            display:none;position:fixed;top:0;left:0;right:0;z-index:90;
+            background:var(--bg-sidebar);padding:12px 16px;
+            justify-content:space-between;align-items:center;
+            box-shadow:0 2px 12px rgba(0,0,0,.2);
+        }
+        .hamburger {
+            background:none;border:none;color:#FFF;font-size:24px;cursor:pointer;padding:4px;
+        }
+        .mobile-topbar-brand { display:flex;align-items:center;gap:10px;color:#FFF6EC; }
+        .mobile-topbar-brand span { font-family:var(--font-display);font-size:14px;font-weight:800;letter-spacing:1px; }
+        .sidebar-backdrop {
+            display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:95;
         }
 
-        .login-hint {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 16px;
+        @media (max-width:860px) {
+            .sidebar { transform:translateX(-100%); z-index:200; }
+            .sidebar.open { transform:translateX(0); }
+            .sidebar-backdrop.show { display:block; z-index:199; }
+            .mobile-topbar { display:flex; }
+            .main-content { margin-left:0 !important; padding-top:68px !important; }
         }
 
-        /* ===== MAIN DASHBOARD LAYOUT ===== */
-        .dashboard-container {
-            max-width: 1280px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 32px 20px 60px;
-            flex: 1;
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            flex:1;
+            padding: 28px 28px 60px;
+            min-height: 100vh;
+            width: calc(100% - var(--sidebar-w));
         }
 
-        .dashboard-header {
-            margin-bottom: 30px;
+        /* Page header */
+        .page-header { margin-bottom:28px; }
+        .page-header h2 {
+            font-family:var(--font-display);font-size:28px;font-weight:800;
+            color:var(--text-heading);letter-spacing:-.5px;margin-bottom:4px;
+        }
+        .page-header-am {
+            font-family:var(--font-ethiopic);font-size:15px;color:var(--brand-caramel);font-weight:600;
+        }
+        .page-header p { font-size:13px;color:var(--text-muted);margin-top:4px; }
+
+        /* Page sections */
+        .page-section { display:none; }
+        .page-section.active { display:block; }
+
+        /* ===== STAT CARDS ===== */
+        .stats-grid {
+            display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:28px;
+        }
+        .stat-card {
+            background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius-md);
+            padding:22px;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s;
+        }
+        .stat-card:hover { transform:translateY(-2px);box-shadow:var(--shadow-md); }
+        .stat-card-top { display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px; }
+        .stat-icon {
+            width:44px;height:44px;border-radius:var(--radius-sm);
+            display:flex;align-items:center;justify-content:center;font-size:20px;
+        }
+        .stat-icon.menu { background:#FEF3C7;color:#D97706; }
+        .stat-icon.cat { background:#DBEAFE;color:#2563EB; }
+        .stat-icon.orders { background:#D1FAE5;color:#059669; }
+        .stat-icon.revenue { background:#FCE7F3;color:#DB2777; }
+        .stat-change { font-size:11px;font-weight:700;padding:3px 8px;border-radius:var(--radius-full); }
+        .stat-change.up { background:var(--success-bg);color:var(--success); }
+        .stat-change.neutral { background:var(--bg-subtle);color:var(--text-muted); }
+        .stat-value {
+            font-family:var(--font-display);font-size:32px;font-weight:800;
+            color:var(--text-heading);line-height:1;margin-bottom:4px;
+        }
+        .stat-label { font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px; }
+
+        /* ===== QUICK ACTIONS ===== */
+        .quick-actions {
+            display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;
+        }
+        .qa-btn {
+            display:inline-flex;align-items:center;gap:8px;padding:10px 18px;
+            border-radius:var(--radius-full);border:1.5px solid var(--border-soft);
+            background:var(--bg-card);color:var(--text-body);font-size:13px;font-weight:600;
+            cursor:pointer;transition:all .2s;font-family:inherit;
+        }
+        .qa-btn:hover { border-color:var(--brand-caramel);color:var(--brand-caramel);transform:translateY(-1px); }
+        .qa-btn.primary {
+            background:linear-gradient(135deg,var(--brand-caramel),#A06429);color:#FFF;border-color:transparent;
+            box-shadow:0 4px 14px rgba(200,141,72,.25);
+        }
+        .qa-btn.primary:hover { box-shadow:0 6px 20px rgba(200,141,72,.35); }
+
+        /* ===== ACTIVITY FEED ===== */
+        .activity-card {
+            background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius-md);
+            padding:24px;box-shadow:var(--shadow-sm);
+        }
+        .card-heading {
+            font-family:var(--font-display);font-size:17px;font-weight:700;
+            color:var(--text-heading);margin-bottom:18px;display:flex;align-items:center;gap:10px;
+        }
+        .card-heading-icon { font-size:18px; }
+        .activity-item {
+            display:flex;align-items:center;gap:14px;padding:12px 0;
+            border-bottom:1px solid var(--border-soft);
+        }
+        .activity-item:last-child { border-bottom:none; }
+        .activity-dot {
+            width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+            justify-content:center;font-size:16px;flex-shrink:0;
+        }
+        .activity-dot.green { background:var(--success-bg); }
+        .activity-dot.blue { background:var(--info-bg); }
+        .activity-dot.amber { background:var(--warning-bg); }
+        .activity-text { flex:1;font-size:13px;color:var(--text-body); }
+        .activity-text strong { color:var(--text-heading); }
+        .activity-time { font-size:11px;color:var(--text-muted);white-space:nowrap; }
+
+        /* ===== TABLE STYLES (Menu Manager / Orders) ===== */
+        .table-toolbar {
+            display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:18px;
+        }
+        .table-search {
+            flex:1;min-width:200px;padding:10px 16px;border:1.5px solid var(--border-soft);
+            border-radius:var(--radius-full);font-size:13px;background:var(--bg-card);
+            color:var(--text-heading);outline:none;font-family:inherit;transition:all .2s;
+        }
+        .table-search:focus { border-color:var(--brand-caramel);box-shadow:0 0 0 3px rgba(200,141,72,.12); }
+        .filter-select {
+            padding:10px 16px;border:1.5px solid var(--border-soft);border-radius:var(--radius-full);
+            font-size:13px;background:var(--bg-card);color:var(--text-body);outline:none;
+            font-family:inherit;cursor:pointer;
         }
 
-        .dashboard-header h2 {
-            font-family: var(--font-display);
-            font-size: 30px;
-            font-weight: 800;
-            color: var(--text-heading);
-            letter-spacing: -0.5px;
-            margin-bottom: 6px;
+        .data-table-wrap {
+            background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius-md);
+            box-shadow:var(--shadow-sm);overflow:hidden;
+        }
+        .data-table {
+            width:100%;border-collapse:collapse;font-size:13px;
+        }
+        .data-table thead { background:var(--bg-subtle); }
+        .data-table th {
+            padding:12px 16px;text-align:left;font-weight:700;font-size:11px;
+            text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);
+            border-bottom:2px solid var(--border-soft);
+        }
+        .data-table td {
+            padding:12px 16px;border-bottom:1px solid var(--border-soft);
+            vertical-align:middle;color:var(--text-body);
+        }
+        .data-table tr:last-child td { border-bottom:none; }
+        .data-table tr:hover td { background:rgba(200,141,72,.04); }
+        .data-table .item-thumb {
+            width:44px;height:44px;border-radius:var(--radius-sm);object-fit:cover;
+        }
+        .data-table .item-name { font-weight:700;color:var(--text-heading); }
+        .data-table .item-name-am {
+            font-family:var(--font-ethiopic);font-size:11px;color:var(--text-muted);font-weight:500;
+        }
+        .data-table .cell-row { display:flex;align-items:center;gap:10px; }
+
+        .diet-badge {
+            display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;
+            border-radius:var(--radius-full);letter-spacing:.3px;text-transform:uppercase;
+        }
+        .diet-badge.fasting { background:#EAF7EB;color:#217332; }
+        .diet-badge.meat { background:#FFF0EB;color:#B4381C; }
+
+        .cat-badge {
+            display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;
+            border-radius:var(--radius-full);background:var(--bg-subtle);color:var(--text-muted);
+            border:1px solid var(--border-soft);
         }
 
-        .dashboard-header p {
-            font-size: 14px;
-            color: var(--text-muted);
+        .price-cell { font-weight:800;color:var(--brand-caramel);white-space:nowrap; }
+
+        .action-btns { display:flex;gap:6px; }
+        .act-btn {
+            width:32px;height:32px;border-radius:8px;border:1px solid var(--border-soft);
+            background:var(--bg-card);display:flex;align-items:center;justify-content:center;
+            font-size:14px;cursor:pointer;transition:all .2s;
+        }
+        .act-btn:hover { border-color:var(--brand-caramel);background:var(--bg-subtle); }
+        .act-btn.del:hover { border-color:var(--danger);background:var(--danger-bg); }
+
+        .table-footer {
+            display:flex;justify-content:space-between;align-items:center;
+            padding:12px 16px;font-size:12px;color:var(--text-muted);
+            border-top:1px solid var(--border-soft);
         }
 
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 28px;
-        }
+        /* Responsive table */
+        .table-scroll { overflow-x:auto; }
 
-        @media (min-width: 960px) {
-            .dashboard-grid {
-                grid-template-columns: 460px 1fr;
-                align-items: start;
-            }
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position:fixed;inset:0;background:rgba(27,15,10,.6);backdrop-filter:blur(6px);
+            z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;
+            opacity:0;visibility:hidden;transition:all .3s;
         }
-
-        /* ===== SETTINGS PANEL ===== */
-        .settings-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-lg);
-            padding: 28px;
-            box-shadow: var(--shadow-sm);
+        .modal-overlay.open { opacity:1;visibility:visible; }
+        .modal-box {
+            background:var(--bg-card);width:100%;max-width:560px;border-radius:var(--radius-lg);
+            padding:32px;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;
+            transform:scale(.92);transition:transform .3s cubic-bezier(.16,1,.3,1);
         }
-
-        .card-title {
-            font-family: var(--font-display);
-            font-size: 19px;
-            font-weight: 700;
-            color: var(--text-heading);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .modal-overlay.open .modal-box { transform:scale(1); }
+        .modal-title {
+            font-family:var(--font-display);font-size:22px;font-weight:800;
+            color:var(--text-heading);margin-bottom:20px;
         }
-
-        .card-title-icon {
-            font-size: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
+        .form-group { margin-bottom:18px; }
         .form-label {
-            display: block;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-heading);
-            margin-bottom: 8px;
+            display:block;font-size:11px;font-weight:700;text-transform:uppercase;
+            letter-spacing:.5px;color:var(--text-heading);margin-bottom:6px;
         }
-
         .form-input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1.5px solid var(--border-soft);
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            font-family: inherit;
-            background: var(--bg-subtle);
-            color: var(--text-heading);
-            outline: none;
-            transition: all 0.2s ease;
+            width:100%;padding:10px 14px;border:1.5px solid var(--border-soft);
+            border-radius:var(--radius-sm);font-size:13px;font-family:inherit;
+            background:var(--bg-subtle);color:var(--text-heading);outline:none;transition:all .2s;
         }
-
-        .form-input:focus {
-            border-color: var(--brand-caramel);
-            background: #FFFFFF;
-            box-shadow: 0 0 0 3px rgba(200, 141, 72, 0.12);
+        .form-input:focus { border-color:var(--brand-caramel);background:#FFF;box-shadow:0 0 0 3px rgba(200,141,72,.12); }
+        .form-row { display:grid;grid-template-columns:1fr 1fr;gap:14px; }
+        .form-select {
+            width:100%;padding:10px 14px;border:1.5px solid var(--border-soft);
+            border-radius:var(--radius-sm);font-size:13px;font-family:inherit;
+            background:var(--bg-subtle);color:var(--text-heading);outline:none;cursor:pointer;
         }
-
-        .form-hint {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 5px;
+        .modal-actions { display:flex;gap:10px;margin-top:24px;justify-content:flex-end; }
+        .modal-btn {
+            padding:10px 22px;border-radius:var(--radius-full);font-size:13px;font-weight:700;
+            cursor:pointer;transition:all .2s;font-family:inherit;border:none;
         }
-
-        /* Preset Table Buttons */
-        .preset-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 8px;
+        .modal-btn.cancel { background:var(--bg-subtle);color:var(--text-body);border:1.5px solid var(--border-soft); }
+        .modal-btn.cancel:hover { background:var(--border-soft); }
+        .modal-btn.save {
+            background:linear-gradient(135deg,var(--brand-caramel),#A06429);color:#FFF;
+            box-shadow:0 4px 14px rgba(200,141,72,.25);
         }
+        .modal-btn.save:hover { transform:translateY(-1px);box-shadow:0 6px 18px rgba(200,141,72,.35); }
+        .modal-btn.danger { background:var(--danger);color:#FFF; }
 
+        /* ===== QR SECTION ===== */
+        .qr-grid { display:grid;grid-template-columns:1fr;gap:24px; }
+        @media(min-width:960px) { .qr-grid { grid-template-columns:420px 1fr;align-items:start; } }
+        .qr-settings-card {
+            background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius-lg);
+            padding:28px;box-shadow:var(--shadow-sm);
+        }
+        .preset-pills { display:flex;flex-wrap:wrap;gap:8px;margin-top:8px; }
         .preset-pill {
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-full);
-            padding: 5px 12px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-body);
-            cursor: pointer;
-            transition: all 0.2s;
+            background:var(--bg-subtle);border:1px solid var(--border-soft);border-radius:var(--radius-full);
+            padding:5px 12px;font-size:12px;font-weight:600;color:var(--text-body);cursor:pointer;
+            transition:all .2s;font-family:inherit;
         }
+        .preset-pill:hover,.preset-pill.active { background:var(--brand-caramel);color:#FFF;border-color:var(--brand-caramel); }
 
-        .preset-pill:hover, .preset-pill.active {
-            background: var(--brand-caramel);
-            color: #FFFFFF;
-            border-color: var(--brand-caramel);
-        }
-
-        /* Color Selection Radios */
-        .color-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
+        .color-options { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
         .color-option {
-            border: 2px solid var(--border-soft);
-            border-radius: var(--radius-sm);
-            padding: 10px 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            background: var(--bg-subtle);
+            border:2px solid var(--border-soft);border-radius:var(--radius-sm);padding:10px 8px;
+            text-align:center;cursor:pointer;transition:all .2s;background:var(--bg-subtle);
         }
+        .color-option.active { border-color:var(--brand-caramel);background:#FFF;box-shadow:0 4px 12px rgba(200,141,72,.15); }
+        .color-circle { width:22px;height:22px;border-radius:50%;margin:0 auto 6px; }
+        .color-label { font-size:11px;font-weight:700;color:var(--text-body); }
 
-        .color-option.active {
-            border-color: var(--brand-caramel);
-            background: #FFFFFF;
-            box-shadow: 0 4px 12px rgba(200, 141, 72, 0.15);
+        .btn-stack { display:flex;flex-direction:column;gap:10px;margin-top:24px; }
+        .btn-primary-qr {
+            width:100%;padding:14px;
+            background:linear-gradient(135deg,var(--brand-caramel),#A06429);color:#FFF;
+            border:none;border-radius:var(--radius-full);font-size:14px;font-weight:700;
+            cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+            transition:all .25s;box-shadow:0 4px 16px rgba(200,141,72,.25);font-family:inherit;
         }
-
-        .color-circle {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            margin: 0 auto 6px;
+        .btn-primary-qr:hover { transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,141,72,.35); }
+        .btn-secondary-qr {
+            width:100%;padding:12px;background:#FFF;color:var(--brand-espresso);
+            border:1.5px solid var(--border-soft);border-radius:var(--radius-full);
+            font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;
+            justify-content:center;gap:8px;transition:all .2s;font-family:inherit;
         }
+        .btn-secondary-qr:hover { background:var(--bg-subtle);border-color:var(--brand-caramel); }
 
-        .color-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-body);
-        }
-
-        /* Action Buttons */
-        .btn-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 24px;
-        }
-
-        .btn-primary {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--brand-caramel), #A06429);
-            color: #FFFFFF;
-            border: none;
-            border-radius: var(--radius-full);
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 16px rgba(200, 141, 72, 0.25);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(200, 141, 72, 0.35);
-        }
-
-        .btn-secondary {
-            width: 100%;
-            padding: 12px;
-            background: #FFFFFF;
-            color: var(--brand-espresso);
-            border: 1.5px solid var(--border-soft);
-            border-radius: var(--radius-full);
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-subtle);
-            border-color: var(--brand-caramel);
-        }
-
-        /* ===== LIVE STAND PREVIEW AREA ===== */
-        .preview-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .preview-header-bar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .preview-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* ===== THE PHYSICAL PRINTABLE STAND CARD ===== */
+        /* QR Preview */
+        .qr-preview-area { display:flex;flex-direction:column;align-items:center; }
         .stand-card {
-            background: #FFFFFF;
-            width: 100%;
-            max-width: 440px;
-            border-radius: 28px;
-            padding: 44px 36px 40px;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid #ECE2D5;
-            position: relative;
-            transition: all 0.3s ease;
+            background:#FFF;width:100%;max-width:400px;border-radius:28px;
+            padding:40px 32px 36px;text-align:center;box-shadow:var(--shadow-lg);
+            border:1px solid #ECE2D5;position:relative;
         }
-
         .stand-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 20%;
-            right: 20%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--brand-caramel), transparent);
-            border-radius: 2px;
+            content:'';position:absolute;top:0;left:20%;right:20%;height:4px;
+            background:linear-gradient(90deg,transparent,var(--brand-caramel),transparent);border-radius:2px;
         }
-
-        /* Brand on Top of QR */
-        .brand-top-box {
-            margin-bottom: 22px;
-        }
-
         .stand-emblem {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 12px;
-            background: linear-gradient(135deg, var(--brand-caramel), var(--brand-gold));
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            box-shadow: 0 8px 22px rgba(200, 141, 72, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.6);
+            width:56px;height:56px;margin:0 auto 10px;
+            background:linear-gradient(135deg,var(--brand-caramel),var(--brand-gold));
+            border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;
+            box-shadow:0 8px 22px rgba(200,141,72,.3);border:2px solid rgba(255,255,255,.6);
         }
-
         .stand-brand-title {
-            font-family: var(--font-display);
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: var(--brand-espresso);
-            line-height: 1.1;
+            font-family:var(--font-display);font-size:24px;font-weight:800;
+            letter-spacing:2px;color:var(--brand-espresso);line-height:1.1;
         }
-
         .stand-brand-amharic {
-            font-family: var(--font-ethiopic);
-            font-size: 19px;
-            font-weight: 700;
-            color: var(--brand-caramel);
-            margin-top: 3px;
-            letter-spacing: 1px;
+            font-family:var(--font-ethiopic);font-size:16px;font-weight:700;
+            color:var(--brand-caramel);margin-top:3px;letter-spacing:1px;
         }
-
         .stand-table-badge {
-            display: inline-block;
-            background: #1B0F0A;
-            color: #FFD270;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            padding: 4px 14px;
-            border-radius: var(--radius-full);
-            margin-top: 10px;
-            text-transform: uppercase;
+            display:none;background:#1B0F0A;color:#FFD270;font-size:11px;font-weight:800;
+            letter-spacing:1px;padding:4px 14px;border-radius:var(--radius-full);margin-top:10px;
+            text-transform:uppercase;
         }
-
-        .stand-tagline {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 8px;
-            font-weight: 500;
-        }
-
-        /* QR Canvas Wrap */
+        .stand-tagline { font-size:12px;color:var(--text-muted);margin-top:8px;font-weight:500; }
         .qr-canvas-holder {
-            display: inline-block;
-            background: #FFFFFF;
-            padding: 16px;
-            border-radius: 20px;
-            border: 2px solid #EDE4D8;
-            margin: 18px 0;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-            position: relative;
+            display:inline-block;background:#FFF;padding:14px;border-radius:18px;
+            border:2px solid #EDE4D8;margin:16px 0;box-shadow:0 6px 20px rgba(0,0,0,.05);
         }
-
-        .qr-canvas-holder canvas {
-            display: block;
-            border-radius: 8px;
-        }
-
-        /* Instructions Under QR */
-        .stand-instructions {
-            margin-top: 8px;
-        }
-
-        .stand-scan-headline {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--brand-espresso);
-            margin-bottom: 2px;
-        }
-
+        .qr-canvas-holder canvas { display:block;border-radius:8px; }
+        .stand-scan-headline { font-size:15px;font-weight:700;color:var(--brand-espresso);margin-bottom:2px; }
         .stand-scan-amharic {
-            font-family: var(--font-ethiopic);
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--brand-caramel);
-            margin-bottom: 8px;
+            font-family:var(--font-ethiopic);font-size:13px;font-weight:600;
+            color:var(--brand-caramel);margin-bottom:8px;
         }
-
-        .stand-subtext {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 18px;
-        }
-
+        .stand-subtext { font-size:11px;color:var(--text-muted);margin-bottom:16px; }
         .stand-divider {
-            width: 48px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--brand-caramel), transparent);
-            margin: 0 auto 16px;
+            width:48px;height:2px;
+            background:linear-gradient(90deg,transparent,var(--brand-caramel),transparent);
+            margin:0 auto 14px;
         }
-
-        /* Features / Footnote on Stand */
-        .stand-footer-chips {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 6px;
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--text-muted);
-        }
-
+        .stand-footer-chips { display:flex;flex-wrap:wrap;justify-content:center;gap:6px; }
         .stand-chip {
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-soft);
-            padding: 4px 10px;
-            border-radius: var(--radius-full);
+            background:var(--bg-subtle);border:1px solid var(--border-soft);
+            padding:4px 10px;border-radius:var(--radius-full);
+            font-size:10px;font-weight:700;color:var(--text-muted);
         }
 
-        /* Toast notification */
+        /* ===== SETTINGS ===== */
+        .settings-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px; }
+        .settings-section {
+            background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius-md);
+            padding:24px;box-shadow:var(--shadow-sm);
+        }
+        .settings-section h3 {
+            font-family:var(--font-display);font-size:17px;font-weight:700;
+            color:var(--text-heading);margin-bottom:18px;display:flex;align-items:center;gap:10px;
+        }
+        .save-btn {
+            margin-top:18px;padding:10px 24px;
+            background:linear-gradient(135deg,var(--brand-caramel),#A06429);color:#FFF;
+            border:none;border-radius:var(--radius-full);font-size:13px;font-weight:700;
+            cursor:pointer;transition:all .2s;font-family:inherit;
+        }
+        .save-btn:hover { transform:translateY(-1px); }
+
+        .toggle-wrap { display:flex;align-items:center;gap:14px;margin-top:12px; }
+        .toggle-switch {
+            width:48px;height:26px;background:#CCC;border-radius:13px;
+            position:relative;cursor:pointer;transition:background .3s;
+        }
+        .toggle-switch.on { background:var(--success); }
+        .toggle-switch::after {
+            content:'';width:22px;height:22px;border-radius:50%;background:#FFF;
+            position:absolute;top:2px;left:2px;transition:transform .3s;box-shadow:0 2px 4px rgba(0,0,0,.2);
+        }
+        .toggle-switch.on::after { transform:translateX(22px); }
+        .toggle-label { font-size:13px;font-weight:600;color:var(--text-body); }
+
+        /* ===== ORDERS ===== */
+        .order-card {
+            background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius-md);
+            padding:20px;box-shadow:var(--shadow-sm);margin-bottom:14px;
+        }
+        .order-top { display:flex;justify-content:space-between;align-items:center;margin-bottom:14px; }
+        .order-id { font-weight:800;color:var(--text-heading);font-size:14px; }
+        .order-status {
+            font-size:11px;font-weight:700;padding:4px 12px;border-radius:var(--radius-full);
+        }
+        .order-status.active { background:var(--warning-bg);color:var(--warning); }
+        .order-status.completed { background:var(--success-bg);color:var(--success); }
+        .order-items { font-size:13px;color:var(--text-body);margin-bottom:12px; }
+        .order-items li { padding:4px 0;display:flex;justify-content:space-between; }
+        .order-total {
+            display:flex;justify-content:space-between;padding-top:10px;
+            border-top:1px solid var(--border-soft);font-weight:700;color:var(--text-heading);
+        }
+        .order-actions { display:flex;gap:8px;margin-top:12px; }
+        .order-btn {
+            padding:8px 16px;border-radius:var(--radius-full);font-size:12px;
+            font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all .2s;
+        }
+        .order-btn.complete { background:var(--success);color:#FFF; }
+        .order-btn.dismiss { background:var(--bg-subtle);color:var(--text-body);border:1px solid var(--border-soft); }
+
+        .empty-state {
+            text-align:center;padding:60px 20px;color:var(--text-muted);
+        }
+        .empty-icon { font-size:48px;margin-bottom:14px; }
+        .empty-state h3 { font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--text-heading);margin-bottom:6px; }
+
+        /* ===== TOAST ===== */
         .toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #1B0F0A;
-            color: #FFF6EC;
-            padding: 12px 24px;
-            border-radius: var(--radius-full);
-            font-size: 13px;
-            font-weight: 600;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-            z-index: 2000;
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid var(--brand-gold);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            position:fixed;bottom:24px;left:50%;
+            transform:translateX(-50%) translateY(100px);
+            background:#1B0F0A;color:#FFF6EC;padding:12px 24px;
+            border-radius:var(--radius-full);font-size:13px;font-weight:600;
+            box-shadow:0 8px 30px rgba(0,0,0,.35);z-index:9000;opacity:0;
+            transition:all .3s cubic-bezier(.16,1,.3,1);border:1px solid var(--brand-gold);
+            display:flex;align-items:center;gap:8px;
         }
+        .toast.show { transform:translateX(-50%) translateY(0);opacity:1; }
 
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        /* ===== PRINT STYLING (CLEAN STAND CARD ONLY) ===== */
+        /* Print */
         @media print {
-            body {
-                background: #FFFFFF !important;
-                padding: 0 !important;
-            }
-
-            .admin-nav,
-            .dashboard-header,
-            .settings-card,
-            .preview-header-bar,
-            .login-overlay,
-            .toast {
-                display: none !important;
-            }
-
-            .dashboard-container {
-                max-width: 100% !important;
-                padding: 0 !important;
-                margin: 0 !important;
-            }
-
-            .dashboard-grid {
-                display: block !important;
-            }
-
-            .preview-area {
-                display: flex !important;
-                justify-content: center !important;
-                align-items: center !important;
-                min-height: 100vh !important;
-            }
-
-            .stand-card {
-                box-shadow: none !important;
-                border: 2px dashed #BCA897 !important;
-                max-width: 420px !important;
-                margin: 40px auto !important;
-                page-break-inside: avoid;
-            }
+            body * { visibility:hidden; }
+            .stand-card, .stand-card * { visibility:visible; }
+            .stand-card { position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:none;border:2px dashed #BCA897; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== TOP ADMIN NAVIGATION ===== -->
-    <header class="admin-nav">
-        <a href="../" class="admin-brand">
-            <div class="admin-logo-emblem">☕</div>
-            <div class="admin-brand-text">
-                <h1>MIKA COFFEE <span class="admin-badge">Admin</span></h1>
-                <span>ሚካ ቡና · አስተዳዳሪ</span>
+<!-- ===== LOGIN OVERLAY ===== -->
+<div class="login-overlay" id="loginOverlay">
+    <div class="login-card" id="loginCard">
+        <div class="login-emblem">🔐</div>
+        <h2>Admin Portal</h2>
+        <div class="login-amharic">የአስተዳዳሪ መግቢያ</div>
+        <p>Enter the admin PIN to access the dashboard.</p>
+        <form onsubmit="handleLogin(event)">
+            <input type="password" id="adminPassword" class="login-input" placeholder="••••" maxlength="8" autofocus autocomplete="current-password">
+            <div class="login-error" id="loginError"></div>
+            <button type="submit" class="login-btn">Unlock Dashboard · ግባ</button>
+        </form>
+        <div class="login-hint">Default passcode: 1234</div>
+    </div>
+</div>
+
+<!-- ===== MOBILE TOP BAR ===== -->
+<div class="mobile-topbar">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <div class="mobile-topbar-brand">
+        <span>☕</span> <span>MIKA COFFEE</span>
+    </div>
+    <button class="hamburger" onclick="logoutAdmin()">🔒</button>
+</div>
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <a href="../" class="sidebar-brand-row">
+            <div class="sidebar-logo">☕</div>
+            <div>
+                <h1>MIKA COFFEE <span class="admin-pill">Admin</span></h1>
+                <div class="sidebar-brand-sub">ሚካ ቡና · አስተዳዳሪ</div>
             </div>
         </a>
-
-        <div class="admin-actions">
-            <a href="../" class="nav-btn">
-                <span>🍽️</span> <span>Live Menu</span>
-            </a>
-            <button class="nav-btn logout-btn" onclick="logoutAdmin()" title="Log out">
-                <span>🔒</span> <span>Lock</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- ===== PASSWORD GATEWAY (1234) ===== -->
-    <div class="login-overlay" id="loginOverlay">
-        <div class="login-card" id="loginCard">
-            <div class="login-emblem">🔐</div>
-            <h2>Admin Portal</h2>
-            <div class="login-amharic">የአስተዳዳሪ መግቢያ</div>
-            <p>Please enter the admin PIN to access table QR generation and settings.</p>
-
-            <form onsubmit="handleLogin(event)">
-                <div class="login-input-wrap">
-                    <input type="password" id="adminPassword" class="login-input" placeholder="••••" maxlength="8" autofocus autocomplete="current-password">
-                </div>
-                <div class="login-error" id="loginError"></div>
-                <button type="submit" class="login-btn">Unlock Portal · ግባ</button>
-            </form>
-            <div class="login-hint">Default passcode: 1234</div>
-        </div>
     </div>
 
-    <!-- ===== MAIN DASHBOARD ===== -->
-    <main class="dashboard-container">
-        <div class="dashboard-header">
-            <h2>Table QR Code Generator</h2>
-            <p>Design, customize, and print high-resolution table QR stands with the MIKA COFFEE brand.</p>
+    <nav class="sidebar-nav">
+        <button class="nav-item active" onclick="showPage('dashboard',this)">
+            <span class="nav-item-icon">📊</span>
+            <span class="nav-item-label">Dashboard</span>
+        </button>
+        <button class="nav-item" onclick="showPage('menu',this)">
+            <span class="nav-item-icon">🍽️</span>
+            <span class="nav-item-label">Menu Manager</span>
+            <span class="nav-badge" id="menuCountBadge">0</span>
+        </button>
+        <button class="nav-item" onclick="showPage('orders',this)">
+            <span class="nav-item-icon">📋</span>
+            <span class="nav-item-label">Orders</span>
+            <span class="nav-badge" id="ordersCountBadge">0</span>
+        </button>
+        <button class="nav-item" onclick="showPage('qr',this)">
+            <span class="nav-item-icon">📱</span>
+            <span class="nav-item-label">QR Generator</span>
+        </button>
+        <button class="nav-item" onclick="showPage('settings',this)">
+            <span class="nav-item-icon">⚙️</span>
+            <span class="nav-item-label">Settings</span>
+        </button>
+
+        <div style="flex:1"></div>
+
+        <a href="../" class="nav-item" style="text-decoration:none;">
+            <span class="nav-item-icon">🌐</span>
+            <span class="nav-item-label">View Live Menu</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <button class="sidebar-footer-btn" onclick="logoutAdmin()">
+            <span>🔒</span> Lock Admin · ቆልፍ
+        </button>
+    </div>
+</aside>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="main-content">
+
+    <!-- ======== DASHBOARD PAGE ======== -->
+    <section class="page-section active" id="page-dashboard">
+        <div class="page-header">
+            <h2>Dashboard</h2>
+            <span class="page-header-am">ዳሽቦርድ</span>
+            <p>Welcome back! Here's your MIKA COFFEE overview.</p>
         </div>
 
-        <div class="dashboard-grid">
-            <!-- Settings Panel -->
-            <section class="settings-card">
-                <div class="card-title">
-                    <span class="card-title-icon">⚙️</span>
-                    <span>QR Stand Customization</span>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-card-top">
+                    <div class="stat-icon menu">🍽️</div>
+                    <span class="stat-change neutral">Total</span>
                 </div>
+                <div class="stat-value" id="statMenuItems">0</div>
+                <div class="stat-label">Menu Items · የምግብ ዝርዝር</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-top">
+                    <div class="stat-icon cat">📂</div>
+                    <span class="stat-change neutral">Active</span>
+                </div>
+                <div class="stat-value" id="statCategories">7</div>
+                <div class="stat-label">Categories · ምድቦች</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-top">
+                    <div class="stat-icon orders">📋</div>
+                    <span class="stat-change up">Today</span>
+                </div>
+                <div class="stat-value" id="statOrders">0</div>
+                <div class="stat-label">Active Orders · ያልተጠናቀቁ ትዕዛዞች</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-top">
+                    <div class="stat-icon revenue">💰</div>
+                    <span class="stat-change up">ETB</span>
+                </div>
+                <div class="stat-value" id="statRevenue">0</div>
+                <div class="stat-label">Est. Revenue · ግምት ገቢ</div>
+            </div>
+        </div>
 
-                <!-- Menu URL -->
+        <div class="quick-actions">
+            <button class="qa-btn primary" onclick="showPage('menu',document.querySelectorAll('.nav-item')[1]);openAddModal()">➕ Add Menu Item</button>
+            <button class="qa-btn" onclick="showPage('qr',document.querySelectorAll('.nav-item')[3])">📱 Generate QR</button>
+            <button class="qa-btn" onclick="showPage('orders',document.querySelectorAll('.nav-item')[2])">📋 View Orders</button>
+            <button class="qa-btn" onclick="window.open('../','_blank')">🌐 Open Live Menu</button>
+        </div>
+
+        <div class="activity-card">
+            <div class="card-heading"><span class="card-heading-icon">⏱️</span> Recent Activity · የቅርብ ጊዜ</div>
+            <div id="activityFeed">
+                <div class="activity-item">
+                    <div class="activity-dot blue">📂</div>
+                    <div class="activity-text"><strong>Menu loaded</strong> — All items synced from data store.</div>
+                    <span class="activity-time">Just now</span>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot green">✅</div>
+                    <div class="activity-text"><strong>Admin logged in</strong> — Dashboard session started.</div>
+                    <span class="activity-time">Just now</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== MENU MANAGER PAGE ======== -->
+    <section class="page-section" id="page-menu">
+        <div class="page-header">
+            <h2>Menu Manager</h2>
+            <span class="page-header-am">የምግብ ዝርዝር አስተዳዳሪ</span>
+            <p>Add, edit, and remove menu items. Changes are saved locally.</p>
+        </div>
+
+        <div class="table-toolbar">
+            <input type="text" class="table-search" placeholder="🔍 Search items..." id="menuTableSearch" oninput="renderMenuTable()">
+            <select class="filter-select" id="menuCatFilter" onchange="renderMenuTable()">
+                <option value="all">All Categories</option>
+                <option value="fast-food">🍔 Fast Food</option>
+                <option value="breakfast">🍳 Breakfast</option>
+                <option value="lunch">🍛 Lunch</option>
+                <option value="pasta">🍝 Pasta</option>
+                <option value="juice">🥤 Juices & Shakes</option>
+                <option value="mojito">🍹 Mojitos</option>
+                <option value="drinks">☕ Drinks & Coffee</option>
+            </select>
+            <button class="qa-btn primary" onclick="openAddModal()">➕ Add Item</button>
+        </div>
+
+        <div class="data-table-wrap">
+            <div class="table-scroll">
+                <table class="data-table" id="menuTable">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Item Name</th>
+                            <th>Category</th>
+                            <th>Diet</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="menuTableBody"></tbody>
+                </table>
+            </div>
+            <div class="table-footer">
+                <span id="menuTableCount">0 items</span>
+                <span style="font-size:11px;color:var(--text-muted)">Data stored in localStorage</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== ORDERS PAGE ======== -->
+    <section class="page-section" id="page-orders">
+        <div class="page-header">
+            <h2>Orders</h2>
+            <span class="page-header-am">ትዕዛዞች</span>
+            <p>View active and completed customer order trays.</p>
+        </div>
+
+        <div class="table-toolbar">
+            <button class="qa-btn" onclick="renderOrders()" style="margin-left:auto">🔄 Refresh</button>
+        </div>
+
+        <div id="ordersContainer">
+            <div class="empty-state">
+                <div class="empty-icon">📋</div>
+                <h3>No orders yet</h3>
+                <p>Orders from the customer menu tray will appear here.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== QR GENERATOR PAGE ======== -->
+    <section class="page-section" id="page-qr">
+        <div class="page-header">
+            <h2>QR Code Generator</h2>
+            <span class="page-header-am">የ QR ኮድ ማመንጫ</span>
+            <p>Design and print branded table QR stands for MIKA COFFEE.</p>
+        </div>
+
+        <div class="qr-grid">
+            <div class="qr-settings-card">
+                <div class="card-heading"><span class="card-heading-icon">⚙️</span> QR Stand Customization</div>
+
                 <div class="form-group">
                     <label class="form-label" for="menuUrlInput">Target Menu URL</label>
-                    <input type="url" id="menuUrlInput" class="form-input" value="https://yetnora1.github.io/MIKA-Coffee/" placeholder="https://..." oninput="generateQR()">
-                    <div class="form-hint">Customers will instantly open this URL when scanning the QR code.</div>
+                    <input type="url" id="menuUrlInput" class="form-input" value="https://yetnora1.github.io/MIKA-Coffee/" oninput="generateQR()">
+                    <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Customers see this URL when scanning.</div>
                 </div>
 
-                <!-- Table Identifier -->
                 <div class="form-group">
-                    <label class="form-label" for="tableInput">Table Label / Identifier (Optional)</label>
-                    <input type="text" id="tableInput" class="form-input" placeholder="e.g. Table 01, VIP Lounge, Counter" oninput="updateTableBadge()">
+                    <label class="form-label" for="tableInput">Table Label (Optional)</label>
+                    <input type="text" id="tableInput" class="form-input" placeholder="e.g. Table 01, VIP Lounge" oninput="updateTableBadge()">
                     <div class="preset-pills">
-                        <button type="button" class="preset-pill" onclick="setTablePreset('')">All Tables (General)</button>
-                        <button type="button" class="preset-pill" onclick="setTablePreset('Table 01')">Table 01</button>
-                        <button type="button" class="preset-pill" onclick="setTablePreset('Table 02')">Table 02</button>
-                        <button type="button" class="preset-pill" onclick="setTablePreset('Table 03')">Table 03</button>
-                        <button type="button" class="preset-pill" onclick="setTablePreset('VIP Area')">VIP Area</button>
+                        <button class="preset-pill" onclick="setTablePreset('')">All Tables</button>
+                        <button class="preset-pill" onclick="setTablePreset('Table 01')">Table 01</button>
+                        <button class="preset-pill" onclick="setTablePreset('Table 02')">Table 02</button>
+                        <button class="preset-pill" onclick="setTablePreset('Table 03')">Table 03</button>
+                        <button class="preset-pill" onclick="setTablePreset('VIP Area')">VIP Area</button>
                     </div>
                 </div>
 
-                <!-- QR Code Dark Color Theme -->
                 <div class="form-group">
-                    <label class="form-label">QR Code Accent Color</label>
+                    <label class="form-label">QR Accent Color</label>
                     <div class="color-options">
-                        <div class="color-option active" onclick="setColorTheme('#1B0F0A', this)">
-                            <div class="color-circle" style="background: #1B0F0A;"></div>
-                            <div class="color-label">Espresso Dark</div>
+                        <div class="color-option active" onclick="setColorTheme('#1B0F0A',this)">
+                            <div class="color-circle" style="background:#1B0F0A"></div>
+                            <div class="color-label">Espresso</div>
                         </div>
-                        <div class="color-option" onclick="setColorTheme('#C88D48', this)">
-                            <div class="color-circle" style="background: #C88D48;"></div>
-                            <div class="color-label">Caramel Gold</div>
+                        <div class="color-option" onclick="setColorTheme('#C88D48',this)">
+                            <div class="color-circle" style="background:#C88D48"></div>
+                            <div class="color-label">Caramel</div>
                         </div>
-                        <div class="color-option" onclick="setColorTheme('#2E1B13', this)">
-                            <div class="color-circle" style="background: #2E1B13;"></div>
-                            <div class="color-label">Roast Brown</div>
+                        <div class="color-option" onclick="setColorTheme('#2E1B13',this)">
+                            <div class="color-circle" style="background:#2E1B13"></div>
+                            <div class="color-label">Roast</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Wi-Fi note toggle -->
                 <div class="form-group">
-                    <label class="form-label">Bottom Information Chips</label>
+                    <label class="form-label">Bottom Info Chips</label>
                     <input type="text" id="wifiInput" class="form-input" value="📶 Free Wi-Fi · 💳 Mobile Banking · ☕ Fresh Daily" oninput="updateFooterChips()">
                 </div>
 
-                <!-- Action Buttons -->
                 <div class="btn-stack">
-                    <button type="button" class="btn-primary" onclick="window.print()">
-                        <span>🖨️</span> <span>Print Table Stand (PDF)</span>
-                    </button>
-                    <button type="button" class="btn-secondary" onclick="downloadQRImage()">
-                        <span>📥</span> <span>Download QR Image (PNG)</span>
-                    </button>
-                    <button type="button" class="btn-secondary" onclick="copyMenuUrl()">
-                        <span>📋</span> <span>Copy Menu Link</span>
-                    </button>
+                    <button class="btn-primary-qr" onclick="window.print()">🖨️ Print Table Stand</button>
+                    <button class="btn-secondary-qr" onclick="downloadQRImage()">📥 Download QR Image (PNG)</button>
+                    <button class="btn-secondary-qr" onclick="copyMenuUrl()">📋 Copy Menu Link</button>
                 </div>
-            </section>
+            </div>
 
-            <!-- Live Printable Table Stand Card Preview -->
-            <section class="preview-area">
-                <div class="preview-header-bar">
-                    <span class="preview-title">Table Stand Preview · የጠረጴዛ ስታንድ እይታ</span>
-                </div>
-
-                <!-- Physical Card -->
+            <div class="qr-preview-area">
+                <div style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px">Table Stand Preview · የጠረጴዛ ስታንድ</div>
                 <div class="stand-card" id="standCard">
-                    <!-- Brand on Top of QR -->
-                    <div class="brand-top-box">
+                    <div>
                         <div class="stand-emblem">☕</div>
                         <h2 class="stand-brand-title">MIKA COFFEE</h2>
                         <div class="stand-brand-amharic">ሚካ ቡና</div>
-                        <div class="stand-table-badge" id="previewTableBadge" style="display: none;">Table 01</div>
+                        <div class="stand-table-badge" id="previewTableBadge">Table 01</div>
                         <p class="stand-tagline">Authentic Flavors · Artisan Coffee · Fresh Food</p>
                     </div>
-
-                    <!-- The QR Canvas -->
                     <div class="qr-canvas-holder">
                         <canvas id="qrCanvas"></canvas>
                     </div>
-
-                    <!-- Instructions below QR -->
-                    <div class="stand-instructions">
+                    <div>
                         <div class="stand-scan-headline">Scan for Digital Menu</div>
                         <div class="stand-scan-amharic">ሜኑን ለማየት በስልክዎ ይቃኙ</div>
-                        <div class="stand-subtext">Point your mobile camera at the QR code above</div>
+                        <div class="stand-subtext">Point your mobile camera at the QR code</div>
                         <div class="stand-divider"></div>
                         <div class="stand-footer-chips" id="previewChips">
                             <span class="stand-chip">📶 Free Wi-Fi</span>
-                            <span class="stand-chip">💳 Telebirr &amp; CBE</span>
-                            <span class="stand-chip">✨ Fresh Daily</span>
+                            <span class="stand-chip">💳 Mobile Banking</span>
+                            <span class="stand-chip">☕ Fresh Daily</span>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
-    </main>
+    </section>
 
-    <!-- Toast Notice -->
-    <div class="toast" id="toastNotice">
-        <span>✓</span> <span id="toastMsg">Menu link copied to clipboard!</span>
+    <!-- ======== SETTINGS PAGE ======== -->
+    <section class="page-section" id="page-settings">
+        <div class="page-header">
+            <h2>Settings</h2>
+            <span class="page-header-am">ቅንብሮች</span>
+            <p>Manage admin access, business info, and cafe status.</p>
+        </div>
+
+        <div class="settings-grid">
+            <div class="settings-section">
+                <h3>🔐 Admin PIN · የአስተዳዳሪ ፒን</h3>
+                <div class="form-group">
+                    <label class="form-label">Current PIN</label>
+                    <input type="password" class="form-input" id="settingsCurrentPin" placeholder="Enter current PIN">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">New PIN</label>
+                    <input type="password" class="form-input" id="settingsNewPin" placeholder="Enter new PIN" maxlength="8">
+                </div>
+                <button class="save-btn" onclick="changePin()">Update PIN</button>
+            </div>
+
+            <div class="settings-section">
+                <h3>☕ Cafe Status · የካፌ ሁኔታ</h3>
+                <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">Toggle your cafe's open/closed status. Synced to the main menu page.</p>
+                <div class="toggle-wrap">
+                    <div class="toggle-switch on" id="statusToggle" onclick="toggleCafeStatus()"></div>
+                    <span class="toggle-label" id="statusLabel">Open · ክፍት ነው</span>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>📞 Business Info · የቢዝነስ መረጃ</h3>
+                <div class="form-group">
+                    <label class="form-label">Cafe Name</label>
+                    <input type="text" class="form-input" id="settingsCafeName" value="MIKA COFFEE">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="text" class="form-input" id="settingsPhone" placeholder="+251 9XX XXX XXXX">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Wi-Fi Password</label>
+                    <input type="text" class="form-input" id="settingsWifi" placeholder="Enter Wi-Fi password">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Business Hours</label>
+                    <input type="text" class="form-input" id="settingsHours" value="6:00 AM — 10:00 PM">
+                </div>
+                <button class="save-btn" onclick="saveBusinessInfo()">Save Info</button>
+            </div>
+
+            <div class="settings-section">
+                <h3>🗑️ Data Management · የመረጃ አስተዳደር</h3>
+                <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">Export or reset your locally stored menu data.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:10px">
+                    <button class="qa-btn" onclick="exportData()">📤 Export Data (JSON)</button>
+                    <button class="qa-btn" style="color:var(--danger);border-color:var(--danger)" onclick="resetData()">🗑️ Reset All Data</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ===== ITEM EDIT/ADD MODAL ===== -->
+<div class="modal-overlay" id="itemModal">
+    <div class="modal-box">
+        <h3 class="modal-title" id="modalTitle">Add Menu Item</h3>
+        <input type="hidden" id="editItemId">
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Name (English)</label>
+                <input type="text" class="form-input" id="modalNameEn" placeholder="e.g. Mika Burger">
+            </div>
+            <div class="form-group">
+                <label class="form-label">ስም (አማርኛ)</label>
+                <input type="text" class="form-input" id="modalNameAm" placeholder="e.g. ሚካ በርገር">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Description</label>
+            <input type="text" class="form-input" id="modalDesc" placeholder="Short item description...">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Price (ETB)</label>
+                <input type="number" class="form-input" id="modalPrice" placeholder="450">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Category</label>
+                <select class="form-select" id="modalCategory">
+                    <option value="fast-food">🍔 Fast Food</option>
+                    <option value="breakfast">🍳 Breakfast</option>
+                    <option value="lunch">🍛 Lunch</option>
+                    <option value="pasta">🍝 Pasta</option>
+                    <option value="juice">🥤 Juices & Shakes</option>
+                    <option value="mojito">🍹 Mojitos</option>
+                    <option value="drinks">☕ Drinks & Coffee</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Diet Type</label>
+                <select class="form-select" id="modalDiet">
+                    <option value="meat">🥩 Non-Fasting (የፍስክ)</option>
+                    <option value="fasting">🌱 Fasting (የፆም)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Image URL (Optional)</label>
+                <input type="url" class="form-input" id="modalImage" placeholder="https://...">
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="modal-btn cancel" onclick="closeItemModal()">Cancel</button>
+            <button class="modal-btn save" onclick="saveItem()">Save Item</button>
+        </div>
     </div>
+</div>
 
-    <!-- ===== JAVASCRIPT LOGIC ===== -->
-    <script>
-        const REQUIRED_PASS = '1234';
-        let currentQRColor = '#1B0F0A';
+<!-- ===== DELETE CONFIRM MODAL ===== -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal-box" style="max-width:400px;text-align:center">
+        <div style="font-size:48px;margin-bottom:14px">🗑️</div>
+        <h3 class="modal-title" style="text-align:center">Delete Item?</h3>
+        <p style="color:var(--text-muted);margin-bottom:24px">This cannot be undone. The item will be permanently removed.</p>
+        <input type="hidden" id="deleteItemId">
+        <div class="modal-actions" style="justify-content:center">
+            <button class="modal-btn cancel" onclick="closeDeleteModal()">Cancel</button>
+            <button class="modal-btn danger" onclick="confirmDelete()">Delete</button>
+        </div>
+    </div>
+</div>
 
-        // Authentication Checking
-        function checkAuth() {
-            const isAuth = sessionStorage.getItem('mika_admin_auth') === 'true';
-            const overlay = document.getElementById('loginOverlay');
-            if (isAuth) {
-                overlay.classList.add('hidden');
-            } else {
-                overlay.classList.remove('hidden');
-                setTimeout(() => {
-                    document.getElementById('adminPassword').focus();
-                }, 200);
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toastNotice">
+    <span>✓</span> <span id="toastMsg">Done!</span>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// ==================== MENU DATA ====================
+const DEFAULT_MENU = [
+    // --- Fast Food ---
+    {id:1,nameEn:"Mika Burger",nameAm:"ሚካ በርገር",desc:"Juicy grilled beef patty with cheddar, caramelized onions, crisp lettuce & house Mika sauce.",price:450,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&auto=format&fit=crop&q=80"},
+    {id:2,nameEn:"Cheese Burger",nameAm:"ቺዝ በርገር",desc:"Double melted cheese over grilled beef with crunchy lettuce, pickles, and creamy dressing.",price:450,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&auto=format&fit=crop&q=80"},
+    {id:3,nameEn:"Mika Original Wrap",nameAm:"ሚካ ኦርጅናል ራፕ",desc:"Warm toasted wrap with seasoned grilled meats, fresh salad, and garlic yogurt sauce.",price:300,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&auto=format&fit=crop&q=80"},
+    {id:4,nameEn:"Special Original Wrap",nameAm:"ስፔሻል ኦርጅናል ራፕ",desc:"Golden seasoned wrap with crispy fillings, fresh crunchy vegetables, and tangy sauce.",price:250,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=400&auto=format&fit=crop&q=80"},
+    {id:5,nameEn:"Egg Scramble",nameAm:"እንቁላል ስክራምብል",desc:"Silky farm eggs gently scrambled with butter and fresh herbs, served hot.",price:200,category:"fast-food",diet:"fasting",image:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&auto=format&fit=crop&q=80"},
+    {id:6,nameEn:"Normal Original Wrap",nameAm:"ኖርማል ኦርጅናል ራፕ",desc:"Healthy vegetarian wrap packed with sautéed peppers, onions, and herbs.",price:150,category:"fast-food",diet:"fasting",image:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&auto=format&fit=crop&q=80"},
+    {id:7,nameEn:"Club Sandwich",nameAm:"ክለብ ሳንድዊች",desc:"Triple decker toasted sandwich with roasted chicken, egg, cheese, and fresh salad.",price:400,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&auto=format&fit=crop&q=80"},
+    // --- Breakfast ---
+    {id:8,nameEn:"Afuun",nameAm:"አፉኝ",desc:"Traditional hot breakfast sautéed with pure spiced butter (nitir kibe) and tender meat.",price:450,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80"},
+    {id:9,nameEn:"Normal Chechebsa",nameAm:"ኖርማል ጨጨብሳ",desc:"Freshly torn flatbread sautéed with berbere and aromatic herbal butter.",price:250,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400&auto=format&fit=crop&q=80"},
+    {id:10,nameEn:"Special Chechebsa",nameAm:"ስፔሻል ጨጨብሳ",desc:"Torn bread in spiced butter, garnished with natural honey and fresh curd.",price:300,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&auto=format&fit=crop&q=80"},
+    {id:11,nameEn:"Quanta Firfir",nameAm:"ቋንጣ ፍርፍር",desc:"Dried cured beef stewed with onion, garlic, and berbere, tossed with fresh injera.",price:400,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=400&auto=format&fit=crop&q=80"},
+    {id:12,nameEn:"Tibs Firfir",nameAm:"ጥብስ ፍርፍር",desc:"Hot seared beef cubes with caramelized onions, jalapeños, and berbere injera.",price:400,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80"},
+    {id:13,nameEn:"Special Ful",nameAm:"ስፔሻል ፉል",desc:"Creamy fava bean stew topped with veggies, boiled egg, cheese, and warm bread.",price:250,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop&q=80"},
+    {id:14,nameEn:"Enqulal Ful",nameAm:"እንቁላል ፉል",desc:"Hearty mashed fava beans pan-cooked with scrambled eggs and olive oil.",price:230,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1510693206972-df098062cb71?w=400&auto=format&fit=crop&q=80"},
+    {id:15,nameEn:"Ful",nameAm:"ፉል",desc:"Simmered fava beans with olive oil, raw onion, and fresh green chili.",price:200,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&auto=format&fit=crop&q=80"},
+    {id:16,nameEn:"Mika Firfir (Fasting)",nameAm:"ሚካ ፍርፍር | የፆም",desc:"Aromatic spicy vegan injera stew with onions, garlic, and berbere.",price:350,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop&q=80"},
+    {id:17,nameEn:"Mika Firfir (Non-Fasting)",nameAm:"ሚካ ፍርፍር | የፍስክ",desc:"Injera stewed in rich spiced beef gravy with clarified herbal butter.",price:450,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=400&auto=format&fit=crop&q=80"},
+    {id:18,nameEn:"Omelet",nameAm:"ኦምሌት",desc:"Fluffy rolled omelet with tomatoes, onions, green peppers, and cheese.",price:300,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&auto=format&fit=crop&q=80"},
+    {id:19,nameEn:"Honey Omelet",nameAm:"ማር ኦምሌት",desc:"Sweet fluffy omelet drizzled with pure natural honey.",price:350,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&auto=format&fit=crop&q=80"},
+    {id:20,nameEn:"Kinche",nameAm:"ቅንጨ",desc:"Coarsely cracked wheat cooked with spiced butter.",price:150,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400&auto=format&fit=crop&q=80"},
+    {id:21,nameEn:"Enqulal (Boiled Egg)",nameAm:"እንቁላል (የተቀቀለ)",desc:"Fresh farm-boiled eggs, served with mustard or pepper.",price:100,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1510693206972-df098062cb71?w=400&auto=format&fit=crop&q=80"},
+    {id:22,nameEn:"Genfo",nameAm:"ገንፎ",desc:"Traditional thick porridge drizzled with spiced butter and berbere.",price:150,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&auto=format&fit=crop&q=80"},
+    {id:23,nameEn:"Enkulal Sandwich",nameAm:"እንቁላል ሳንድዊች",desc:"Toasted bread sandwich stuffed with seasoned scrambled eggs.",price:180,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&auto=format&fit=crop&q=80"},
+    // --- Lunch ---
+    {id:24,nameEn:"Special Tibs",nameAm:"ስፔሻል ጥብስ",desc:"Premium cubed beef sautéed with rosemary, onions, and jalapeño peppers.",price:550,category:"lunch",diet:"meat",image:"https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80"},
+    {id:25,nameEn:"Normal Tibs",nameAm:"ኖርማል ጥብስ",desc:"Classic pan-fried beef cubes with onions and green peppers.",price:450,category:"lunch",diet:"meat",image:"https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80"},
+    {id:26,nameEn:"Derek Tibs",nameAm:"ደረቅ ጥብስ",desc:"Dry-fried crispy beef tibs with minimal sauce, full of flavor.",price:500,category:"lunch",diet:"meat",image:"https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80"},
+    {id:27,nameEn:"Kitfo",nameAm:"ክትፎ",desc:"Traditional Ethiopian steak tartare minced with spiced butter and mitmita.",price:600,category:"lunch",diet:"meat",image:"https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80"},
+    {id:28,nameEn:"Special Shiro",nameAm:"ስፔሻል ሽሮ",desc:"Smooth ground chickpea stew with garlic, onions, and spiced butter.",price:300,category:"lunch",diet:"fasting",image:"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop&q=80"},
+    {id:29,nameEn:"Beyaynetu",nameAm:"በያይነቱ",desc:"Mixed fasting platter with shiro, gomen, misir, and fresh injera.",price:400,category:"lunch",diet:"fasting",image:"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop&q=80"},
+    // --- Pasta ---
+    {id:30,nameEn:"Mika Special Pasta",nameAm:"ሚካ ስፔሻል ፓስታ",desc:"House special pasta in creamy tomato sauce with fresh herbs.",price:350,category:"pasta",diet:"fasting",image:"https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&auto=format&fit=crop&q=80"},
+    {id:31,nameEn:"Pasta with Meat Sauce",nameAm:"ፓስታ ከስጋ ሶስ ጋር",desc:"Al dente pasta smothered in rich slow-cooked meat bolognese.",price:400,category:"pasta",diet:"meat",image:"https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&auto=format&fit=crop&q=80"},
+    {id:32,nameEn:"Lasagna",nameAm:"ላዛኛ",desc:"Layered pasta baked with meat sauce, béchamel, and melted cheese.",price:500,category:"pasta",diet:"meat",image:"https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&auto=format&fit=crop&q=80"},
+    // --- Juices ---
+    {id:33,nameEn:"Avocado Juice",nameAm:"አቮካዶ ጁስ",desc:"Thick creamy avocado blended with milk and a touch of honey.",price:150,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1546173159-315724a31696?w=400&auto=format&fit=crop&q=80"},
+    {id:34,nameEn:"Mango Juice",nameAm:"ማንጎ ጁስ",desc:"Sweet tropical mango blended fresh to order.",price:120,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1546173159-315724a31696?w=400&auto=format&fit=crop&q=80"},
+    {id:35,nameEn:"Papaya Juice",nameAm:"ፓፓያ ጁስ",desc:"Fresh ripe papaya blended smooth with a hint of lime.",price:120,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1546173159-315724a31696?w=400&auto=format&fit=crop&q=80"},
+    {id:36,nameEn:"Mixed Juice (Spris)",nameAm:"ስፕሪስ",desc:"Layered combination of avocado, mango, and papaya juices.",price:200,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1546173159-315724a31696?w=400&auto=format&fit=crop&q=80"},
+    {id:37,nameEn:"Detox Green Juice",nameAm:"ዲቶክስ ጁስ",desc:"Healthy blend of spinach, ginger, lemon, and apple.",price:180,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1546173159-315724a31696?w=400&auto=format&fit=crop&q=80"},
+    // --- Mojitos ---
+    {id:38,nameEn:"Classic Mojito",nameAm:"ክላሲክ ሞጂቶ",desc:"Fresh mint, lime, sugar, and soda water over crushed ice.",price:200,category:"mojito",diet:"fasting",image:"https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&auto=format&fit=crop&q=80"},
+    {id:39,nameEn:"Strawberry Mojito",nameAm:"ስትሮቤሪ ሞጂቶ",desc:"Classic mojito infused with fresh muddled strawberries.",price:220,category:"mojito",diet:"fasting",image:"https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&auto=format&fit=crop&q=80"},
+    {id:40,nameEn:"Passion Fruit Mojito",nameAm:"ፓሽን ፍሩት ሞጂቶ",desc:"Tropical passion fruit blended into a refreshing mojito.",price:220,category:"mojito",diet:"fasting",image:"https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&auto=format&fit=crop&q=80"},
+    // --- Drinks & Coffee ---
+    {id:41,nameEn:"Macchiato",nameAm:"ማኪያቶ",desc:"Rich Ethiopian espresso topped with foamed milk.",price:80,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400&auto=format&fit=crop&q=80"},
+    {id:42,nameEn:"Cappuccino",nameAm:"ካፑቺኖ",desc:"Smooth espresso with steamed milk and velvety foam.",price:120,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400&auto=format&fit=crop&q=80"},
+    {id:43,nameEn:"Jebena Coffee",nameAm:"ጀበና ቡና",desc:"Traditional Ethiopian coffee ceremony brew from clay pot.",price:60,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400&auto=format&fit=crop&q=80"},
+    {id:44,nameEn:"Tea (Shai)",nameAm:"ሻይ",desc:"Fresh brewed black tea with optional milk and sugar.",price:50,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400&auto=format&fit=crop&q=80"},
+    {id:45,nameEn:"Hot Chocolate",nameAm:"ሆት ቾኮሌት",desc:"Rich creamy hot chocolate topped with whipped cream.",price:150,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400&auto=format&fit=crop&q=80"},
+    {id:46,nameEn:"Fresh Milk",nameAm:"ወተት",desc:"Chilled fresh whole milk served cold.",price:80,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400&auto=format&fit=crop&q=80"},
+    {id:47,nameEn:"Soft Drinks",nameAm:"ለስላሳ መጠጦች",desc:"Coca-Cola, Sprite, Fanta, and Mirinda.",price:60,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400&auto=format&fit=crop&q=80"},
+    {id:48,nameEn:"Water (Ambo / Normal)",nameAm:"ውሃ (አምቦ / ንፁህ)",desc:"Mineral water (Ambo sparkling or still).",price:40,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400&auto=format&fit=crop&q=80"},
+];
+
+const CATEGORY_ICONS = {
+    'fast-food':'🍔','breakfast':'🍳','lunch':'🍛','pasta':'🍝',
+    'juice':'🥤','mojito':'🍹','drinks':'☕'
+};
+const CATEGORY_NAMES = {
+    'fast-food':'Fast Food','breakfast':'Breakfast','lunch':'Lunch','pasta':'Pasta',
+    'juice':'Juices & Shakes','mojito':'Mojitos','drinks':'Drinks & Coffee'
+};
+
+// ==================== STATE ====================
+let menuData = [];
+let orders = [];
+let nextId = 100;
+
+function loadData() {
+    const saved = localStorage.getItem('mika_menu_data');
+    if (saved) {
+        try { menuData = JSON.parse(saved); } catch(e) { menuData = [...DEFAULT_MENU]; }
+    } else {
+        menuData = [...DEFAULT_MENU];
+    }
+    nextId = Math.max(...menuData.map(i=>i.id), 99) + 1;
+
+    const savedOrders = localStorage.getItem('mika_orders');
+    if (savedOrders) {
+        try { orders = JSON.parse(savedOrders); } catch(e) { orders = []; }
+    }
+
+    // Also try to read the customer tray
+    const tray = localStorage.getItem('mika_tray');
+    if (tray) {
+        try {
+            const trayItems = JSON.parse(tray);
+            if (trayItems.length > 0 && !orders.find(o => o.status === 'active')) {
+                orders.push({
+                    id: 'ORD-' + Date.now().toString(36).toUpperCase(),
+                    items: trayItems,
+                    total: trayItems.reduce((s,i) => s + (i.price * (i.qty||1)), 0),
+                    status: 'active',
+                    time: new Date().toLocaleTimeString()
+                });
+                saveOrders();
             }
+        } catch(e) {}
+    }
+}
+
+function saveMenu() { localStorage.setItem('mika_menu_data', JSON.stringify(menuData)); }
+function saveOrders() { localStorage.setItem('mika_orders', JSON.stringify(orders)); }
+
+// ==================== AUTH ====================
+function getPin() { return localStorage.getItem('mika_admin_pin') || '1234'; }
+
+function checkAuth() {
+    const isAuth = sessionStorage.getItem('mika_admin_auth') === 'true';
+    const overlay = document.getElementById('loginOverlay');
+    if (isAuth) {
+        overlay.classList.add('hidden');
+    } else {
+        overlay.classList.remove('hidden');
+        setTimeout(() => document.getElementById('adminPassword').focus(), 200);
+    }
+}
+
+function handleLogin(e) {
+    e.preventDefault();
+    const inp = document.getElementById('adminPassword');
+    const err = document.getElementById('loginError');
+    const card = document.getElementById('loginCard');
+    if (inp.value.trim() === getPin()) {
+        sessionStorage.setItem('mika_admin_auth', 'true');
+        err.textContent = '';
+        document.getElementById('loginOverlay').classList.add('hidden');
+        showToast('Welcome to MIKA COFFEE Admin · እንኳን ደህና መጡ');
+        initDashboard();
+    } else {
+        err.textContent = 'Incorrect passcode. Please try again.';
+        card.classList.remove('shake');
+        void card.offsetWidth;
+        card.classList.add('shake');
+        inp.value = '';
+        inp.focus();
+    }
+}
+
+function logoutAdmin() {
+    sessionStorage.removeItem('mika_admin_auth');
+    document.getElementById('loginOverlay').classList.remove('hidden');
+    document.getElementById('adminPassword').value = '';
+    document.getElementById('loginError').textContent = '';
+    document.getElementById('adminPassword').focus();
+    closeSidebar();
+}
+
+// ==================== SIDEBAR / NAV ====================
+function showPage(pageId, navBtn) {
+    document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + pageId).classList.add('active');
+    document.querySelectorAll('.sidebar-nav .nav-item').forEach(n => n.classList.remove('active'));
+    if (navBtn) navBtn.classList.add('active');
+    closeSidebar();
+
+    if (pageId === 'qr') setTimeout(generateQR, 100);
+    if (pageId === 'orders') renderOrders();
+    if (pageId === 'menu') renderMenuTable();
+    if (pageId === 'settings') loadSettings();
+}
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarBackdrop').classList.toggle('show');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarBackdrop').classList.remove('show');
+}
+
+// ==================== DASHBOARD ====================
+function updateStats() {
+    document.getElementById('statMenuItems').textContent = menuData.length;
+    const cats = new Set(menuData.map(i => i.category));
+    document.getElementById('statCategories').textContent = cats.size;
+    const activeOrders = orders.filter(o => o.status === 'active');
+    document.getElementById('statOrders').textContent = activeOrders.length;
+    const totalRev = orders.filter(o=>o.status==='completed').reduce((s,o)=>s+o.total,0);
+    document.getElementById('statRevenue').textContent = totalRev.toLocaleString();
+    document.getElementById('menuCountBadge').textContent = menuData.length;
+    document.getElementById('ordersCountBadge').textContent = activeOrders.length;
+}
+
+// ==================== MENU TABLE ====================
+function renderMenuTable() {
+    const search = (document.getElementById('menuTableSearch').value || '').toLowerCase();
+    const catFilter = document.getElementById('menuCatFilter').value;
+    let filtered = menuData.filter(item => {
+        const matchSearch = !search || item.nameEn.toLowerCase().includes(search) || item.nameAm.includes(search);
+        const matchCat = catFilter === 'all' || item.category === catFilter;
+        return matchSearch && matchCat;
+    });
+
+    const tbody = document.getElementById('menuTableBody');
+    tbody.innerHTML = filtered.map(item => `
+        <tr>
+            <td><img src="${item.image || 'https://via.placeholder.com/44'}" class="item-thumb" alt="" loading="lazy"></td>
+            <td>
+                <div class="item-name">${item.nameEn}</div>
+                <div class="item-name-am">${item.nameAm}</div>
+            </td>
+            <td><span class="cat-badge">${CATEGORY_ICONS[item.category]||''} ${CATEGORY_NAMES[item.category]||item.category}</span></td>
+            <td><span class="diet-badge ${item.diet}">${item.diet==='fasting'?'🌱 Fasting':'🥩 Meat'}</span></td>
+            <td class="price-cell">${item.price} <small style="color:var(--text-muted)">ETB</small></td>
+            <td>
+                <div class="action-btns">
+                    <button class="act-btn" title="Edit" onclick="openEditModal(${item.id})">✏️</button>
+                    <button class="act-btn del" title="Delete" onclick="openDeleteModal(${item.id})">🗑️</button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+
+    document.getElementById('menuTableCount').textContent = `${filtered.length} of ${menuData.length} items`;
+}
+
+// ==================== ITEM MODAL ====================
+function openAddModal() {
+    document.getElementById('modalTitle').textContent = 'Add Menu Item · ምግብ ይጨምሩ';
+    document.getElementById('editItemId').value = '';
+    document.getElementById('modalNameEn').value = '';
+    document.getElementById('modalNameAm').value = '';
+    document.getElementById('modalDesc').value = '';
+    document.getElementById('modalPrice').value = '';
+    document.getElementById('modalCategory').value = 'fast-food';
+    document.getElementById('modalDiet').value = 'meat';
+    document.getElementById('modalImage').value = '';
+    document.getElementById('itemModal').classList.add('open');
+}
+
+function openEditModal(id) {
+    const item = menuData.find(i => i.id === id);
+    if (!item) return;
+    document.getElementById('modalTitle').textContent = 'Edit Item · ምግብ ያስተካክሉ';
+    document.getElementById('editItemId').value = id;
+    document.getElementById('modalNameEn').value = item.nameEn;
+    document.getElementById('modalNameAm').value = item.nameAm;
+    document.getElementById('modalDesc').value = item.desc;
+    document.getElementById('modalPrice').value = item.price;
+    document.getElementById('modalCategory').value = item.category;
+    document.getElementById('modalDiet').value = item.diet;
+    document.getElementById('modalImage').value = item.image || '';
+    document.getElementById('itemModal').classList.add('open');
+}
+
+function closeItemModal() { document.getElementById('itemModal').classList.remove('open'); }
+
+function saveItem() {
+    const editId = document.getElementById('editItemId').value;
+    const nameEn = document.getElementById('modalNameEn').value.trim();
+    const nameAm = document.getElementById('modalNameAm').value.trim();
+    const desc = document.getElementById('modalDesc').value.trim();
+    const price = parseInt(document.getElementById('modalPrice').value) || 0;
+    const category = document.getElementById('modalCategory').value;
+    const diet = document.getElementById('modalDiet').value;
+    const image = document.getElementById('modalImage').value.trim();
+
+    if (!nameEn || !price) {
+        showToast('Please fill in at least the English name and price.');
+        return;
+    }
+
+    if (editId) {
+        const item = menuData.find(i => i.id === parseInt(editId));
+        if (item) {
+            Object.assign(item, {nameEn,nameAm,desc,price,category,diet,image});
+            addActivity('✏️','amber',`<strong>${nameEn}</strong> updated.`);
         }
+    } else {
+        menuData.push({id:nextId++,nameEn,nameAm,desc,price,category,diet,image});
+        addActivity('➕','green',`<strong>${nameEn}</strong> added to the menu.`);
+    }
 
-        function handleLogin(e) {
-            e.preventDefault();
-            const passInput = document.getElementById('adminPassword');
-            const errorElem = document.getElementById('loginError');
-            const card = document.getElementById('loginCard');
+    saveMenu();
+    renderMenuTable();
+    updateStats();
+    closeItemModal();
+    showToast(editId ? 'Item updated successfully!' : 'New item added to menu!');
+}
 
-            if (passInput.value.trim() === REQUIRED_PASS) {
-                sessionStorage.setItem('mika_admin_auth', 'true');
-                errorElem.textContent = '';
-                document.getElementById('loginOverlay').classList.add('hidden');
-                showToast('Welcome to MIKA COFFEE Admin Portal');
-                generateQR();
-            } else {
-                errorElem.textContent = 'Incorrect passcode. Please try again.';
-                card.classList.remove('shake');
-                void card.offsetWidth; // Trigger reflow for animation restart
-                card.classList.add('shake');
-                passInput.value = '';
-                passInput.focus();
-            }
-        }
+// ==================== DELETE ====================
+function openDeleteModal(id) {
+    document.getElementById('deleteItemId').value = id;
+    document.getElementById('deleteModal').classList.add('open');
+}
+function closeDeleteModal() { document.getElementById('deleteModal').classList.remove('open'); }
+function confirmDelete() {
+    const id = parseInt(document.getElementById('deleteItemId').value);
+    const item = menuData.find(i => i.id === id);
+    if (item) addActivity('🗑️','amber',`<strong>${item.nameEn}</strong> removed from menu.`);
+    menuData = menuData.filter(i => i.id !== id);
+    saveMenu();
+    renderMenuTable();
+    updateStats();
+    closeDeleteModal();
+    showToast('Item deleted.');
+}
 
-        function logoutAdmin() {
-            sessionStorage.removeItem('mika_admin_auth');
-            document.getElementById('loginOverlay').classList.remove('hidden');
-            document.getElementById('adminPassword').value = '';
-            document.getElementById('loginError').textContent = '';
-            document.getElementById('adminPassword').focus();
-        }
-
-        // Table Identifier Sync
-        function updateTableBadge() {
-            const val = document.getElementById('tableInput').value.trim();
-            const badge = document.getElementById('previewTableBadge');
-            if (val) {
-                badge.textContent = `✦ ${val.toUpperCase()} ✦`;
-                badge.style.display = 'inline-block';
-            } else {
-                badge.style.display = 'none';
-            }
-        }
-
-        function setTablePreset(preset) {
-            document.getElementById('tableInput').value = preset;
-            updateTableBadge();
-            document.querySelectorAll('.preset-pill').forEach(pill => {
-                pill.classList.toggle('active', pill.textContent.includes(preset) && preset !== '');
-            });
-        }
-
-        // QR Color Theme
-        function setColorTheme(color, elem) {
-            currentQRColor = color;
-            document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
-            elem.classList.add('active');
-            generateQR();
-        }
-
-        // Footer chips
-        function updateFooterChips() {
-            const val = document.getElementById('wifiInput').value;
-            const container = document.getElementById('previewChips');
-            const parts = val.split('·').map(s => s.trim()).filter(Boolean);
-            container.innerHTML = parts.map(p => `<span class="stand-chip">${p}</span>`).join(' ');
-        }
-
-        // Generate QR code
-        function generateQR() {
-            const urlInput = document.getElementById('menuUrlInput');
-            const rawUrl = urlInput.value.trim() || 'https://yetnora1.github.io/MIKA-Coffee/';
-            const canvas = document.getElementById('qrCanvas');
-
-            QRCode.toCanvas(canvas, rawUrl, {
-                width: 250,
-                margin: 2,
-                color: {
-                    dark: currentQRColor,
-                    light: '#FFFFFF'
-                },
-                errorCorrectionLevel: 'H'
-            }, function (error) {
-                if (error) {
-                    console.error('QR generation error:', error);
+// ==================== ORDERS ====================
+function renderOrders() {
+    // Try to read the customer tray again
+    const tray = localStorage.getItem('mika_tray');
+    if (tray) {
+        try {
+            const trayItems = JSON.parse(tray);
+            if (trayItems.length > 0) {
+                const hasActive = orders.some(o => o.status === 'active' && JSON.stringify(o.items) === tray);
+                if (!hasActive) {
+                    orders.push({
+                        id: 'ORD-' + Date.now().toString(36).toUpperCase(),
+                        items: trayItems,
+                        total: trayItems.reduce((s,i) => s + (i.price * (i.qty||1)), 0),
+                        status: 'active',
+                        time: new Date().toLocaleTimeString()
+                    });
+                    saveOrders();
                 }
-            });
-        }
+            }
+        } catch(e) {}
+    }
 
-        // Download PNG Image
-        function downloadQRImage() {
-            const canvas = document.getElementById('qrCanvas');
-            const link = document.createElement('a');
-            const tableVal = document.getElementById('tableInput').value.trim();
-            const filename = tableVal ? `mika-coffee-qr-${tableVal.toLowerCase().replace(/\s+/g, '-')}.png` : 'mika-coffee-menu-qr.png';
-            
-            link.download = filename;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-            showToast('QR Code image downloaded successfully!');
-        }
+    const container = document.getElementById('ordersContainer');
+    if (orders.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📋</div>
+                <h3>No orders yet · ምንም ትዕዛዝ የለም</h3>
+                <p>Orders from the customer menu tray will appear here when customers add items.</p>
+            </div>`;
+        updateStats();
+        return;
+    }
 
-        // Copy Menu URL
-        function copyMenuUrl() {
-            const urlInput = document.getElementById('menuUrlInput');
-            navigator.clipboard.writeText(urlInput.value).then(() => {
-                showToast('Menu URL copied to clipboard!');
-            }).catch(() => {
-                urlInput.select();
-                document.execCommand('copy');
-                showToast('Menu URL copied!');
-            });
-        }
+    container.innerHTML = orders.slice().reverse().map(order => `
+        <div class="order-card">
+            <div class="order-top">
+                <span class="order-id">${order.id}</span>
+                <span class="order-status ${order.status}">${order.status === 'active' ? '⏳ Active' : '✅ Completed'}</span>
+            </div>
+            <ul class="order-items" style="list-style:none">
+                ${order.items.map(it => `
+                    <li>
+                        <span>${it.name || it.nameEn || 'Item'} ${it.qty && it.qty > 1 ? '×'+it.qty : ''}</span>
+                        <span style="font-weight:700;color:var(--brand-caramel)">${(it.price*(it.qty||1))} ETB</span>
+                    </li>
+                `).join('')}
+            </ul>
+            <div class="order-total">
+                <span>Total · ጠቅላላ</span>
+                <span style="color:var(--brand-caramel)">${order.total} ETB</span>
+            </div>
+            ${order.status === 'active' ? `
+            <div class="order-actions">
+                <button class="order-btn complete" onclick="completeOrder('${order.id}')">✅ Complete</button>
+                <button class="order-btn dismiss" onclick="dismissOrder('${order.id}')">✕ Dismiss</button>
+            </div>` : `<div style="margin-top:10px;font-size:11px;color:var(--text-muted)">Completed at ${order.completedAt || '-'}</div>`}
+        </div>
+    `).join('');
+    updateStats();
+}
 
-        // Toast feedback
-        function showToast(msg) {
-            const toast = document.getElementById('toastNotice');
-            document.getElementById('toastMsg').textContent = msg;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
+function completeOrder(id) {
+    const order = orders.find(o => o.id === id);
+    if (order) {
+        order.status = 'completed';
+        order.completedAt = new Date().toLocaleTimeString();
+        addActivity('✅','green',`Order <strong>${id}</strong> completed — ${order.total} ETB`);
+    }
+    saveOrders();
+    renderOrders();
+    showToast('Order marked complete!');
+}
 
-        // Init on load
-        window.onload = function() {
-            checkAuth();
-            generateQR();
-        };
-    </script>
+function dismissOrder(id) {
+    orders = orders.filter(o => o.id !== id);
+    saveOrders();
+    renderOrders();
+    showToast('Order dismissed.');
+}
+
+// ==================== QR GENERATOR ====================
+let currentQRColor = '#1B0F0A';
+
+function updateTableBadge() {
+    const val = document.getElementById('tableInput').value.trim();
+    const badge = document.getElementById('previewTableBadge');
+    if (val) {
+        badge.textContent = `✦ ${val.toUpperCase()} ✦`;
+        badge.style.display = 'inline-block';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
+function setTablePreset(preset) {
+    document.getElementById('tableInput').value = preset;
+    updateTableBadge();
+    document.querySelectorAll('.preset-pill').forEach(p => {
+        p.classList.toggle('active', p.textContent.includes(preset) && preset !== '');
+    });
+}
+
+function setColorTheme(color, elem) {
+    currentQRColor = color;
+    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
+    elem.classList.add('active');
+    generateQR();
+}
+
+function updateFooterChips() {
+    const val = document.getElementById('wifiInput').value;
+    const container = document.getElementById('previewChips');
+    const parts = val.split('·').map(s => s.trim()).filter(Boolean);
+    container.innerHTML = parts.map(p => `<span class="stand-chip">${p}</span>`).join(' ');
+}
+
+function generateQR() {
+    const urlInput = document.getElementById('menuUrlInput');
+    if (!urlInput) return;
+    const rawUrl = urlInput.value.trim() || 'https://yetnora1.github.io/MIKA-Coffee/';
+    const canvas = document.getElementById('qrCanvas');
+    if (!canvas) return;
+    if (typeof QRCode !== 'undefined') {
+        QRCode.toCanvas(canvas, rawUrl, {
+            width: 220, margin: 2,
+            color: { dark: currentQRColor, light: '#FFFFFF' },
+            errorCorrectionLevel: 'H'
+        }, function(err) { if (err) console.error(err); });
+    }
+}
+
+function downloadQRImage() {
+    const canvas = document.getElementById('qrCanvas');
+    const link = document.createElement('a');
+    const tableVal = document.getElementById('tableInput').value.trim();
+    link.download = tableVal ? `mika-qr-${tableVal.toLowerCase().replace(/\s+/g,'-')}.png` : 'mika-coffee-menu-qr.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showToast('QR image downloaded!');
+}
+
+function copyMenuUrl() {
+    const url = document.getElementById('menuUrlInput').value;
+    navigator.clipboard.writeText(url).then(() => showToast('Menu URL copied!')).catch(() => {
+        document.getElementById('menuUrlInput').select();
+        document.execCommand('copy');
+        showToast('URL copied!');
+    });
+}
+
+// ==================== SETTINGS ====================
+function loadSettings() {
+    const info = JSON.parse(localStorage.getItem('mika_business_info') || '{}');
+    document.getElementById('settingsCafeName').value = info.name || 'MIKA COFFEE';
+    document.getElementById('settingsPhone').value = info.phone || '';
+    document.getElementById('settingsWifi').value = info.wifi || '';
+    document.getElementById('settingsHours').value = info.hours || '6:00 AM — 10:00 PM';
+
+    const isOpen = localStorage.getItem('mika_cafe_status') !== 'closed';
+    const toggle = document.getElementById('statusToggle');
+    const label = document.getElementById('statusLabel');
+    if (isOpen) {
+        toggle.classList.add('on');
+        label.textContent = 'Open · ክፍት ነው';
+    } else {
+        toggle.classList.remove('on');
+        label.textContent = 'Closed · ዝግ ነው';
+    }
+}
+
+function changePin() {
+    const current = document.getElementById('settingsCurrentPin').value.trim();
+    const newPin = document.getElementById('settingsNewPin').value.trim();
+    if (current !== getPin()) { showToast('Current PIN is incorrect!'); return; }
+    if (!newPin || newPin.length < 4) { showToast('New PIN must be at least 4 characters.'); return; }
+    localStorage.setItem('mika_admin_pin', newPin);
+    document.getElementById('settingsCurrentPin').value = '';
+    document.getElementById('settingsNewPin').value = '';
+    addActivity('🔐','blue','Admin PIN was changed.');
+    showToast('PIN updated successfully!');
+}
+
+function toggleCafeStatus() {
+    const toggle = document.getElementById('statusToggle');
+    const label = document.getElementById('statusLabel');
+    const isOpen = toggle.classList.toggle('on');
+    localStorage.setItem('mika_cafe_status', isOpen ? 'open' : 'closed');
+    label.textContent = isOpen ? 'Open · ክፍት ነው' : 'Closed · ዝግ ነው';
+    addActivity(isOpen?'🟢':'🔴', isOpen?'green':'amber', `Cafe marked <strong>${isOpen?'Open':'Closed'}</strong>.`);
+    showToast(`Cafe is now ${isOpen ? 'OPEN' : 'CLOSED'}`);
+}
+
+function saveBusinessInfo() {
+    const info = {
+        name: document.getElementById('settingsCafeName').value.trim(),
+        phone: document.getElementById('settingsPhone').value.trim(),
+        wifi: document.getElementById('settingsWifi').value.trim(),
+        hours: document.getElementById('settingsHours').value.trim(),
+    };
+    localStorage.setItem('mika_business_info', JSON.stringify(info));
+    showToast('Business info saved!');
+}
+
+function exportData() {
+    const data = {
+        menu: menuData,
+        orders: orders,
+        settings: JSON.parse(localStorage.getItem('mika_business_info') || '{}'),
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    const link = document.createElement('a');
+    link.download = 'mika-coffee-backup.json';
+    link.href = URL.createObjectURL(blob);
+    link.click();
+    showToast('Data exported!');
+}
+
+function resetData() {
+    if (!confirm('Reset ALL data? This will remove your menu customizations, orders, and settings.')) return;
+    localStorage.removeItem('mika_menu_data');
+    localStorage.removeItem('mika_orders');
+    localStorage.removeItem('mika_business_info');
+    localStorage.removeItem('mika_admin_pin');
+    menuData = [...DEFAULT_MENU];
+    orders = [];
+    saveMenu();
+    saveOrders();
+    renderMenuTable();
+    renderOrders();
+    updateStats();
+    loadSettings();
+    showToast('All data reset to defaults.');
+}
+
+// ==================== ACTIVITY FEED ====================
+function addActivity(icon, color, text) {
+    const feed = document.getElementById('activityFeed');
+    const time = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    const html = `
+        <div class="activity-item" style="animation:fadeIn .3s">
+            <div class="activity-dot ${color}">${icon}</div>
+            <div class="activity-text">${text}</div>
+            <span class="activity-time">${time}</span>
+        </div>`;
+    feed.insertAdjacentHTML('afterbegin', html);
+    // keep last 20
+    while (feed.children.length > 20) feed.removeChild(feed.lastChild);
+}
+
+// ==================== TOAST ====================
+function showToast(msg) {
+    const toast = document.getElementById('toastNotice');
+    document.getElementById('toastMsg').textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ==================== INIT ====================
+function initDashboard() {
+    loadData();
+    updateStats();
+    renderMenuTable();
+    loadSettings();
+}
+
+window.onload = function() {
+    checkAuth();
+    initDashboard();
+};
+</script>
 </body>
 </html>
