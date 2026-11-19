@@ -895,20 +895,21 @@
             color: var(--brand-caramel);
         }
 
-        /* ===== DETAIL MODAL (Glassmorphism + Claymorphism) ===== */
+        /* ===== FULL SCREEN DISH DETAIL VIEW (Immersive Display) ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(7, 23, 15, 0.65);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            z-index: 200;
+            background: rgba(7, 23, 15, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 1000;
             display: flex;
-            align-items: flex-end;
-            justify-content: center;
+            align-items: stretch;
+            justify-content: stretch;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+            overflow: hidden;
         }
 
         .modal-overlay.open {
@@ -917,128 +918,173 @@
         }
 
         .modal-card {
-            background: rgba(255, 255, 255, 0.94);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.9);
+            background: #FFFFFF;
             width: 100%;
-            max-width: 520px;
-            max-height: 88vh;
-            border-top-left-radius: 28px;
-            border-top-right-radius: 28px;
+            height: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            max-height: 100dvh;
+            border-radius: 0;
             overflow-y: auto;
-            transform: translateY(100%);
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 25px 60px rgba(11, 32, 22, 0.28),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.9);
             position: relative;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(24px);
+            opacity: 0;
+            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+            -webkit-overflow-scrolling: touch;
         }
 
         .modal-overlay.open .modal-card {
             transform: translateY(0);
+            opacity: 1;
         }
 
-        @media (min-width: 640px) {
-            .modal-overlay {
-                align-items: center;
-                padding: 24px;
-            }
-
-            .modal-card {
-                border-radius: 28px;
-                max-width: 560px;
-                transform: scale(0.92) translateY(20px);
-                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            }
-
-            .modal-overlay.open .modal-card {
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .modal-close-btn {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: rgba(11, 32, 22, 0.6);
-            color: #FFFFFF;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            cursor: pointer;
-            z-index: 5;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-            transition: all 0.2s ease;
-        }
-
-        .modal-close-btn:hover {
-            background: rgba(11, 32, 22, 0.85);
-            transform: scale(1.08);
+        .modal-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 44vh;
+            min-height: 280px;
+            max-height: 440px;
+            background: #0B2016;
+            flex-shrink: 0;
+            overflow: hidden;
         }
 
         .modal-img {
             width: 100%;
-            height: 240px;
+            height: 100%;
             object-fit: cover;
             display: block;
         }
 
+        .modal-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(7, 23, 15, 0.45) 0%, transparent 40%, rgba(7, 23, 15, 0.3) 100%);
+            pointer-events: none;
+        }
+
+        /* Floating Nav Buttons (Glassmorphism + Tactile Depth) */
+        .modal-nav-btn {
+            position: absolute;
+            z-index: 10;
+            background: rgba(11, 32, 22, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .modal-nav-btn:hover {
+            background: rgba(11, 32, 22, 0.9);
+            transform: scale(1.05);
+        }
+
+        .modal-nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        .modal-back-btn {
+            top: max(16px, env(safe-area-inset-top));
+            left: 16px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: inherit;
+        }
+
+        .modal-close-btn {
+            top: max(16px, env(safe-area-inset-top));
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            font-size: 16px;
+        }
+
         .modal-body {
-            padding: 20px 24px 30px;
+            flex: 1;
+            padding: 24px 20px 32px;
+            display: flex;
+            flex-direction: column;
+            max-width: 840px;
+            width: 100%;
+            margin: 0 auto;
         }
 
         .modal-diet-badge {
-            display: inline-block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .modal-title-en {
             font-family: var(--font-display);
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 800;
             color: var(--text-heading);
             line-height: 1.2;
+            letter-spacing: -0.3px;
         }
 
         .modal-title-am {
             font-family: var(--font-ethiopic);
-            font-size: 17px;
+            font-size: 18px;
             color: var(--brand-caramel);
-            font-weight: 600;
-            margin-bottom: 12px;
+            font-weight: 700;
+            margin-top: 2px;
+            margin-bottom: 16px;
         }
 
         .modal-desc {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--text-body);
-            line-height: 1.6;
-            margin-bottom: 20px;
+            line-height: 1.65;
+            margin-bottom: 24px;
         }
 
+        /* Sticky bottom action row */
         .modal-info-row {
+            margin-top: auto;
+            position: sticky;
+            bottom: 0;
+            background: #FFFFFF;
+            border-top: 1px solid var(--border-soft);
+            padding: 16px 20px max(18px, env(safe-area-inset-bottom));
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-soft);
+            gap: 16px;
+            z-index: 15;
+            box-shadow: 0 -8px 24px rgba(11, 32, 22, 0.08);
+            max-width: 840px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .modal-price {
-            font-size: 26px;
+            font-family: var(--font-display);
+            font-size: 28px;
             font-weight: 800;
             color: #14532D;
+            line-height: 1;
         }
 
         .modal-price span {
             font-size: 14px;
             font-weight: 600;
             color: var(--text-muted);
+            margin-left: 2px;
         }
 
         /* Claymorphic Modal Action Button */
@@ -1046,11 +1092,12 @@
             background: linear-gradient(135deg, #166534 0%, #0E4B26 100%);
             color: #FFFFFF;
             border: none;
-            padding: 12px 24px;
+            padding: 14px 26px;
             border-radius: var(--radius-full);
             font-size: 14px;
             font-weight: 700;
-            display: flex;
+            font-family: inherit;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
             cursor: pointer;
@@ -1058,19 +1105,45 @@
             box-shadow: 0 6px 18px rgba(22, 101, 52, 0.35),
                         inset 0 2px 3px rgba(255, 255, 255, 0.35),
                         inset 0 -3px 3px rgba(0, 0, 0, 0.25);
+            white-space: nowrap;
         }
 
         .modal-tray-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 24px rgba(22, 101, 52, 0.45),
-                        inset 0 2px 3px rgba(255, 255, 255, 0.5),
-                        inset 0 -3px 3px rgba(0, 0, 0, 0.25);
+                        inset 0 2px 3px rgba(255, 255, 255, 0.5);
         }
 
         .modal-tray-btn:active {
             transform: scale(0.97) translateY(1px);
-            box-shadow: 0 3px 8px rgba(22, 101, 52, 0.25),
-                        inset 0 2px 4px rgba(0, 0, 0, 0.35);
+        }
+
+        @media (min-width: 860px) {
+            .modal-overlay {
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+            }
+
+            .modal-card {
+                max-width: 680px;
+                height: auto;
+                min-height: 600px;
+                max-height: 90vh;
+                border-radius: 28px;
+                box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+            }
+
+            .modal-img-wrap {
+                height: 320px;
+                border-top-left-radius: 28px;
+                border-top-right-radius: 28px;
+            }
+
+            .modal-info-row {
+                border-bottom-left-radius: 28px;
+                border-bottom-right-radius: 28px;
+            }
         }
 
         /* ===== FLOATING ORDER TRAY SUMMARY (Glassmorphism + Clay Button) ===== */
@@ -1264,10 +1337,25 @@
 
         [data-theme="dark"] .modal-card {
             background: #0B2016;
+            color: #F0FDF4;
+        }
+
+        [data-theme="dark"] .modal-info-row {
+            background: #0B2016;
+            border-top-color: #1B442F;
+            box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.45);
+        }
+
+        [data-theme="dark"] .modal-title-en {
+            color: #F0FDF4;
+        }
+
+        [data-theme="dark"] .modal-desc {
+            color: #C2DEC9;
         }
 
         [data-theme="dark"] .modal-tray-btn {
-            background: var(--brand-caramel);
+            background: linear-gradient(135deg, #166534 0%, #0E4B26 100%);
             color: #FFFFFF;
         }
 
@@ -2507,22 +2595,31 @@
 
     </main>
 
-    <!-- ===== DISH DETAIL MODAL (TAP ANY ITEM) ===== -->
-    <div class="modal-overlay" id="dishModal" onclick="closeModalOnOverlay(event)">
+    <!-- ===== DISH DETAIL MODAL (FULL SCREEN IMMERSIVE DISPLAY) ===== -->
+    <div class="modal-overlay" id="dishModal" onclick="closeModalOnOverlay(event)" role="dialog" aria-modal="true" aria-labelledby="modalTitleEn">
         <div class="modal-card">
-            <button class="modal-close-btn" onclick="closeModal()" aria-label="Close">✕</button>
-            <img src="" alt="" id="modalImg" class="modal-img">
+            <div class="modal-img-wrap">
+                <button class="modal-nav-btn modal-back-btn" onclick="closeModal()" aria-label="Back to menu">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    <span>Back · ተመለስ</span>
+                </button>
+                <button class="modal-nav-btn modal-close-btn" onclick="closeModal()" aria-label="Close dish details">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <img src="" alt="" id="modalImg" class="modal-img">
+            </div>
             <div class="modal-body">
                 <div id="modalDietBadge" class="modal-diet-badge"></div>
                 <h3 id="modalTitleEn" class="modal-title-en"></h3>
                 <div id="modalTitleAm" class="modal-title-am"></div>
                 <p id="modalDesc" class="modal-desc"></p>
-                <div class="modal-info-row">
-                    <div class="modal-price" id="modalPrice"></div>
-                    <button class="modal-tray-btn" onclick="addToTrayFromModal()">
-                        <span>➕ Add to Tray</span>
-                    </button>
-                </div>
+            </div>
+            <div class="modal-info-row">
+                <div class="modal-price" id="modalPrice"></div>
+                <button class="modal-tray-btn" onclick="addToTrayFromModal()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <span>Add to Tray · ወደ ትዕዛዝ ጨምር</span>
+                </button>
             </div>
         </div>
     </div>
@@ -2569,6 +2666,10 @@
         // Open Modal
         function openModal(titleEn, titleAm, desc, price, imgUrl, diet) {
             currentModalItem = { titleEn, titleAm, price, imgUrl };
+            const modal = document.getElementById('dishModal');
+            const card = modal?.querySelector('.modal-card');
+            if (card) card.scrollTop = 0;
+
             document.getElementById('modalImg').src = imgUrl;
             document.getElementById('modalTitleEn').textContent = titleEn;
             document.getElementById('modalTitleAm').textContent = titleAm;
@@ -2584,7 +2685,7 @@
                 badgeElem.innerHTML = '<span class="tag-pill special">✨ Chef Choice</span>';
             }
 
-            document.getElementById('dishModal').classList.add('open');
+            modal.classList.add('open');
             document.body.style.overflow = 'hidden';
         }
 
@@ -2598,6 +2699,11 @@
                 closeModal();
             }
         }
+
+        // Close on Escape key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
 
         // Add to Tray
         function addToTrayFromModal() {
