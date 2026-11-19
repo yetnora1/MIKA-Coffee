@@ -1225,56 +1225,70 @@
                         inset 0 2px 2px rgba(255, 255, 255, 0.5);
         }
 
-        /* ===== FOOTER ===== */
+        /* ===== MINIMAL COMPACT FOOTER ===== */
         .footer {
             text-align: center;
-            padding: 40px 20px 20px;
+            padding: 16px 16px max(16px, env(safe-area-inset-bottom));
             border-top: 1px solid var(--border-soft);
-            margin-top: 40px;
+            margin-top: 24px;
+        }
+
+        .footer-logo-row {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 6px;
         }
 
         .footer-logo {
             font-family: var(--font-display);
-            font-size: 20px;
+            font-size: 13px;
             font-weight: 800;
             color: var(--text-heading);
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .footer-amharic {
             font-family: var(--font-ethiopic);
-            font-size: 15px;
-            color: var(--brand-caramel);
-            font-weight: 600;
-            margin-top: 2px;
-        }
-
-        .footer-tagline {
             font-size: 12px;
-            color: var(--text-muted);
-            margin: 12px auto 16px;
-            max-width: 340px;
+            color: var(--brand-caramel);
+            font-weight: 700;
         }
 
-        .footer-info-chips {
+        .footer-badges {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 8px;
-            margin-bottom: 24px;
+            align-items: center;
+            gap: 6px 14px;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
         }
 
-        .info-chip {
-            background: var(--bg-card);
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-full);
-            padding: 5px 12px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-muted);
-            display: flex;
+        .footer-badges span {
+            display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
+        }
+
+        .footer-copyright {
+            font-size: 10px;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        .footer-admin-link {
+            color: inherit;
+            text-decoration: none;
+            opacity: 0.65;
+            transition: opacity 0.2s ease;
+        }
+
+        .footer-admin-link:hover {
+            opacity: 1;
+            color: var(--brand-caramel);
         }
 
         .no-results {
@@ -2560,36 +2574,62 @@
                         </div>
                     </div>
                 </article>
-            </div>
+                <!-- Bottled Water (0.5L) -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Bottled Water (0.5L)', 'የታሸገ ዉሀ (0.5ሊ)', 'Pure, refreshingly chilled natural spring bottled water 0.5 liter personal bottle.', '50', 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=400&auto=format&fit=crop&q=80" alt="Bottled Water (0.5L)" class="item-img" loading="lazy">
+                        <span class="item-diet-dot" title="Pure Water">💧</span>
+                    </div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Bottled Water (0.5L)</h3>
+                        </div>
+                        <div class="item-title-am">የታሸገ ዉሀ · ግማሽ ሊትር</div>
+                        <p class="item-desc">Pure, refreshingly chilled natural mountain spring bottled water 0.5 liter.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">💧 ½ Liter · ግማሽ ሊትር</span></div>
+                            <div class="item-price-tag">50 <span class="item-price-currency">ETB</span></div>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Bottled Water Sizes -->
-            <div class="table-portion-card" style="margin-top: 18px;">
-                <div class="portion-head">
-                    <span>💧</span> Bottled Mineral Water · የታሸገ ዉሀ
-                </div>
-                <div class="portion-grid">
-                    <div class="portion-box" onclick="openModal('Bottled Water (0.5L)', 'ዉሀ 1/2ሊ', 'Pure, refreshingly chilled natural spring bottled water 0.5 liter.', '50', 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=600&auto=format&fit=crop&q=80', 'fasting')" style="cursor: pointer;">
-                        <div>
-                            <div class="portion-title">½ Liter · ግማሽ ሊትር</div>
-                            <div class="portion-title-am">ዉሀ 1/2ሊ</div>
-                        </div>
-                        <div class="portion-price">50 ETB</div>
+                <!-- Bottled Water (1L) -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Bottled Water (1L)', 'የታሸገ ዉሀ (1ሊ)', 'Crisp and refreshing natural mountain spring bottled water 1 liter medium bottle.', '60', 'https://images.unsplash.com/photo-1523362628745-0c100150b504?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1523362628745-0c100150b504?w=400&auto=format&fit=crop&q=80" alt="Bottled Water (1L)" class="item-img" loading="lazy">
+                        <span class="item-diet-dot" title="Pure Water">💧</span>
                     </div>
-                    <div class="portion-box" onclick="openModal('Bottled Water (1L)', 'ዉሀ 1ሊ', 'Pure, refreshingly chilled natural spring bottled water 1 liter.', '60', 'https://images.unsplash.com/photo-1523362628745-0c100150b504?w=600&auto=format&fit=crop&q=80', 'fasting')" style="cursor: pointer;">
-                        <div>
-                            <div class="portion-title">1 Liter · አንድ ሊትር</div>
-                            <div class="portion-title-am">ዉሀ 1ሊ</div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Bottled Water (1L)</h3>
                         </div>
-                        <div class="portion-price">60 ETB</div>
-                    </div>
-                    <div class="portion-box" onclick="openModal('Bottled Water (2L)', 'ዉሀ 2ሊ', 'Pure, refreshingly chilled natural spring bottled water 2 liters family size.', '70', 'https://images.unsplash.com/photo-1560023907-5f339617ea30?w=600&auto=format&fit=crop&q=80', 'fasting')" style="cursor: pointer;">
-                        <div>
-                            <div class="portion-title">2 Liters · ሁለት ሊትር</div>
-                            <div class="portion-title-am">ዉሀ 2ሊ</div>
+                        <div class="item-title-am">የታሸገ ዉሀ · አንድ ሊትር</div>
+                        <p class="item-desc">Crisp and refreshing natural mountain spring bottled mineral water 1 liter.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">💧 1 Liter · አንድ ሊትር</span></div>
+                            <div class="item-price-tag">60 <span class="item-price-currency">ETB</span></div>
                         </div>
-                        <div class="portion-price">70 ETB</div>
                     </div>
-                </div>
+                </article>
+
+                <!-- Bottled Water (2L) -->
+                <article class="item-card" data-diet="fasting" onclick="openModal('Bottled Water (2L)', 'የታሸገ ዉሀ (2ሊ)', 'Chilled pure natural mountain spring bottled water 2 liters family / sharing size.', '70', 'https://images.unsplash.com/photo-1560023907-5f339617ea30?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                    <div class="item-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1560023907-5f339617ea30?w=400&auto=format&fit=crop&q=80" alt="Bottled Water (2L)" class="item-img" loading="lazy">
+                        <span class="item-diet-dot" title="Pure Water">💧</span>
+                    </div>
+                    <div class="item-details">
+                        <div class="item-name-row">
+                            <h3 class="item-title-en">Bottled Water (2L)</h3>
+                        </div>
+                        <div class="item-title-am">የታሸገ ዉሀ · ሁለት ሊትር</div>
+                        <p class="item-desc">Chilled pure natural mountain spring bottled water 2 liters family table size.</p>
+                        <div class="item-bottom-row">
+                            <div class="item-tags"><span class="tag-pill fasting">💧 2 Liters · ሁለት ሊትር</span></div>
+                            <div class="item-price-tag">70 <span class="item-price-currency">ETB</span></div>
+                        </div>
+                    </div>
+                </article>
             </div>
         </section>
 
@@ -2638,21 +2678,21 @@
         </button>
     </aside>
 
-    <!-- ===== FOOTER ===== -->
+    <!-- ===== MINIMAL COMPACT FOOTER ===== -->
     <footer class="footer">
-        <div class="footer-logo">MIKA COFFEE</div>
-        <div class="footer-amharic">ሚካ ቡና</div>
-        <p class="footer-tagline">
-            Crafted with warmth &amp; passion. Thank you for dining with us!<br>
-            ስለመረጡን ከልብ እናመሰግናለን!
-        </p>
-        <div class="footer-info-chips">
-            <span class="info-chip">📶 Free High-Speed Wi-Fi</span>
-            <span class="info-chip">💳 Cash &amp; Mobile Banking (CBE / Telebirr)</span>
-            <span class="info-chip">✨ Freshly Prepared Daily</span>
+        <div class="footer-logo-row">
+            <span style="font-size: 14px;">☕</span>
+            <span class="footer-logo">MIKA COFFEE</span>
+            <span style="color: var(--border-soft);">·</span>
+            <span class="footer-amharic">ሚካ ቡና</span>
         </div>
-        <p style="font-size: 11px; color: var(--text-light); margin-top: 6px;">
-            © 2026 MIKA COFFEE. All Rights Reserved. · <a href="admin" style="color: inherit; text-decoration: none; opacity: 0.65; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.65'">Admin Portal 🔒</a>
+        <div class="footer-badges">
+            <span>📶 Free Wi-Fi</span>
+            <span>💳 CBE / Telebirr</span>
+            <span>✨ Fresh Daily</span>
+        </div>
+        <p class="footer-copyright">
+            © 2026 MIKA COFFEE · <a href="admin" class="footer-admin-link">Admin 🔒</a>
         </p>
     </footer>
 
