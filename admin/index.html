@@ -15,6 +15,21 @@
     <!-- QRCode.js -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
+    <!-- Global bulletproof image fallback recovery -->
+    <script>
+        window.FALLBACK_FOOD_IMG = 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=200&auto=format&fit=crop&q=80';
+        window.handleImgError = function(img) {
+            if (!img || img.dataset.failed) return;
+            img.dataset.failed = 'true';
+            img.src = window.FALLBACK_FOOD_IMG;
+        };
+        document.addEventListener('error', function(e) {
+            if (e.target && e.target.tagName === 'IMG') {
+                window.handleImgError(e.target);
+            }
+        }, true);
+    </script>
+
     <style>
         :root {
             --bg-body: #FAF5EF;
@@ -948,6 +963,10 @@
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 Add Item
             </button>
+            <button class="qa-btn" onclick="syncMenuImages()" title="Sync all menu items and images with verified defaults">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+                Sync Images
+            </button>
         </div>
 
         <div class="data-table-wrap">
@@ -1239,7 +1258,7 @@ const DEFAULT_MENU = [
     {id:3,nameEn:"Mika Original Wrap",nameAm:"ሚካ ኦርጅናል ራፕ",desc:"Warm toasted wrap with seasoned grilled meats, fresh salad, and garlic yogurt sauce.",price:300,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&auto=format&fit=crop&q=80"},
     {id:4,nameEn:"Special Original Wrap",nameAm:"ስፔሻል ኦርጅናል ራፕ",desc:"Golden seasoned wrap with crispy fillings, fresh crunchy vegetables, and tangy sauce.",price:250,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=400&auto=format&fit=crop&q=80"},
     {id:5,nameEn:"Egg Scramble",nameAm:"እንቁላል ስክራምብል",desc:"Silky farm eggs gently scrambled with butter and fresh herbs, served hot.",price:200,category:"fast-food",diet:"fasting",image:"https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&auto=format&fit=crop&q=80"},
-    {id:6,nameEn:"Normal Original Wrap",nameAm:"ኖርማል ኦርጅናል ራፕ",desc:"Healthy vegetarian wrap packed with sautéed peppers, onions, and herbs.",price:150,category:"fast-food",diet:"fasting",image:"https://images.unsplash.com/photo-1561651823-34feb02250e4?w=400&auto=format&fit=crop&q=80"},
+    {id:6,nameEn:"Normal Original Wrap",nameAm:"ኖርማል ኦርጅናል ራፕ",desc:"Healthy vegetarian wrap packed with sautéed peppers, onions, and herbs.",price:150,category:"fast-food",diet:"fasting",image:"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop&q=80"},
     {id:7,nameEn:"Club Sandwich",nameAm:"ክለብ ሳንድዊች",desc:"Triple decker toasted sandwich with roasted chicken, egg, cheese, and fresh salad.",price:400,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&auto=format&fit=crop&q=80"},
     // --- Breakfast ---
     {id:8,nameEn:"Afuun",nameAm:"አፉኝ",desc:"Traditional hot breakfast sautéed with pure spiced butter (nitir kibe) and tender meat.",price:450,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1504973960431-1c467e159aa4?w=400&auto=format&fit=crop&q=80"},
@@ -1309,7 +1328,33 @@ let nextId = 100;
 function loadData() {
     const saved = localStorage.getItem('mika_menu_data');
     if (saved) {
-        try { menuData = JSON.parse(saved); } catch(e) { menuData = [...DEFAULT_MENU]; }
+        try {
+            menuData = JSON.parse(saved);
+            // Auto-heal: verify and replace any dead/broken Unsplash URLs with working ones from DEFAULT_MENU
+            const defaultMap = new Map(DEFAULT_MENU.map(i => [i.id, i.image]));
+            const brokenIds = [
+                'photo-1592417817098-8f3d69109853',
+                'photo-1572448862537-07436a8bbccb',
+                'photo-1621996346565-e3d5d6281292',
+                'photo-1548839140-29a749e1bc4e',
+                'photo-1561651823-34feb02250e4',
+                'via.placeholder.com'
+            ];
+            let healed = false;
+            menuData.forEach(item => {
+                if (!item.image || brokenIds.some(b => item.image.includes(b))) {
+                    if (defaultMap.has(item.id)) {
+                        item.image = defaultMap.get(item.id);
+                        healed = true;
+                    }
+                }
+            });
+            if (healed) {
+                localStorage.setItem('mika_menu_data', JSON.stringify(menuData));
+            }
+        } catch(e) {
+            menuData = [...DEFAULT_MENU];
+        }
     } else {
         menuData = [...DEFAULT_MENU];
     }
@@ -1435,7 +1480,7 @@ function renderMenuTable() {
     const tbody = document.getElementById('menuTableBody');
     tbody.innerHTML = filtered.map(item => `
         <tr>
-            <td><img src="${item.image || 'https://via.placeholder.com/44'}" class="item-thumb" alt="" loading="lazy"></td>
+            <td><img src="${item.image || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=100&auto=format&fit=crop&q=80'}" class="item-thumb" alt="${item.nameEn}" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=100&auto=format&fit=crop&q=80';"></td>
             <td>
                 <div class="item-name">${item.nameEn}</div>
                 <div class="item-name-am">${item.nameAm}</div>
@@ -1453,6 +1498,27 @@ function renderMenuTable() {
     `).join('');
 
     document.getElementById('menuTableCount').textContent = `${filtered.length} of ${menuData.length} items`;
+}
+
+function syncMenuImages() {
+    if (confirm('Sync all menu items and image links to the latest verified high-resolution images? (Custom items you added will be preserved)')) {
+        const defaultMap = new Map(DEFAULT_MENU.map(i => [i.id, i]));
+        menuData = menuData.map(item => {
+            if (defaultMap.has(item.id)) {
+                return { ...item, image: defaultMap.get(item.id).image };
+            }
+            return item;
+        });
+        DEFAULT_MENU.forEach(def => {
+            if (!menuData.some(m => m.id === def.id)) {
+                menuData.push({ ...def });
+            }
+        });
+        localStorage.setItem('mika_menu_data', JSON.stringify(menuData));
+        renderMenuTable();
+        updateStats();
+        showToast('All menu images successfully synced!');
+    }
 }
 
 // ==================== ITEM MODAL ====================

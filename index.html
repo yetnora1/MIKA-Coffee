@@ -20,6 +20,19 @@
                 document.documentElement.setAttribute('data-theme', systemPrefersDark ? 'dark' : 'light');
             }
         })();
+
+        // Global bulletproof image fallback recovery
+        window.FALLBACK_FOOD_IMG = 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&auto=format&fit=crop&q=80';
+        window.handleImgError = function(img) {
+            if (!img || img.dataset.failed) return;
+            img.dataset.failed = 'true';
+            img.src = window.FALLBACK_FOOD_IMG;
+        };
+        document.addEventListener('error', function(e) {
+            if (e.target && e.target.tagName === 'IMG') {
+                window.handleImgError(e.target);
+            }
+        }, true);
     </script>
 
     <!-- Google Fonts -->
@@ -1601,9 +1614,9 @@
                 </article>
 
                 <!-- Normal Original Wrap -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Normal Original Wrap', 'ኖርማል ኦርጅናል ራፕ', 'Light and wholesome rolled tortilla packed with fresh sautéed vegetables and savory dressing.', '150', 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600&auto=format&fit=crop&q=80', 'fasting')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Normal Original Wrap', 'ኖርማል ኦርጅናል ራፕ', 'Light and wholesome rolled tortilla packed with fresh sautéed vegetables and savory dressing.', '150', 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80', 'fasting')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1561651823-34feb02250e4?w=400&auto=format&fit=crop&q=80" alt="Normal Original Wrap" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop&q=80" alt="Normal Original Wrap" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -2251,9 +2264,9 @@
 
             <div class="items-grid">
                 <!-- Bodybuilder -->
-                <article class="item-card" data-diet="fasting" onclick="openModal('Bodybuilder', 'ቦዲ ቢውልደር', 'High-calorie powerhouse shake made with creamy avocado, sweet banana, dates, roasted peanuts, and pure honey.', '250', 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&auto=format&fit=crop&q=80', 'smoothie')">
+                <article class="item-card" data-diet="fasting" onclick="openModal('Bodybuilder', 'ቦዲ ቢውልደር', 'High-calorie powerhouse shake made with creamy avocado, sweet banana, dates, roasted peanuts, and pure honey.', '250', 'https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?w=600&auto=format&fit=crop&q=80', 'smoothie')">
                     <div class="item-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400&auto=format&fit=crop&q=80" alt="Bodybuilder Shake" class="item-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?w=400&auto=format&fit=crop&q=80" alt="Bodybuilder Shake" class="item-img" loading="lazy">
                     </div>
                     <div class="item-details">
                         <div class="item-name-row">
@@ -2624,7 +2637,7 @@
                 <button class="modal-nav-btn modal-close-btn" onclick="closeModal()" aria-label="Close dish details">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
-                <img src="" alt="" id="modalImg" class="modal-img">
+                <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80" alt="Dish photo" id="modalImg" class="modal-img" onerror="handleImgError(this)">
             </div>
             <div class="modal-body">
                 <div id="modalDietBadge" class="modal-diet-badge"></div>
@@ -2670,7 +2683,11 @@
             const card = modal?.querySelector('.modal-card');
             if (card) card.scrollTop = 0;
 
-            document.getElementById('modalImg').src = imgUrl;
+            const mImg = document.getElementById('modalImg');
+            if (mImg) {
+                mImg.dataset.failed = '';
+                mImg.src = imgUrl || window.FALLBACK_FOOD_IMG;
+            }
             document.getElementById('modalTitleEn').textContent = titleEn;
             document.getElementById('modalTitleAm').textContent = titleAm;
             document.getElementById('modalDesc').textContent = desc;
