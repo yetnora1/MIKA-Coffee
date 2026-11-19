@@ -56,6 +56,20 @@
 
         * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
+        :focus-visible {
+            outline: 2px solid var(--brand-gold) !important;
+            outline-offset: 2px !important;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
         body {
             background: var(--bg-body);
             color: var(--text-body);
@@ -63,6 +77,16 @@
             min-height: 100vh;
             line-height: 1.5;
             display: flex;
+        }
+
+        .nav-svg {
+            stroke: currentColor;
+            display: inline-block;
+            vertical-align: middle;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-item:hover .nav-svg {
+            transform: scale(1.1);
         }
 
         /* ===== LOGIN OVERLAY ===== */
@@ -769,39 +793,51 @@
 
     <nav class="sidebar-nav">
         <button class="nav-item active" onclick="showPage('dashboard',this)">
-            <span class="nav-item-icon">📊</span>
+            <span class="nav-item-icon">
+                <svg class="nav-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+            </span>
             <span class="nav-item-label">Dashboard</span>
         </button>
         <button class="nav-item" onclick="showPage('menu',this)">
-            <span class="nav-item-icon">🍽️</span>
+            <span class="nav-item-icon">
+                <svg class="nav-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </span>
             <span class="nav-item-label">Menu Manager</span>
             <span class="nav-badge" id="menuCountBadge">0</span>
         </button>
         <button class="nav-item" onclick="showPage('orders',this)">
-            <span class="nav-item-icon">📋</span>
+            <span class="nav-item-icon">
+                <svg class="nav-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </span>
             <span class="nav-item-label">Orders</span>
             <span class="nav-badge" id="ordersCountBadge">0</span>
         </button>
         <button class="nav-item" onclick="showPage('qr',this)">
-            <span class="nav-item-icon">📱</span>
+            <span class="nav-item-icon">
+                <svg class="nav-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>
+            </span>
             <span class="nav-item-label">QR Generator</span>
         </button>
         <button class="nav-item" onclick="showPage('settings',this)">
-            <span class="nav-item-icon">⚙️</span>
+            <span class="nav-item-icon">
+                <svg class="nav-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            </span>
             <span class="nav-item-label">Settings</span>
         </button>
 
         <div style="flex:1"></div>
 
         <a href="../" class="nav-item" style="text-decoration:none;">
-            <span class="nav-item-icon">🌐</span>
+            <span class="nav-item-icon">
+                <svg class="nav-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </span>
             <span class="nav-item-label">View Live Menu</span>
         </a>
     </nav>
 
     <div class="sidebar-footer">
         <button class="sidebar-footer-btn" onclick="logoutAdmin()">
-            <span>🔒</span> Lock Admin · ቆልፍ
+            <svg class="nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Lock Admin · ቆልፍ
         </button>
     </div>
 </aside>
@@ -853,10 +889,22 @@
         </div>
 
         <div class="quick-actions">
-            <button class="qa-btn primary" onclick="showPage('menu',document.querySelectorAll('.nav-item')[1]);openAddModal()">➕ Add Menu Item</button>
-            <button class="qa-btn" onclick="showPage('qr',document.querySelectorAll('.nav-item')[3])">📱 Generate QR</button>
-            <button class="qa-btn" onclick="showPage('orders',document.querySelectorAll('.nav-item')[2])">📋 View Orders</button>
-            <button class="qa-btn" onclick="window.open('../','_blank')">🌐 Open Live Menu</button>
+            <button class="qa-btn primary" onclick="showPage('menu',document.querySelectorAll('.nav-item')[1]);openAddModal()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add Menu Item
+            </button>
+            <button class="qa-btn" onclick="showPage('qr',document.querySelectorAll('.nav-item')[3])">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/></svg>
+                Generate QR
+            </button>
+            <button class="qa-btn" onclick="showPage('orders',document.querySelectorAll('.nav-item')[2])">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                View Orders
+            </button>
+            <button class="qa-btn" onclick="window.open('../','_blank')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                Open Live Menu
+            </button>
         </div>
 
         <div class="activity-card">
@@ -885,18 +933,21 @@
         </div>
 
         <div class="table-toolbar">
-            <input type="text" class="table-search" placeholder="🔍 Search items..." id="menuTableSearch" oninput="renderMenuTable()">
-            <select class="filter-select" id="menuCatFilter" onchange="renderMenuTable()">
+            <input type="text" class="table-search" placeholder="Search menu items..." id="menuTableSearch" oninput="renderMenuTable()" aria-label="Search menu items">
+            <select class="filter-select" id="menuCatFilter" onchange="renderMenuTable()" aria-label="Filter by category">
                 <option value="all">All Categories</option>
-                <option value="fast-food">🍔 Fast Food</option>
-                <option value="breakfast">🍳 Breakfast</option>
-                <option value="lunch">🍛 Lunch</option>
-                <option value="pasta">🍝 Pasta</option>
-                <option value="juice">🥤 Juices & Shakes</option>
-                <option value="mojito">🍹 Mojitos</option>
-                <option value="drinks">☕ Drinks & Coffee</option>
+                <option value="fast-food">Fast Food</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="pasta">Pasta</option>
+                <option value="juice">Juices &amp; Shakes</option>
+                <option value="mojito">Mojitos</option>
+                <option value="drinks">Drinks &amp; Coffee</option>
             </select>
-            <button class="qa-btn primary" onclick="openAddModal()">➕ Add Item</button>
+            <button class="qa-btn primary" onclick="openAddModal()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add Item
+            </button>
         </div>
 
         <div class="data-table-wrap">

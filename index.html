@@ -1288,6 +1288,29 @@
             background: #0F2A1D;
             border-color: #1B442F;
         }
+
+        /* ===== UI/UX PRO MAX ACCESSIBILITY & PERFORMANCE POLISH ===== */
+        :focus-visible {
+            outline: 2px solid var(--brand-gold) !important;
+            outline-offset: 2px !important;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        .tray-bar {
+            padding-bottom: max(14px, env(safe-area-inset-bottom));
+        }
+
+        .hero {
+            padding-top: max(10px, env(safe-area-inset-top));
+        }
     </style>
 </head>
 <body>
@@ -1314,13 +1337,17 @@
             <div class="hero-controls">
                 <!-- Theme Toggle Button -->
                 <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle Dark and Day Mode" title="Toggle Day/Dark mode">
-                    <span class="theme-icon" id="themeIcon">🌙</span>
+                    <span class="theme-icon" id="themeIcon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </span>
                     <span class="theme-text" id="themeText">Dark</span>
                 </button>
 
                 <!-- Language Switcher (Single Cycling Button) -->
                 <button class="lang-cycle-btn" id="langCycleBtn" onclick="cycleLang()" aria-label="Switch Language" title="Click to cycle: All / English / አማርኛ">
-                    <span class="lang-icon">🌐</span>
+                    <span class="lang-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </span>
                     <span class="lang-text" id="langText">ሁለቱም</span>
                 </button>
             </div>
@@ -1330,9 +1357,13 @@
     <!-- ===== SEARCH BAR ===== -->
     <div class="search-container">
         <div class="search-box">
-            <span class="search-icon">🔍</span>
+            <span class="search-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
             <input type="text" id="menuSearch" class="search-input" placeholder="Search dish, food, or drinks... / ምግብ ይፈልጉ" oninput="filterMenu()" onkeyup="filterMenu()" onchange="filterMenu()" autocomplete="off">
-            <button class="search-clear" id="searchClear" onclick="clearSearch()" aria-label="Clear search" title="Clear">✕</button>
+            <button class="search-clear" id="searchClear" onclick="clearSearch()" aria-label="Clear search" title="Clear">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
     </div>
 
@@ -2754,19 +2785,22 @@
         }, { passive: true });
 
         // ===== THEME TOGGLE (DARK & DAY MODE) =====
+        const MOON_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+        const SUN_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+
         function updateThemeUI(theme) {
             const themeIcon = document.getElementById('themeIcon');
             const themeText = document.getElementById('themeText');
             const metaThemeColor = document.querySelector('meta[name="theme-color"]');
 
             if (theme === 'dark') {
-                if (themeIcon) themeIcon.textContent = '☀️';
+                if (themeIcon) themeIcon.innerHTML = SUN_SVG;
                 if (themeText) themeText.textContent = 'Day';
-                if (metaThemeColor) metaThemeColor.setAttribute('content', '#110B08');
+                if (metaThemeColor) metaThemeColor.setAttribute('content', '#07170F');
             } else {
-                if (themeIcon) themeIcon.textContent = '🌙';
+                if (themeIcon) themeIcon.innerHTML = MOON_SVG;
                 if (themeText) themeText.textContent = 'Dark';
-                if (metaThemeColor) metaThemeColor.setAttribute('content', '#1A0F0A');
+                if (metaThemeColor) metaThemeColor.setAttribute('content', '#0B2016');
             }
         }
 
