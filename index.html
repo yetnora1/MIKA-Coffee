@@ -107,6 +107,8 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         html {
@@ -121,6 +123,7 @@
             padding-bottom: 100px;
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
+            text-rendering: optimizeLegibility;
         }
 
         /* ===== COMPACT HERO HEADER (75% Vertical Space Reduction) ===== */
@@ -614,17 +617,17 @@
         /* Claymorphic Dish Cards (Inflated Soft Tactile 3D) */
         .item-card {
             background: #FFFFFF;
-            border: 1px solid rgba(220, 232, 224, 0.7);
+            border: 1px solid rgba(232, 217, 204, 0.85);
             border-radius: 20px;
             padding: 14px;
             display: flex;
             gap: 14px;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(11, 32, 22, 0.05),
-                        inset 0 2px 2px rgba(255, 255, 255, 0.95),
-                        inset 0 -2px 3px rgba(11, 32, 22, 0.03);
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.25s ease, border-color 0.2s ease;
+            box-shadow: 0 6px 18px rgba(28, 18, 12, 0.05),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.95),
+                        inset 0 -1px 2px rgba(28, 18, 12, 0.03);
+            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.25s ease, border-color 0.2s ease, background-color 0.2s ease;
             position: relative;
             overflow: hidden;
             height: 100%;
@@ -633,15 +636,15 @@
 
         .item-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 16px 32px rgba(11, 32, 22, 0.1),
-                        inset 0 2px 3px rgba(255, 255, 255, 1),
-                        inset 0 -2px 4px rgba(11, 32, 22, 0.05);
+            box-shadow: 0 14px 30px rgba(28, 18, 12, 0.1),
+                        inset 0 1px 1px #FFFFFF,
+                        inset 0 -1px 2px rgba(28, 18, 12, 0.04);
             border-color: var(--brand-caramel);
         }
 
         .item-card:active {
             transform: scale(0.985) translateY(1px);
-            box-shadow: 0 4px 10px rgba(11, 32, 22, 0.08),
+            box-shadow: 0 4px 10px rgba(28, 18, 12, 0.08),
                         inset 0 2px 4px rgba(0, 0, 0, 0.06);
         }
 
@@ -701,24 +704,28 @@
         }
 
         .item-title-en {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--text-heading);
+            font-size: 15.5px;
+            font-weight: 800;
+            color: #1A0E08;
             line-height: 1.3;
+            letter-spacing: -0.2px;
         }
 
         .item-title-am {
             font-family: var(--font-ethiopic);
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 500;
+            font-size: 13.5px;
+            color: #7C3E1D;
+            font-weight: 700;
             margin-bottom: 5px;
+            letter-spacing: 0.1px;
+            line-height: 1.35;
         }
 
         .item-desc {
-            font-size: 12px;
-            color: var(--text-muted);
-            line-height: 1.4;
+            font-size: 12.5px;
+            color: #4A3326;
+            line-height: 1.45;
+            font-weight: 500;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -742,13 +749,15 @@
         }
 
         .tag-pill {
-            font-size: 10px;
+            font-size: 10.5px;
             font-weight: 700;
             padding: 3px 8px;
             border-radius: var(--radius-xs);
             letter-spacing: 0.3px;
             text-transform: uppercase;
-            box-shadow: 0 2px 4px rgba(11, 32, 22, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+            background: #F3E9DF;
+            color: #634024;
+            box-shadow: 0 2px 4px rgba(28, 18, 12, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.7);
         }
 
         .tag-pill.fasting {
@@ -768,8 +777,9 @@
         }
 
         .tag-pill.special {
-            background: var(--bg-subtle);
-            color: var(--brand-caramel);
+            background: #F8EFE6;
+            color: #7C3E1D;
+            border: 1px solid rgba(124, 62, 29, 0.2);
         }
 
         /* Skeuomorphic Beveled Price Plate */
@@ -1166,11 +1176,140 @@
             border-bottom-color: #3D2619;
         }
 
+        [data-theme="dark"] .nav-chip {
+            background: #1C1109;
+            border-color: #382012;
+            color: #D7C4B7;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="dark"] .nav-chip:hover {
+            border-color: #D97706;
+            color: #FAF4EE;
+            background: #25160D;
+        }
+
         [data-theme="dark"] .nav-chip.active {
             background: linear-gradient(135deg, #92400E, #6B2E0A);
             color: #FFFFFF;
             border-color: transparent;
             box-shadow: 0 4px 14px rgba(124, 62, 29, 0.4);
+        }
+
+        [data-theme="dark"] .filter-pill {
+            background: #1C1109;
+            border-color: #382012;
+            color: #D7C4B7;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="dark"] .filter-pill:hover {
+            border-color: #D97706;
+            color: #FAF4EE;
+            background: #25160D;
+        }
+
+        [data-theme="dark"] .filter-pill.active {
+            background: linear-gradient(135deg, #D97706, #92400E);
+            border-color: transparent;
+            color: #FFFFFF;
+            box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+        }
+
+        /* Dark Mode: Razor-Sharp Claymorphic Cards & High-Contrast Typography */
+        [data-theme="dark"] .item-card {
+            background: #1C1109;
+            border: 1px solid #382012;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.08),
+                        inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="dark"] .item-card:hover {
+            background: #24150C;
+            border-color: #D97706;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7),
+                        0 0 0 1px rgba(217, 119, 6, 0.35),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.12);
+        }
+
+        [data-theme="dark"] .item-card:active {
+            background: #180E07;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6),
+                        inset 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        [data-theme="dark"] .item-img-wrap {
+            background: #120A05;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        [data-theme="dark"] .item-title-en {
+            color: #FAF4EE !important;
+            font-weight: 800;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        [data-theme="dark"] .item-title-am {
+            color: #FBBF24 !important;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="dark"] .item-desc {
+            color: #D7C4B7 !important;
+            font-weight: 500;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="dark"] .tag-pill {
+            background: #2D1A10;
+            color: #D7C4B7;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.06);
+        }
+
+        [data-theme="dark"] .tag-pill.special {
+            background: #361F12;
+            color: #FBBF24;
+            border-color: rgba(245, 158, 11, 0.25);
+        }
+
+        [data-theme="dark"] .section-titles span {
+            color: #FBBF24;
+        }
+
+        [data-theme="dark"] .section-icon {
+            background: #1C1109;
+            border-color: #382012;
+        }
+
+        [data-theme="dark"] .section-badge-count {
+            background: #1C1109;
+            border-color: #382012;
+            color: #D7C4B7;
+        }
+
+        [data-theme="dark"] .table-portion-card {
+            background: #1C1109;
+            border-color: #382012;
+        }
+
+        [data-theme="dark"] .portion-box {
+            background: #26160C;
+            border-color: #382012;
+        }
+
+        [data-theme="dark"] .portion-title {
+            color: #FAF4EE;
+        }
+
+        [data-theme="dark"] .portion-title-am {
+            color: #D7C4B7;
+        }
+
+        [data-theme="dark"] .portion-price {
+            color: #FBBF24;
         }
 
         [data-theme="dark"] .item-diet-dot {
