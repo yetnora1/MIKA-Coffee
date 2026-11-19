@@ -295,33 +295,38 @@
             transform: scale(1.15) rotate(15deg);
         }
 
-        .lang-switch {
-            display: flex;
+        .lang-cycle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             background: rgba(255, 255, 255, 0.14);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
-            border-radius: var(--radius-full);
-            padding: 2px;
             border: 1px solid rgba(255, 255, 255, 0.22);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(0, 0, 0, 0.2);
-        }
-
-        .lang-btn {
-            border: none;
-            background: transparent;
-            color: #C2DEC9;
+            border-radius: var(--radius-full);
+            padding: 6px 12px;
+            color: #FFFFFF;
             font-size: 11px;
             font-weight: 700;
-            padding: 4px 10px;
-            border-radius: var(--radius-full);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.25);
+            user-select: none;
+            white-space: nowrap;
         }
 
-        .lang-btn.active {
-            background: linear-gradient(135deg, #1E7E4E, #166534);
-            color: #FFFFFF;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+        .lang-cycle-btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .lang-cycle-btn:active {
+            transform: scale(0.95);
+        }
+
+        .lang-cycle-btn .lang-icon {
+            font-size: 13px;
         }
 
         @media (max-width: 440px) {
@@ -331,8 +336,8 @@
             .theme-toggle-btn {
                 padding: 6px 9px;
             }
-            .lang-btn {
-                padding: 4px 7px;
+            .lang-cycle-btn {
+                padding: 6px 9px;
                 font-size: 10px;
             }
             .hero-title {
@@ -352,22 +357,22 @@
         /* ===== SEARCH BAR (Glassmorphism + Skeuomorphic Inset Well) ===== */
         .search-container {
             max-width: 760px;
-            margin: 10px auto 0;
+            margin: 12px auto 0;
             padding: 0 16px;
             position: relative;
-            z-index: 10;
+            z-index: 40;
         }
 
         .search-box {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.88);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            border: 1.5px solid rgba(220, 232, 224, 0.85);
             border-radius: var(--radius-md);
             padding: 8px 18px;
-            box-shadow: 0 12px 32px rgba(11, 32, 22, 0.1),
+            box-shadow: 0 12px 32px rgba(11, 32, 22, 0.08),
                         inset 0 2px 4px rgba(11, 32, 22, 0.04),
                         inset 0 -1px 2px rgba(255, 255, 255, 0.8);
             gap: 12px;
@@ -375,7 +380,7 @@
         }
 
         .search-box:focus-within {
-            border-color: var(--brand-gold);
+            border-color: #22C55E;
             background: rgba(255, 255, 255, 0.98);
             box-shadow: 0 16px 36px rgba(22, 101, 52, 0.2),
                         0 0 0 3px rgba(34, 197, 94, 0.25),
@@ -385,6 +390,7 @@
         .search-icon {
             font-size: 18px;
             color: var(--text-muted);
+            pointer-events: none;
         }
 
         .search-input {
@@ -405,12 +411,24 @@
 
         .search-clear {
             display: none;
-            background: none;
+            background: rgba(0, 0, 0, 0.08);
             border: none;
-            font-size: 16px;
-            color: var(--text-light);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+            line-height: 24px;
+            text-align: center;
+            color: var(--text-muted);
             cursor: pointer;
-            padding: 4px;
+            padding: 0;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .search-clear:hover {
+            background: rgba(0, 0, 0, 0.16);
+            color: var(--text-heading);
         }
 
         /* ===== CATEGORY TABS (Glassmorphism Backdrop + Claymorphism Pills) ===== */
@@ -1216,6 +1234,28 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.6);
         }
 
+        [data-theme="dark"] .search-box {
+            background: rgba(14, 38, 26, 0.92);
+            border-color: rgba(34, 197, 94, 0.35);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.08);
+        }
+
+        [data-theme="dark"] .search-box:focus-within {
+            background: #0E291D;
+            border-color: #4ADE80;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 0 3px rgba(74, 222, 128, 0.25);
+        }
+
+        [data-theme="dark"] .search-clear {
+            background: rgba(255, 255, 255, 0.12);
+            color: #C2DEC9;
+        }
+
+        [data-theme="dark"] .search-clear:hover {
+            background: rgba(255, 255, 255, 0.22);
+            color: #FFFFFF;
+        }
+
         [data-theme="dark"] .item-price-tag {
             background: #163A29;
             border-color: #21523B;
@@ -1278,12 +1318,11 @@
                     <span class="theme-text" id="themeText">Dark</span>
                 </button>
 
-                <!-- Language Switcher -->
-                <div class="lang-switch">
-                    <button class="lang-btn active" onclick="setLang('all', this)" title="All / ሁለቱም">ሁለቱም</button>
-                    <button class="lang-btn" onclick="setLang('en', this)" title="English">EN</button>
-                    <button class="lang-btn" onclick="setLang('am', this)" title="አማርኛ">አማ</button>
-                </div>
+                <!-- Language Switcher (Single Cycling Button) -->
+                <button class="lang-cycle-btn" id="langCycleBtn" onclick="cycleLang()" aria-label="Switch Language" title="Click to cycle: All / English / አማርኛ">
+                    <span class="lang-icon">🌐</span>
+                    <span class="lang-text" id="langText">ሁለቱም</span>
+                </button>
             </div>
         </div>
     </header>
@@ -1292,8 +1331,8 @@
     <div class="search-container">
         <div class="search-box">
             <span class="search-icon">🔍</span>
-            <input type="text" id="menuSearch" class="search-input" placeholder="Search dish, food, or drinks... / ምግብ ይፈልጉ" oninput="filterMenu()">
-            <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+            <input type="text" id="menuSearch" class="search-input" placeholder="Search dish, food, or drinks... / ምግብ ይፈልጉ" oninput="filterMenu()" onkeyup="filterMenu()" onchange="filterMenu()" autocomplete="off">
+            <button class="search-clear" id="searchClear" onclick="clearSearch()" aria-label="Clear search" title="Clear">✕</button>
         </div>
     </div>
 
@@ -2564,22 +2603,42 @@
             }
         }
 
-        // Search & Filter
+        // Enhanced Search & Filter
         function filterMenu() {
-            const query = document.getElementById('menuSearch').value.toLowerCase().trim();
+            const rawQuery = (document.getElementById('menuSearch')?.value || '').toLowerCase().trim();
             const clearBtn = document.getElementById('searchClear');
-            clearBtn.style.display = query.length > 0 ? 'block' : 'none';
+            if (clearBtn) {
+                clearBtn.style.display = rawQuery.length > 0 ? 'block' : 'none';
+            }
 
+            const queryWords = rawQuery.split(/\s+/).filter(Boolean);
             const cards = document.querySelectorAll('.item-card');
             let matchCount = 0;
 
             cards.forEach(card => {
-                const en = card.querySelector('.item-title-en').textContent.toLowerCase();
-                const am = card.querySelector('.item-title-am').textContent.toLowerCase();
-                const desc = card.querySelector('.item-desc').textContent.toLowerCase();
-                const diet = card.getAttribute('data-diet') || '';
+                const en = (card.querySelector('.item-title-en')?.textContent || '').toLowerCase();
+                const am = (card.querySelector('.item-title-am')?.textContent || '').toLowerCase();
+                const desc = (card.querySelector('.item-desc')?.textContent || '').toLowerCase();
+                const price = (card.querySelector('.item-price-tag')?.textContent || '').toLowerCase();
+                const diet = (card.getAttribute('data-diet') || '').toLowerCase();
 
-                const matchesQuery = query === '' || en.includes(query) || am.includes(query) || desc.includes(query);
+                // Get section category titles
+                const section = card.closest('.section-wrap');
+                const catEn = (section?.querySelector('.section-titles h2')?.textContent || '').toLowerCase();
+                const catAm = (section?.querySelector('.section-titles span')?.textContent || '').toLowerCase();
+                const catId = (section?.getAttribute('id') || '').toLowerCase();
+
+                // Get all badges / tags
+                const tags = Array.from(card.querySelectorAll('.tag-pill'))
+                    .map(t => t.textContent.toLowerCase())
+                    .join(' ');
+
+                const searchable = `${en} ${am} ${desc} ${catEn} ${catAm} ${catId} ${tags} ${price} ${diet}`;
+
+                // Multi-word matching: all typed words must be present somewhere in searchable content
+                const matchesQuery = queryWords.length === 0 || queryWords.every(word => searchable.includes(word));
+
+                // Dietary filter check
                 const matchesDiet = currentDietFilter === 'all' || 
                                     (currentDietFilter === 'fasting' && diet === 'fasting') ||
                                     (currentDietFilter === 'meat' && diet === 'meat') ||
@@ -2596,46 +2655,74 @@
             // Handle sections with zero visible items
             document.querySelectorAll('.section-wrap').forEach(section => {
                 const visibleInSec = Array.from(section.querySelectorAll('.item-card')).filter(c => c.style.display !== 'none');
-                if (visibleInSec.length === 0 && query !== '') {
-                    section.style.display = 'none';
-                } else {
-                    section.style.display = 'block';
-                }
+                section.style.display = visibleInSec.length === 0 ? 'none' : 'block';
             });
 
-            document.getElementById('noResults').style.display = matchCount === 0 ? 'block' : 'none';
+            const noResults = document.getElementById('noResults');
+            if (noResults) {
+                noResults.style.display = matchCount === 0 ? 'block' : 'none';
+            }
         }
 
         function clearSearch() {
-            document.getElementById('menuSearch').value = '';
-            filterMenu();
+            const input = document.getElementById('menuSearch');
+            if (input) {
+                input.value = '';
+                filterMenu();
+                input.focus();
+            }
         }
 
         function filterDiet(type, btn) {
             currentDietFilter = type;
             document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            if (btn) btn.classList.add('active');
             filterMenu();
         }
 
-        // Language Switcher
-        function setLang(lang, btn) {
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+        // Language Switcher - Single Cycling Tactile Button
+        let currentLang = localStorage.getItem('mika_lang') || 'all';
 
+        function applyLang(lang) {
+            currentLang = lang;
+            try {
+                localStorage.setItem('mika_lang', lang);
+            } catch (e) {}
+
+            const langText = document.getElementById('langText');
             const enElements = document.querySelectorAll('.item-title-en');
             const amElements = document.querySelectorAll('.item-title-am');
 
             if (lang === 'en') {
+                if (langText) langText.textContent = 'English';
                 enElements.forEach(el => el.style.display = 'block');
                 amElements.forEach(el => el.style.display = 'none');
             } else if (lang === 'am') {
+                if (langText) langText.textContent = 'አማርኛ';
                 enElements.forEach(el => el.style.display = 'none');
                 amElements.forEach(el => el.style.display = 'block');
             } else {
+                if (langText) langText.textContent = 'ሁለቱም';
                 enElements.forEach(el => el.style.display = 'block');
                 amElements.forEach(el => el.style.display = 'block');
             }
+        }
+
+        function cycleLang() {
+            if (currentLang === 'all') {
+                applyLang('en');
+            } else if (currentLang === 'en') {
+                applyLang('am');
+            } else {
+                applyLang('all');
+            }
+        }
+
+        // Initialize language preference on load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => applyLang(currentLang));
+        } else {
+            applyLang(currentLang);
         }
 
         // Smooth Scroll for Nav
