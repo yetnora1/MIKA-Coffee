@@ -1110,7 +1110,7 @@
 
                 <div class="form-group">
                     <label class="form-label" for="menuUrlInput">Menu Link</label>
-                    <input type="url" id="menuUrlInput" class="form-input" value="https://yetnora1.github.io/MIKA-Coffee/" oninput="generateQR()">
+                    <input type="url" id="menuUrlInput" class="form-input" value="https://mikaco.vercel.app" oninput="generateQR()">
                     <div class="form-hint" id="menuUrlHint">The address where your menu is published.</div>
                 </div>
 
@@ -1863,7 +1863,7 @@ function dismissOrder(id) {
 
 // ==================== QR GENERATOR ====================
 let currentQRColor = '#1C120C';
-const DEFAULT_MENU_URL = 'https://yetnora1.github.io/MIKA-Coffee/';
+const DEFAULT_MENU_URL = 'https://mikaco.vercel.app';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const currentTable = () => document.getElementById('tableInput').value.trim();
