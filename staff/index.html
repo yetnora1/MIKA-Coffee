@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0D0805">
+    <meta name="robots" content="noindex">
+    <title>MIKA COFFEE · Staff</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0D0805;
+            --panel: rgba(255, 244, 235, 0.045);
+            --panel-2: rgba(255, 244, 235, 0.075);
+            --line: rgba(255, 236, 220, 0.09);
+            --line-2: rgba(255, 236, 220, 0.16);
+            --text: #F8EFE6;
+            --muted: #A99485;
+            --faint: #6F5D51;
+            --gold: #F5A524;
+            --gold-soft: rgba(245, 165, 36, 0.14);
+            --ember: #FF8A3D;
+            --ember-soft: rgba(255, 138, 61, 0.14);
+            --green: #3DDC97;
+            --green-soft: rgba(61, 220, 151, 0.13);
+            --red: #FF6B6B;
+            --red-soft: rgba(255, 107, 107, 0.13);
+            --spring: cubic-bezier(0.2, 0.9, 0.25, 1.12);
+            --font: 'Plus Jakarta Sans', 'Noto Sans Ethiopic', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            --font-am: 'Noto Sans Ethiopic', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        [hidden] { display: none !important; }
+
+        html { color-scheme: dark; }
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            background:
+                radial-gradient(1100px 600px at 8% -12%, rgba(245, 165, 36, 0.11), transparent 60%),
+                radial-gradient(900px 520px at 110% 115%, rgba(200, 118, 63, 0.12), transparent 60%),
+                var(--bg);
+            background-attachment: fixed;
+            color: var(--text);
+            font-family: var(--font);
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 22px 22px;
+            -webkit-mask-image: linear-gradient(to bottom, #000, transparent 75%);
+            mask-image: linear-gradient(to bottom, #000, transparent 75%);
+        }
+        button { font-family: inherit; }
+        :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+        .am { font-family: var(--font-am); }
+
+        /* ---------- Buttons ---------- */
+        .btn {
+            height: 46px;
+            padding: 0 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 1px solid var(--line-2);
+            border-radius: 14px;
+            background: var(--panel-2);
+            color: var(--text);
+            font-size: 14.5px;
+            font-weight: 800;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: transform 0.12s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+        }
+        .btn:active { transform: scale(0.97); }
+        .btn-gold {
+            border: none;
+            background: linear-gradient(135deg, #FFC766 0%, #F59E0B 100%);
+            color: #1A0F08;
+            box-shadow: 0 8px 22px rgba(245, 158, 11, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+        .btn-green {
+            border: none;
+            background: linear-gradient(135deg, #6EF2B9 0%, #22C58B 100%);
+            color: #052016;
+            box-shadow: 0 8px 22px rgba(34, 197, 139, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+        }
+        .btn-ghost { border-color: transparent; background: transparent; color: var(--muted); }
+        .btn-ghost:hover { background: var(--panel); color: var(--text); }
+        .btn-armed { border-color: rgba(255, 107, 107, 0.45); background: var(--red-soft); color: var(--red); }
+        .btn-sm { height: 36px; padding: 0 12px; font-size: 13px; border-radius: 11px; }
+        .btn-block { width: 100%; height: 54px; font-size: 16px; border-radius: 16px; }
+
+        /* ---------- Sign in & role picker ---------- */
+        .center-screen {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+        .glass-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 36px 28px 28px;
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(255, 244, 235, 0.07), rgba(255, 244, 235, 0.03));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            text-align: center;
+        }
+        .brand-orb {
+            width: 68px;
+            height: 68px;
+            margin: 0 auto 18px;
+            display: grid;
+            place-items: center;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #8A4520, #3B1C0B);
+            font-size: 32px;
+            box-shadow: 0 0 0 1px rgba(245, 165, 36, 0.35), 0 12px 40px rgba(245, 165, 36, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .glass-card h1, .roles-head h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+        .glass-card p { margin-top: 4px; color: var(--muted); font-size: 14px; }
+        .pin-input {
+            width: 100%;
+            height: 62px;
+            margin: 24px 0 8px;
+            border: 1.5px solid var(--line-2);
+            border-radius: 18px;
+            outline: none;
+            background: rgba(0, 0, 0, 0.25);
+            color: var(--text);
+            font: 800 26px/1 var(--font);
+            letter-spacing: 0.5em;
+            text-align: center;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .pin-input:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(245, 165, 36, 0.15); }
+        .pin-input::placeholder { color: var(--faint); }
+        .gate-error { min-height: 20px; margin-bottom: 12px; color: var(--red) !important; font-size: 13px !important; font-weight: 700; }
+        .shake { animation: shake 0.4s ease; }
+        @keyframes shake { 25% { transform: translateX(-8px); } 50% { transform: translateX(6px); } 75% { transform: translateX(-3px); } }
+
+        .roles { width: 100%; max-width: 640px; text-align: center; }
+        .roles-head p { margin-top: 4px; color: var(--muted); }
+        .role-cards { display: grid; gap: 14px; margin-top: 28px; }
+        @media (min-width: 600px) { .role-cards { grid-template-columns: 1fr 1fr; } }
+        .role-card {
+            position: relative;
+            padding: 26px 22px;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(255, 244, 235, 0.07), rgba(255, 244, 235, 0.025));
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+            transition: transform 0.2s var(--spring), border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .role-card:hover { transform: translateY(-3px); border-color: rgba(245, 165, 36, 0.45); box-shadow: 0 18px 44px rgba(245, 165, 36, 0.12); }
+        .role-emoji {
+            width: 54px;
+            height: 54px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 16px;
+            border-radius: 16px;
+            background: var(--gold-soft);
+            font-size: 28px;
+        }
+        .role-card strong { display: block; font-size: 19px; font-weight: 800; }
+        .role-card .am { display: block; color: var(--gold); font-size: 13px; font-weight: 600; }
+        .role-card small { display: block; margin-top: 8px; color: var(--muted); font-size: 13.5px; }
+
+        /* ---------- Top bar ---------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            padding: max(12px, env(safe-area-inset-top)) 20px 12px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(13, 8, 5, 0.74);
+            backdrop-filter: blur(18px) saturate(1.4);
+            -webkit-backdrop-filter: blur(18px) saturate(1.4);
+        }
+        .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #8A4520, #3B1C0B);
+            box-shadow: 0 0 0 1px rgba(245, 165, 36, 0.3), 0 6px 18px rgba(245, 165, 36, 0.18);
+            font-size: 18px;
+        }
+        .brand strong { display: block; font-size: 15px; font-weight: 800; letter-spacing: 0.06em; line-height: 1.1; }
+        .brand span { font-size: 11.5px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; }
+
+        .role-switch {
+            position: relative;
+            order: 3;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 4px;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: var(--panel);
+        }
+        .role-switch button {
+            position: relative;
+            z-index: 1;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            border-radius: 12px;
+            background: none;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: color 0.25s ease;
+        }
+        .role-switch button[aria-selected="true"] { color: #1A0F08; }
+        .role-count {
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+            display: inline-grid;
+            place-items: center;
+            border-radius: 99px;
+            background: var(--red);
+            color: #FFFFFF;
+            font-size: 11px;
+            font-weight: 800;
+        }
+        .role-count:empty { display: none; }
+        .role-indicator {
+            position: absolute;
+            top: 4px;
+            bottom: 4px;
+            left: 4px;
+            width: calc(50% - 4px);
+            border-radius: 12px;
+            background: linear-gradient(135deg, #FFC766, #F59E0B);
+            box-shadow: 0 6px 18px rgba(245, 158, 11, 0.3);
+            transition: transform 0.38s var(--spring);
+        }
+        .role-switch[data-role="cashier"] .role-indicator { transform: translateX(100%); }
+
+        .top-actions { display: flex; align-items: center; gap: 8px; }
+        .conn {
+            height: 36px;
+            padding: 0 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--line);
+            border-radius: 99px;
+            background: var(--panel);
+            font-size: 12.5px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .conn-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--faint); }
+        .conn-live .conn-dot { background: var(--green); animation: pulse 1.8s ease-out infinite; }
+        .conn-demo .conn-dot, .conn-connecting .conn-dot { background: var(--gold); --pulse: rgba(245, 165, 36, 0.5); animation: pulse 1.8s ease-out infinite; }
+        .conn-offline .conn-dot, .conn-error .conn-dot { background: var(--red); }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 var(--pulse, rgba(61, 220, 151, 0.55)); }
+            70%, 100% { box-shadow: 0 0 0 8px transparent; }
+        }
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--panel);
+            color: var(--text);
+            cursor: pointer;
+        }
+        .icon-btn.needs-tap { border-color: rgba(245, 165, 36, 0.5); color: var(--gold); animation: pulse 1.8s ease-out infinite; --pulse: rgba(245, 165, 36, 0.4); }
+        .icon-btn.is-off { color: var(--faint); }
+
+        @media (min-width: 820px) {
+            .brand { flex: 1; margin-right: 0; }
+            .role-switch { order: 0; width: 320px; }
+            .top-actions { flex: 1; justify-content: flex-end; }
+        }
+
+        /* ---------- Page ---------- */
+        .wrap { position: relative; max-width: 1440px; margin: 0 auto; padding: 22px 20px 48px; }
+        .demo-banner {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 18px;
+            padding: 14px 16px;
+            border: 1px solid rgba(245, 165, 36, 0.3);
+            border-radius: 18px;
+            background: var(--gold-soft);
+            font-size: 13.5px;
+            color: #FFDDA0;
+        }
+        .demo-banner strong { color: var(--gold); }
+        .demo-banner code { padding: 1px 6px; border-radius: 6px; background: rgba(0, 0, 0, 0.3); font-size: 12.5px; }
+        .hello { margin-bottom: 20px; }
+        .hello h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+        .hello p { margin-top: 2px; color: var(--muted); font-size: 15px; }
+        .hello p b { color: var(--text); }
+
+        .stats { display: grid; gap: 14px; margin-bottom: 18px; }
+        @media (min-width: 700px) { .stats { grid-template-columns: 1fr 1fr; } }
+        .stat {
+            padding: 18px 20px;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background: var(--panel);
+        }
+        .stat > span { display: block; font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+        .stat strong { display: block; margin-top: 4px; font-size: 32px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+        .stat strong small { font-size: 14px; color: var(--muted); font-weight: 700; letter-spacing: 0; }
+        .stat p { margin-top: 2px; color: var(--muted); font-size: 13px; }
+        .stat-gold { border-color: rgba(245, 165, 36, 0.3); background: linear-gradient(135deg, rgba(245, 165, 36, 0.18), rgba(245, 165, 36, 0.04)); }
+        .stat-gold span { color: var(--gold); }
+
+        .lanes { display: grid; gap: 16px; align-items: start; }
+        @media (min-width: 1000px) {
+            .lanes.three { grid-template-columns: repeat(3, 1fr); }
+            .lanes.two { grid-template-columns: 1fr 1fr; }
+        }
+        .lane {
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: rgba(255, 244, 235, 0.02);
+        }
+        .lane-head { display: flex; align-items: center; gap: 10px; padding: 2px 4px 12px; }
+        .lane-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--faint); }
+        .lane-new .lane-dot, .lane-collect .lane-dot { background: var(--gold); box-shadow: 0 0 12px rgba(245, 165, 36, 0.7); }
+        .lane-preparing .lane-dot { background: var(--ember); box-shadow: 0 0 12px rgba(255, 138, 61, 0.6); }
+        .lane-served .lane-dot, .lane-paid .lane-dot { background: var(--green); box-shadow: 0 0 12px rgba(61, 220, 151, 0.5); }
+        .lane-head h2 { font-size: 16px; font-weight: 800; }
+        .lane-head .am { color: var(--muted); font-size: 13px; }
+        .lane-count {
+            margin-left: auto;
+            min-width: 28px;
+            height: 26px;
+            padding: 0 9px;
+            display: grid;
+            place-items: center;
+            border-radius: 99px;
+            background: var(--panel-2);
+            font-size: 13px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+        .lane-body { display: grid; gap: 12px; }
+        @media (min-width: 640px) and (max-width: 999px) { .lane-body { grid-template-columns: 1fr 1fr; } }
+        .lane-more { padding: 4px; text-align: center; color: var(--muted); font-size: 13px; }
+        .empty { padding: 30px 14px 34px; text-align: center; color: var(--muted); font-size: 13.5px; grid-column: 1 / -1; }
+        .empty-icon { display: block; margin-bottom: 8px; font-size: 28px; }
+        .empty strong { display: block; color: var(--text); font-size: 15px; }
+
+        /* ---------- Order card ---------- */
+        .order {
+            position: relative;
+            padding: 16px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            background: linear-gradient(180deg, rgba(255, 244, 235, 0.065), rgba(255, 244, 235, 0.03));
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        .order::before {
+            content: '';
+            position: absolute;
+            top: 14px;
+            bottom: 14px;
+            left: 0;
+            width: 3px;
+            border-radius: 0 3px 3px 0;
+            background: var(--faint);
+        }
+        .order.s-new::before { background: linear-gradient(var(--gold), #FFD27A); box-shadow: 0 0 14px rgba(245, 165, 36, 0.8); }
+        .order.s-preparing::before { background: linear-gradient(var(--ember), #FFB27A); box-shadow: 0 0 14px rgba(255, 138, 61, 0.7); }
+        .order.s-served::before { background: var(--green); }
+        .order.s-new { border-color: rgba(245, 165, 36, 0.32); box-shadow: 0 14px 40px rgba(245, 165, 36, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.06); }
+        .order.s-cancelled { opacity: 0.55; }
+        .order.arrive { animation: arrive 0.6s var(--spring) both, glow 1.6s ease-out 0.2s 2; }
+        @keyframes arrive { from { opacity: 0; transform: translateY(-10px) scale(0.97); } }
+        @keyframes glow { 0% { box-shadow: 0 0 0 0 rgba(245, 165, 36, 0.55); } 100% { box-shadow: 0 0 0 14px rgba(245, 165, 36, 0); } }
+        .lane-served .order, .lane-paid .order { background: rgba(255, 244, 235, 0.03); box-shadow: none; }
+
+        .order-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+        .order-table span { display: block; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+        .order-table strong { display: block; font-size: 30px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; word-break: break-word; }
+        .order-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+        .order-code { font-size: 13px; font-weight: 800; letter-spacing: 0.08em; color: var(--gold); }
+        .wait {
+            padding: 4px 10px;
+            border-radius: 99px;
+            background: var(--panel-2);
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            font-variant-numeric: tabular-nums;
+        }
+        .wait.warn { background: var(--gold-soft); color: var(--gold); }
+        .wait.late { background: var(--red-soft); color: var(--red); }
+
+        .order-lines { list-style: none; }
+        .order-lines li {
+            display: grid;
+            grid-template-columns: 36px 1fr auto;
+            align-items: baseline;
+            gap: 6px;
+            padding: 7px 0;
+            border-bottom: 1px dashed var(--line);
+            font-size: 15px;
+        }
+        .order-lines li:last-child { border-bottom: none; }
+        .line-qty { color: var(--gold); font-weight: 800; font-variant-numeric: tabular-nums; }
+        .line-name { font-weight: 700; }
+        .line-name small { display: block; font-family: var(--font-am); font-size: 12px; font-weight: 500; color: var(--muted); }
+        .line-amt { color: var(--muted); font-size: 13.5px; font-variant-numeric: tabular-nums; }
+        .order-note {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: var(--gold-soft);
+            color: #FFD58A;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .order-note::before { content: '📝  '; }
+        .order-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--line);
+        }
+        .order-total { font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
+        .order-total small { font-size: 12px; color: var(--muted); font-weight: 700; }
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border-radius: 99px;
+            background: var(--panel-2);
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .chip-new { background: var(--gold-soft); color: var(--gold); }
+        .chip-preparing { background: var(--ember-soft); color: var(--ember); }
+        .chip-served, .chip-paid { background: var(--green-soft); color: var(--green); }
+        .chip-cancelled { background: var(--red-soft); color: var(--red); }
+
+        .order-actions { display: flex; gap: 8px; margin-top: 12px; }
+        .order-actions .btn:first-child { flex: 1; }
+        .order-actions .btn-ghost { flex: 0 0 auto; }
+        .paid-note { flex: 1; align-self: center; color: var(--green); font-size: 13.5px; font-weight: 700; }
+        .paid-note.is-muted { color: var(--muted); }
+        .pay-row { margin-top: 12px; }
+        .pay-label { display: block; margin-bottom: 8px; font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+        .pay-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .pay-buttons .btn { padding: 0 8px; font-size: 13.5px; }
+        .pay-buttons .btn:hover { border-color: rgba(61, 220, 151, 0.5); background: var(--green-soft); }
+
+        /* ---------- Toasts ---------- */
+        .toasts {
+            position: fixed;
+            top: max(14px, env(safe-area-inset-top));
+            left: 50%;
+            z-index: 100;
+            width: min(380px, calc(100% - 28px));
+            display: grid;
+            gap: 10px;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+        @media (min-width: 820px) { .toasts { left: auto; right: 20px; top: 82px; transform: none; } }
+        .toast {
+            position: relative;
+            padding: 14px 16px 14px 18px;
+            overflow: hidden;
+            border: 1px solid var(--line-2);
+            border-radius: 18px;
+            background: rgba(24, 15, 9, 0.94);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(-12px) scale(0.98);
+            transition: opacity 0.3s ease, transform 0.45s var(--spring);
+        }
+        .toast::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--gold); }
+        .toast.error::before { background: var(--red); }
+        .toast.ok::before { background: var(--green); }
+        .toast.show { opacity: 1; transform: none; }
+        .toast strong { display: block; font-size: 14.5px; }
+        .toast span { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== Sign in ===== -->
+    <main class="center-screen" id="gate" hidden>
+        <form class="glass-card" id="gateCard" onsubmit="Staff.signIn(event)">
+            <div class="brand-orb" aria-hidden="true">☕</div>
+            <h1>MIKA Staff</h1>
+            <p>Enter the staff PIN · <span class="am">የሰራተኛ ፒን ያስገቡ</span></p>
+            <input class="pin-input" id="pinInput" type="password" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="••••" aria-label="Staff PIN">
+            <p class="gate-error" id="pinError" role="alert"></p>
+            <button type="submit" class="btn btn-gold btn-block">Open orders</button>
+        </form>
+    </main>
+
+    <!-- ===== Who is on this screen ===== -->
+    <main class="center-screen" id="rolePicker" hidden>
+        <div class="roles">
+            <div class="roles-head">
+                <h1>Who's using this screen?</h1>
+                <p><span class="am">ይህን ስክሪን ማን ይጠቀማል?</span> · You can switch any time.</p>
+            </div>
+            <div class="role-cards">
+                <button type="button" class="role-card" onclick="Staff.setRole('waiter')">
+                    <span class="role-emoji" aria-hidden="true">🧑‍🍳</span>
+                    <strong>Waiter</strong>
+                    <span class="am">አስተናጋጅ</span>
+                    <small>See new orders, get them prepared, bring them to the table.</small>
+                </button>
+                <button type="button" class="role-card" onclick="Staff.setRole('cashier')">
+                    <span class="role-emoji" aria-hidden="true">💳</span>
+                    <strong>Cashier</strong>
+                    <span class="am">ገንዘብ ተቀባይ</span>
+                    <small>See every order's total and mark it paid by cash, Telebirr or CBE.</small>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== Orders board ===== -->
+    <div id="app" hidden>
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">☕</div>
+                <div><strong>MIKA</strong><span>STAFF · ሰራተኛ</span></div>
+            </div>
+            <div class="role-switch" id="roleSwitch" role="tablist" aria-label="Screen">
+                <span class="role-indicator" aria-hidden="true"></span>
+                <button type="button" role="tab" data-role="waiter" onclick="Staff.setRole('waiter')">Waiter <span class="role-count" id="waiterCount"></span></button>
+                <button type="button" role="tab" data-role="cashier" onclick="Staff.setRole('cashier')">Cashier <span class="role-count" id="cashierCount"></span></button>
+            </div>
+            <div class="top-actions">
+                <span class="conn" id="conn"><span class="conn-dot"></span><span id="connText">Connecting…</span></span>
+                <button type="button" class="icon-btn" id="soundBtn" onclick="Staff.toggleSound()"></button>
+                <button type="button" class="icon-btn" onclick="Staff.lock()" aria-label="Lock this screen" title="Lock">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <div class="wrap">
+            <div class="demo-banner" id="demoBanner" hidden>
+                <span aria-hidden="true">🧪</span>
+                <div><strong>Demo mode.</strong> Orders only reach screens open on this device. To receive orders from customers' phones, add your Firebase database URL in <code>order-system.js</code>.</div>
+            </div>
+            <section class="hello">
+                <h1 id="greeting"></h1>
+                <p id="summary"></p>
+            </section>
+            <div id="board"></div>
+        </div>
+    </div>
+
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+
+    <script src="../order-system.js"></script>
+    <script>
+        const Staff = (() => {
+            const ROLE_KEY = 'mika_staff_role';
+            const PIN_KEY = 'mika_staff_pin';
+            const SOUND_KEY = 'mika_staff_sound';
+            const PAGE_TITLE = document.title;
+            const LANE_LIMIT = 12;
+            const STATUS = { new: 'New', preparing: 'Preparing', served: 'Served', cancelled: 'Cancelled' };
+            const METHODS = { cash: ['💵', 'Cash'], telebirr: ['📱', 'Telebirr'], cbe: ['🏦', 'CBE'] };
+            const CONN = { live: 'Live', connecting: 'Connecting…', offline: 'Offline · retrying', error: 'No access · check rules', demo: 'Demo mode' };
+
+            let role = localStorage.getItem(ROLE_KEY);
+            let soundOn = localStorage.getItem(SOUND_KEY) !== 'off';
+            let day = MikaOrders.dayKey();
+            let orders = {};
+            let known = null;          // order ids seen so far; null until the first snapshot
+            let rendered = new Set();  // ids on screen, so only new cards animate in
+            let armed = null;          // { id, timer } for the two-tap cancel
+            let unseen = 0;
+            let stopWatching = null;
+            let audioCtx = null;
+            let wakeLock = null;
+
+            const $ = id => document.getElementById(id);
+            const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+            const money = n => Number(n || 0).toLocaleString('en-US');
+            const sum = list => list.reduce((total, o) => total + (Number(o.total) || 0), 0);
+            const clock = ts => new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const vibrate = pattern => { try { navigator.vibrate && navigator.vibrate(pattern); } catch (e) {} };
+
+            function tableParts(label) {
+                const text = String(label || '?').trim();
+                const short = text.replace(/^table\s*/i, '');
+                return { caption: 'Table', main: short || text };
+            }
+
+            function waited(ts) {
+                const minutes = Math.floor((Date.now() - ts) / 60000);
+                if (minutes < 1) return 'Just now';
+                if (minutes < 60) return `${minutes} min`;
+                return `${Math.floor(minutes / 60)} h ${minutes % 60} min`;
+            }
+
+            function urgency(ts) {
+                const minutes = (Date.now() - ts) / 60000;
+                return minutes >= 15 ? 'late' : minutes >= 7 ? 'warn' : '';
+            }
+
+            // ---------- Screens ----------
+            function start() {
+                const pinOk = !MikaOrders.staffPin || localStorage.getItem(PIN_KEY) === MikaOrders.staffPin;
+                show(!pinOk ? 'gate' : role ? 'app' : 'roles');
+            }
+
+            function show(screen) {
+                $('gate').hidden = screen !== 'gate';
+                $('rolePicker').hidden = screen !== 'roles';
+                $('app').hidden = screen !== 'app';
+                if (screen === 'gate') setTimeout(() => $('pinInput').focus(), 60);
+                if (screen === 'app') {
+                    $('demoBanner').hidden = MikaOrders.isLive;
+                    subscribe();
+                    render();
+                    keepAwake();
+                }
+            }
+
+            function signIn(event) {
+                event.preventDefault();
+                unlockAudio();
+                const input = $('pinInput');
+                if (input.value.trim() === MikaOrders.staffPin) {
+                    localStorage.setItem(PIN_KEY, MikaOrders.staffPin);
+                    input.value = '';
+                    $('pinError').textContent = '';
+                    show(role ? 'app' : 'roles');
+                    return;
+                }
+                $('pinError').textContent = "That PIN didn't work. Please try again.";
+                const card = $('gateCard');
+                card.classList.remove('shake');
+                void card.offsetWidth;
+                card.classList.add('shake');
+                input.select();
+            }
+
+            function setRole(next) {
+                role = next;
+                localStorage.setItem(ROLE_KEY, next);
+                unlockAudio();
+                if ($('app').hidden) show('app');
+                else render();
+            }
+
+            function lock() {
+                localStorage.removeItem(PIN_KEY);
+                if (stopWatching) stopWatching();
+                stopWatching = null;
+                show('gate');
+            }
+
+            // ---------- Live data ----------
+            function subscribe() {
+                if (stopWatching) return;
+                day = MikaOrders.dayKey();
+                orders = {};
+                known = null;
+                stopWatching = MikaOrders.watchDay(day, onOrders, setConnection);
+            }
+
+            function onOrders(map) {
+                const next = {};
+                Object.entries(map).forEach(([id, o]) => {
+                    if (!o || typeof o !== 'object') return;
+                    const items = Array.isArray(o.items) ? o.items : Object.values(o.items || {});
+                    next[id] = { ...o, id, items };
+                });
+                const arrivals = known ? Object.keys(next).filter(id => !known.has(id)) : [];
+                known = new Set([...(known || []), ...Object.keys(next)]);
+                orders = next;
+                render();
+                if (arrivals.length) announce(arrivals.map(id => next[id]));
+            }
+
+            function setConnection(state) {
+                $('conn').className = `conn conn-${state}`;
+                $('connText').textContent = CONN[state] || state;
+            }
+
+            function announce(list) {
+                chime();
+                vibrate([30, 60, 30]);
+                list.forEach(o => {
+                    const count = o.items.reduce((n, it) => n + (Number(it.qty) || 0), 0);
+                    toast(`🔔 New order · Table ${tableParts(o.table).main}`, `${count} ${count === 1 ? 'item' : 'items'} · ${money(o.total)} ETB · #${o.code}`);
+                });
+                if (document.hidden) {
+                    unseen += list.length;
+                    document.title = `(${unseen}) New order · MIKA Staff`;
+                }
+            }
+
+            async function change(order, fields, message) {
+                const before = orders[order.id];
+                orders[order.id] = { ...before, ...fields };
+                render();
+                vibrate(10);
+                try {
+                    await MikaOrders.update(order.day || day, order.id, fields);
+                    if (message) toast(message, '', 'ok');
+                } catch (err) {
+                    orders[order.id] = before;
+                    render();
+                    toast("Couldn't save that change", 'Check the connection and try again.', 'error');
+                }
+            }
+
+            document.addEventListener('click', e => {
+                const button = e.target.closest('[data-act]');
+                const id = button && button.closest('[data-id]')?.dataset.id;
+                const order = id && orders[id];
+                if (!order) return;
+                const table = `Table ${tableParts(order.table).main}`;
+
+                switch (button.dataset.act) {
+                    case 'preparing': return change(order, { status: 'preparing' });
+                    case 'served': return change(order, { status: 'served' });
+                    case 'undo-served': return change(order, { status: 'preparing' });
+                    case 'cancel':
+                        if (!armed || armed.id !== id) return arm(id);
+                        disarm();
+                        return change(order, { status: 'cancelled' }, `${table} · order cancelled`);
+                    case 'pay': {
+                        const method = button.dataset.method;
+                        return change(order, { paid: true, payMethod: method, paidAt: Date.now() }, `${table} · paid ${money(order.total)} ETB by ${METHODS[method][1]}`);
+                    }
+                    case 'unpay': return change(order, { paid: false, payMethod: null, paidAt: null });
+                }
+            });
+
+            function arm(id) {
+                disarm(false);
+                armed = { id, timer: setTimeout(() => disarm(), 3000) };
+                render();
+            }
+
+            function disarm(rerender = true) {
+                if (!armed) return;
+                clearTimeout(armed.timer);
+                armed = null;
+                if (rerender) render();
+            }
+
+            // ---------- Rendering ----------
+            function render() {
+                if ($('app').hidden || !role) return;
+                const list = Object.values(orders);
+                const fresh = list.filter(o => o.status === 'new').length;
+                const unpaid = list.filter(o => !o.paid && o.status !== 'cancelled');
+
+                const sw = $('roleSwitch');
+                sw.dataset.role = role;
+                sw.querySelectorAll('[role="tab"]').forEach(tab => tab.setAttribute('aria-selected', String(tab.dataset.role === role)));
+                $('waiterCount').textContent = fresh || '';
+                $('cashierCount').textContent = unpaid.length || '';
+
+                const hour = new Date().getHours();
+                $('greeting').textContent = hour < 12 ? 'Good morning ☀️' : hour < 17 ? 'Good afternoon 🌤️' : 'Good evening 🌙';
+                $('summary').innerHTML = role === 'cashier' ? cashierSummary(unpaid) : waiterSummary(list);
+                $('board').innerHTML = role === 'cashier' ? cashierBoard(list) : waiterBoard(list);
+                rendered = new Set(list.map(o => o.id));
+                updateSoundButton();
+            }
+
+            function waiterSummary(list) {
+                const fresh = list.filter(o => o.status === 'new').length;
+                const cooking = list.filter(o => o.status === 'preparing').length;
+                if (!fresh && !cooking) return 'All caught up. New orders will chime in here ✨';
+                return `<b>${fresh}</b> new · <b>${cooking}</b> being prepared`;
+            }
+
+            function cashierSummary(unpaid) {
+                if (!unpaid.length) return "Everything's paid up ✨";
+                return `<b>${unpaid.length}</b> ${unpaid.length === 1 ? 'order' : 'orders'} to collect · <b>${money(sum(unpaid))} ETB</b>`;
+            }
+
+            const byCreated = (a, b) => (a.createdAt || 0) - (b.createdAt || 0);
+            const byLatest = key => (a, b) => (b[key] || b.createdAt || 0) - (a[key] || a.createdAt || 0);
+
+            function waiterBoard(list) {
+                return `<div class="lanes three">${[
+                    lane('new', 'New', 'አዲስ', list.filter(o => o.status === 'new').sort(byCreated),
+                        ['✨', 'All caught up', 'New orders appear here with a chime.']),
+                    lane('preparing', 'Preparing', 'በዝግጅት ላይ', list.filter(o => o.status === 'preparing').sort(byCreated),
+                        ['🍳', 'Nothing cooking', 'Orders you start preparing move here.']),
+                    lane('served', 'Served', 'ቀርቧል', list.filter(o => o.status === 'served' || o.status === 'cancelled').sort(byLatest('updatedAt')),
+                        ['🍽️', 'Nothing served yet', "Today's served orders gather here."]),
+                ].join('')}</div>`;
+            }
+
+            function cashierBoard(list) {
+                const open = list.filter(o => o.status !== 'cancelled');
+                const toCollect = open.filter(o => !o.paid).sort(byCreated);
+                const paid = open.filter(o => o.paid).sort(byLatest('paidAt'));
+                const split = Object.entries(METHODS)
+                    .map(([key, [, label]]) => [label, sum(paid.filter(o => o.payMethod === key))])
+                    .filter(([, amount]) => amount)
+                    .map(([label, amount]) => `${label} ${money(amount)}`)
+                    .join(' · ');
+                return `<div class="stats">
+                        <div class="stat stat-gold"><span>To collect · <span class="am">የሚከፈል</span></span><strong>${money(sum(toCollect))} <small>ETB</small></strong><p>${toCollect.length} ${toCollect.length === 1 ? 'order' : 'orders'} waiting</p></div>
+                        <div class="stat"><span>Collected today · <span class="am">ዛሬ የተሰበሰበ</span></span><strong>${money(sum(paid))} <small>ETB</small></strong><p>${split || 'No payments yet'}</p></div>
+                    </div>
+                    <div class="lanes two">${[
+                        lane('collect', 'To collect', 'የሚከፈል', toCollect, ['✨', 'Nothing to collect', 'New orders show up here with their total.']),
+                        lane('paid', 'Paid today', 'የተከፈለ', paid, ['🧾', 'No payments yet', 'Paid orders gather here.']),
+                    ].join('')}</div>`;
+            }
+
+            function lane(key, title, am, items, [icon, heading, text]) {
+                const shown = key === 'served' || key === 'paid' ? items.slice(0, LANE_LIMIT) : items;
+                const more = items.length - shown.length;
+                return `<section class="lane lane-${key}">
+                    <header class="lane-head"><span class="lane-dot"></span><h2>${title}</h2><span class="am">${am}</span><span class="lane-count">${items.length}</span></header>
+                    <div class="lane-body">
+                        ${shown.length ? shown.map(card).join('') : `<div class="empty"><span class="empty-icon">${icon}</span><strong>${heading}</strong>${text}</div>`}
+                        ${more > 0 ? `<p class="lane-more">+ ${more} earlier today</p>` : ''}
+                    </div>
+                </section>`;
+            }
+
+            function card(o) {
+                const table = tableParts(o.table);
+                const active = role === 'cashier' ? !o.paid : o.status === 'new' || o.status === 'preparing';
+                const time = active
+                    ? `<span class="wait ${role === 'waiter' ? urgency(o.createdAt) : ''}" data-since="${Number(o.createdAt) || 0}">${waited(o.createdAt)}</span>`
+                    : `<span class="wait">${clock(o.updatedAt || o.createdAt)}</span>`;
+                const lines = o.items.map(it => `<li>
+                        <span class="line-qty">${Number(it.qty) || 1}×</span>
+                        <span class="line-name">${esc(it.name)}${it.nameAm ? `<small>${esc(it.nameAm)}</small>` : ''}</span>
+                        <span class="line-amt">${money((Number(it.price) || 0) * (Number(it.qty) || 1))}</span>
+                    </li>`).join('');
+                const classes = ['order', `s-${esc(o.status)}`, rendered.has(o.id) ? '' : 'arrive'].join(' ');
+
+                return `<article class="${classes}" data-id="${esc(o.id)}">
+                    <div class="order-top">
+                        <div class="order-table"><span>${table.caption}</span><strong>${esc(table.main)}</strong></div>
+                        <div class="order-meta"><span class="order-code">#${esc(o.code)}</span>${time}</div>
+                    </div>
+                    <ul class="order-lines">${lines}</ul>
+                    ${o.note ? `<p class="order-note">${esc(o.note)}</p>` : ''}
+                    <div class="order-foot">${chip(o)}<span class="order-total">${money(o.total)} <small>ETB</small></span></div>
+                    ${role === 'cashier' ? cashierActions(o) : waiterActions(o)}
+                </article>`;
+            }
+
+            function chip(o) {
+                if (role === 'cashier') return `<span class="chip chip-${esc(o.status)}">${STATUS[o.status] || esc(o.status)}</span>`;
+                if (o.status === 'cancelled') return '<span class="chip chip-cancelled">Cancelled</span>';
+                if (o.paid) return `<span class="chip chip-paid">✓ Paid${METHODS[o.payMethod] ? ` · ${METHODS[o.payMethod][1]}` : ''}</span>`;
+                return '<span class="chip">Not paid yet</span>';
+            }
+
+            function cancelButton(o) {
+                const isArmed = armed && armed.id === o.id;
+                return `<button type="button" class="btn ${isArmed ? 'btn-armed' : 'btn-ghost'}" data-act="cancel">${isArmed ? 'Tap again to cancel' : 'Cancel'}</button>`;
+            }
+
+            function waiterActions(o) {
+                if (o.status === 'new') {
+                    return `<div class="order-actions"><button type="button" class="btn btn-gold" data-act="preparing">Start preparing</button>${cancelButton(o)}</div>`;
+                }
+                if (o.status === 'preparing') {
+                    return `<div class="order-actions"><button type="button" class="btn btn-green" data-act="served">✓ Mark served</button>${cancelButton(o)}</div>`;
+                }
+                if (o.status === 'served') {
+                    return `<div class="order-actions"><span class="paid-note is-muted">Served at ${clock(o.updatedAt || o.createdAt)}</span><button type="button" class="btn btn-ghost btn-sm" data-act="undo-served">Undo</button></div>`;
+                }
+                return '';
+            }
+
+            function cashierActions(o) {
+                if (o.paid) {
+                    const method = METHODS[o.payMethod] ? ` · ${METHODS[o.payMethod][1]}` : '';
+                    return `<div class="order-actions"><span class="paid-note">✓ Paid${method} · ${clock(o.paidAt || o.updatedAt || Date.now())}</span><button type="button" class="btn btn-ghost btn-sm" data-act="unpay">Undo</button></div>`;
+                }
+                return `<div class="pay-row">
+                    <span class="pay-label">Paid with · <span class="am">በምን ተከፈለ?</span></span>
+                    <div class="pay-buttons">${Object.entries(METHODS).map(([key, [icon, label]]) =>
+                        `<button type="button" class="btn" data-act="pay" data-method="${key}"><span aria-hidden="true">${icon}</span> ${label}</button>`).join('')}
+                    </div>
+                </div>`;
+            }
+
+            // Refresh the "waiting" times and roll over to a new day at midnight.
+            setInterval(() => {
+                if ($('app').hidden) return;
+                if (MikaOrders.dayKey() !== day && stopWatching) {
+                    stopWatching();
+                    stopWatching = null;
+                    subscribe();
+                    render();
+                    return;
+                }
+                document.querySelectorAll('[data-since]').forEach(el => {
+                    const since = Number(el.dataset.since);
+                    el.textContent = waited(since);
+                    if (role === 'waiter') el.className = `wait ${urgency(since)}`;
+                });
+            }, 20000);
+
+            // ---------- Toasts, sound, screen ----------
+            function toast(title, text = '', kind = '') {
+                const host = $('toasts');
+                const el = document.createElement('div');
+                el.className = `toast ${kind}`;
+                el.innerHTML = `<strong>${esc(title)}</strong>${text ? `<span>${esc(text)}</span>` : ''}`;
+                host.prepend(el);
+                while (host.children.length > 4) host.lastElementChild.remove();
+                requestAnimationFrame(() => el.classList.add('show'));
+                setTimeout(() => {
+                    el.classList.remove('show');
+                    setTimeout(() => el.remove(), 450);
+                }, kind === 'ok' ? 2600 : 5200);
+            }
+
+            function unlockAudio() {
+                try {
+                    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                    if (audioCtx.state === 'suspended') audioCtx.resume().then(updateSoundButton);
+                } catch (e) {}
+                updateSoundButton();
+            }
+            document.addEventListener('pointerdown', unlockAudio, { passive: true });
+
+            function chime() {
+                if (!soundOn || !audioCtx || audioCtx.state !== 'running') return;
+                const now = audioCtx.currentTime;
+                [[880, 0], [1318.5, 0.17]].forEach(([freq, delay]) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.0001, now + delay);
+                    gain.gain.exponentialRampToValueAtTime(0.3, now + delay + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.9);
+                    osc.connect(gain).connect(audioCtx.destination);
+                    osc.start(now + delay);
+                    osc.stop(now + delay + 1);
+                });
+            }
+
+            function toggleSound() {
+                soundOn = !soundOn;
+                localStorage.setItem(SOUND_KEY, soundOn ? 'on' : 'off');
+                unlockAudio();
+                if (soundOn) setTimeout(chime, 60);
+                updateSoundButton();
+            }
+
+            function updateSoundButton() {
+                const btn = $('soundBtn');
+                const ready = audioCtx && audioCtx.state === 'running';
+                btn.textContent = soundOn ? '🔔' : '🔕';
+                btn.classList.toggle('is-off', !soundOn);
+                btn.classList.toggle('needs-tap', soundOn && !ready);
+                const label = !soundOn ? 'Sound off. Tap to turn on' : ready ? 'Sound on. Tap to mute' : 'Tap anywhere to allow the new-order chime';
+                btn.setAttribute('aria-label', label);
+                btn.title = label;
+            }
+
+            async function keepAwake() {
+                try {
+                    if ('wakeLock' in navigator && !wakeLock && document.visibilityState === 'visible') {
+                        wakeLock = await navigator.wakeLock.request('screen');
+                        wakeLock.addEventListener('release', () => { wakeLock = null; });
+                    }
+                } catch (e) {}
+            }
+
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) return;
+                unseen = 0;
+                document.title = PAGE_TITLE;
+                if (!$('app').hidden) keepAwake();
+            });
+
+            start();
+            return { signIn, setRole, lock, toggleSound };
+        })();
+    </script>
+</body>
+</html>
