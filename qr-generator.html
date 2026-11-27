@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Generator — MIKA COFFEE</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Noto+Sans+Ethiopic:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="vendor/qrcode-generator-1.4.4.js"></script>
+    <script src="qr-code.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -126,8 +127,10 @@
             margin-bottom: 24px;
         }
 
-        .qr-canvas-wrap canvas {
+        .qr-canvas-wrap svg {
             display: block;
+            width: 240px;
+            height: 240px;
         }
 
         .qr-card .scan-text {
@@ -198,7 +201,7 @@
             <div class="brand-name">MIKA COFFEE</div>
             <div class="brand-name-am">ሚካ ቡና</div>
             <div class="qr-canvas-wrap">
-                <canvas id="qrCanvas"></canvas>
+                <div id="qrCanvas"></div>
             </div>
             <div class="scan-text">Scan to View Menu</div>
             <div class="scan-text-am">ሜኑን ለማየት ይቃኙ</div>
@@ -217,24 +220,13 @@
                 alert('Please enter your menu URL');
                 return;
             }
-
-            const canvas = document.getElementById('qrCanvas');
-            QRCode.toCanvas(canvas, url, {
-                width: 240,
-                margin: 2,
-                color: {
-                    dark: '#1A0F0A',
-                    light: '#FFFFFF'
-                },
-                errorCorrectionLevel: 'H'
-            }, function (error) {
-                if (error) {
-                    console.error(error);
-                    alert('Error generating QR code');
-                    return;
-                }
+            try {
+                document.getElementById('qrCanvas').innerHTML = MikaQR.svg(url, { color: '#1A0F0A' });
                 document.getElementById('qrOutput').style.display = 'block';
-            });
+            } catch (error) {
+                console.error(error);
+                alert('Error generating QR code');
+            }
         }
 
         window.onload = function() {

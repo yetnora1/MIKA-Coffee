@@ -12,8 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- QRCode.js -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <!-- QR codes: bundled locally so they never depend on a CDN -->
+    <script src="../vendor/qrcode-generator-1.4.4.js"></script>
+    <script src="../qr-code.js"></script>
 
     <!-- Global bulletproof image fallback recovery -->
     <script>
@@ -578,9 +579,10 @@
         .color-options { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
         .color-option {
             border:2px solid var(--border-soft);border-radius:14px;padding:12px 8px;
-            text-align:center;cursor:pointer;transition:all .2s;background:#FFFFFF;
+            text-align:center;cursor:pointer;transition:all .2s;background:#FFFFFF;font-family:inherit;
             box-shadow: 0 2px 6px rgba(28, 18, 12, 0.04), inset 0 1px 1px #FFF;
         }
+        .color-option:hover { border-color:var(--brand-caramel); }
         .color-option.active {
             border-color:var(--brand-gold);background:#FFFFFF;
             box-shadow:0 6px 16px rgba(124, 62, 29, 0.18), inset 0 0 0 1px var(--brand-gold);
@@ -612,6 +614,21 @@
             box-shadow: 0 3px 8px rgba(28, 18, 12, 0.05), inset 0 1px 1px #FFF;
         }
         .btn-secondary-qr:hover { background:var(--bg-subtle);border-color:var(--brand-caramel); }
+        .btn-row { display:grid;grid-template-columns:repeat(3,1fr);gap:8px; }
+        .btn-row .btn-secondary-qr { padding:11px 6px;font-size:12.5px; }
+        .form-hint { font-size:11px;color:var(--text-muted);margin-top:5px; }
+        .form-hint.is-error { color:var(--danger);font-weight:700; }
+
+        .batch-card {
+            margin-top:22px;padding:16px;border-radius:18px;
+            background:var(--bg-subtle);border:1px solid var(--border-soft);
+        }
+        .batch-title { font-size:14px;font-weight:800;color:var(--text-heading); }
+        .batch-card p { font-size:12px;color:var(--text-muted);margin:4px 0 12px;line-height:1.45; }
+        .batch-row { display:flex;align-items:center;gap:10px; }
+        .batch-row label { font-size:12px;font-weight:700;color:var(--text-heading); }
+        .batch-row .form-input { width:78px;text-align:center;font-weight:700; }
+        .batch-row .btn-primary-qr { flex:1;width:auto;padding:12px 14px;font-size:13px; }
 
         /* Skeuomorphic Physical Table Stand Preview */
         .qr-preview-area { display:flex;flex-direction:column;align-items:center; }
@@ -648,18 +665,34 @@
             color:var(--brand-caramel);margin-top:3px;letter-spacing:1px;
         }
         .stand-table-badge {
-            display:none;background:linear-gradient(135deg, #1C120C, #7C3E1D);
-            color:#FDE68A;font-size:11px;font-weight:800;
-            letter-spacing:1px;padding:5px 16px;border-radius:var(--radius-full);margin-top:10px;
+            display:inline-block;background:linear-gradient(135deg, #1C120C, #7C3E1D);
+            color:#FDE68A;font-size:12px;font-weight:800;
+            letter-spacing:1.5px;padding:6px 18px;border-radius:var(--radius-full);margin-top:12px;
             text-transform:uppercase;box-shadow: 0 2px 6px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.3);
         }
         .stand-tagline { font-size:12px;color:var(--text-muted);margin-top:8px;font-weight:500; }
-        .qr-canvas-holder {
-            display:inline-block;background:#FFF;padding:16px;border-radius:20px;
-            border:2px solid #E8D9CC;margin:18px 0;
-            box-shadow: inset 0 2px 4px rgba(28, 18, 12, 0.06), 0 6px 20px rgba(0,0,0,.05);
+        .qr-holder {
+            width:236px;max-width:100%;aspect-ratio:1;margin:20px auto;padding:8px;
+            background:#FFF;border-radius:22px;border:1.5px solid #E8D9CC;
+            box-shadow: 0 10px 28px rgba(28, 18, 12, 0.08), inset 0 1px 0 #FFF;
         }
-        .qr-canvas-holder canvas { display:block;border-radius:8px; }
+        .qr-holder svg { display:block;width:100%;height:100%;border-radius:14px; }
+        .qr-holder.is-error {
+            display:grid;place-items:center;padding:24px;text-align:center;
+            font-size:12.5px;font-weight:700;color:var(--danger);background:var(--danger-bg);
+        }
+        .qr-preview-label {
+            font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;
+            letter-spacing:.5px;margin-bottom:14px;
+        }
+        .qr-link {
+            display:block;max-width:400px;margin-top:16px;padding:10px 16px;border-radius:14px;
+            background:#FFF;border:1px solid var(--border-soft);text-decoration:none;text-align:center;
+            font-size:12px;color:var(--text-muted);word-break:break-all;transition:border-color .2s;
+        }
+        .qr-link:hover { border-color:var(--brand-caramel); }
+        .qr-link strong { color:var(--brand-caramel);font-weight:700; }
+        #printSheet { display:none; }
         .stand-scan-headline { font-size:16px;font-weight:800;color:var(--brand-espresso);margin-bottom:2px; }
         .stand-scan-amharic {
             font-family:var(--font-ethiopic);font-size:13px;font-weight:700;
@@ -778,11 +811,36 @@
         }
         .toast.show { transform:translateX(-50%) translateY(0);opacity:1; }
 
-        /* Print */
+        /* Print: A6 table stands, four per A4 page, with dashed cut lines */
         @media print {
-            body * { visibility:hidden; }
-            .stand-card, .stand-card * { visibility:visible; }
-            .stand-card { position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:none;border:2px dashed #BCA897; }
+            @page { size:A4 portrait; margin:0; }
+            * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+            body { background:#FFF; }
+            body > *:not(#printSheet) { display:none !important; }
+            #printSheet { display:block; }
+            .print-page {
+                width:210mm;height:297mm;display:grid;
+                grid-template-columns:105mm 105mm;grid-template-rows:148.5mm 148.5mm;
+                break-after:page;page-break-after:always;overflow:hidden;
+            }
+            .print-page:last-child { break-after:auto;page-break-after:auto; }
+            .stand-card.is-print {
+                width:105mm;height:148.5mm;max-width:none;padding:9mm 8mm 8mm;
+                display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+                border:0.3mm dashed #CBB8A9;border-radius:0;box-shadow:none;overflow:hidden;
+            }
+            .is-print .stand-emblem { width:12mm;height:12mm;font-size:6.5mm;border-radius:3.6mm;margin-bottom:2.5mm; }
+            .is-print .stand-brand-title { font-size:6.4mm;letter-spacing:0.5mm; }
+            .is-print .stand-brand-amharic { font-size:4.2mm;margin-top:0.5mm; }
+            .is-print .stand-table-badge { font-size:3.6mm;padding:1.4mm 4.5mm;margin-top:2.5mm;letter-spacing:0.4mm; }
+            .is-print .stand-tagline { font-size:2.8mm;margin-top:1.8mm; }
+            .is-print .qr-holder { width:56mm;padding:2mm;margin:0 auto;border-radius:5mm;box-shadow:none; }
+            .is-print .qr-holder svg { border-radius:3.5mm; }
+            .is-print .stand-scan-headline { font-size:4.2mm; }
+            .is-print .stand-scan-amharic { font-size:3.3mm;margin-bottom:1.5mm; }
+            .is-print .stand-subtext { font-size:2.7mm;margin-bottom:2.5mm; }
+            .is-print .stand-divider { margin-bottom:2.5mm; }
+            .is-print .stand-chip { font-size:2.6mm;padding:0.8mm 3mm; }
         }
     </style>
 </head>
@@ -1044,7 +1102,7 @@
         <div class="page-header">
             <h2>QR Code Generator</h2>
             <span class="page-header-am">የ QR ኮድ ማመንጫ</span>
-            <p>Design and print branded table QR stands for MIKA COFFEE.</p>
+            <p>Design and print table QR stands. Each table's code fills in its table number when customers order.</p>
         </div>
 
         <div class="qr-grid">
@@ -1052,78 +1110,71 @@
                 <div class="card-heading"><span class="card-heading-icon">⚙️</span> QR Stand Customization</div>
 
                 <div class="form-group">
-                    <label class="form-label" for="menuUrlInput">Target Menu URL</label>
+                    <label class="form-label" for="menuUrlInput">Menu Link</label>
                     <input type="url" id="menuUrlInput" class="form-input" value="https://yetnora1.github.io/MIKA-Coffee/" oninput="generateQR()">
-                    <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Customers see this URL when scanning.</div>
+                    <div class="form-hint" id="menuUrlHint">The address where your menu is published.</div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="tableInput">Table Label (Optional)</label>
-                    <input type="text" id="tableInput" class="form-input" placeholder="e.g. Table 01, VIP Lounge" oninput="updateTableBadge()">
-                    <div class="preset-pills">
-                        <button class="preset-pill" onclick="setTablePreset('')">All Tables</button>
-                        <button class="preset-pill" onclick="setTablePreset('Table 01')">Table 01</button>
-                        <button class="preset-pill" onclick="setTablePreset('Table 02')">Table 02</button>
-                        <button class="preset-pill" onclick="setTablePreset('Table 03')">Table 03</button>
-                        <button class="preset-pill" onclick="setTablePreset('VIP Area')">VIP Area</button>
+                    <label class="form-label" for="tableInput">Table</label>
+                    <input type="text" id="tableInput" class="form-input" maxlength="24" placeholder="e.g. Table 01, VIP Area" oninput="generateQR()">
+                    <div class="preset-pills" id="tablePresets">
+                        <button type="button" class="preset-pill" data-table="" onclick="setTablePreset('')">All tables</button>
+                        <button type="button" class="preset-pill" data-table="Table 01" onclick="setTablePreset('Table 01')">Table 01</button>
+                        <button type="button" class="preset-pill" data-table="Table 02" onclick="setTablePreset('Table 02')">Table 02</button>
+                        <button type="button" class="preset-pill" data-table="Table 03" onclick="setTablePreset('Table 03')">Table 03</button>
+                        <button type="button" class="preset-pill" data-table="VIP Area" onclick="setTablePreset('VIP Area')">VIP Area</button>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">QR Accent Color</label>
-                    <div class="color-options">
-                        <div class="color-option active" onclick="setColorTheme('#1C120C',this)">
+                    <label class="form-label">QR Color</label>
+                    <div class="color-options" id="qrColors">
+                        <button type="button" class="color-option active" data-color="#1C120C" onclick="setColorTheme(this)">
                             <div class="color-circle" style="background:#1C120C"></div>
                             <div class="color-label">Espresso</div>
-                        </div>
-                        <div class="color-option" onclick="setColorTheme('#7C3E1D',this)">
+                        </button>
+                        <button type="button" class="color-option" data-color="#7C3E1D" onclick="setColorTheme(this)">
                             <div class="color-circle" style="background:#7C3E1D"></div>
                             <div class="color-label">Caramel</div>
-                        </div>
-                        <div class="color-option" onclick="setColorTheme('#120A06',this)">
-                            <div class="color-circle" style="background:#120A06"></div>
-                            <div class="color-label">Dark Roast</div>
-                        </div>
+                        </button>
+                        <button type="button" class="color-option" data-color="#000000" onclick="setColorTheme(this)">
+                            <div class="color-circle" style="background:#000000"></div>
+                            <div class="color-label">Classic Black</div>
+                        </button>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Bottom Info Chips</label>
-                    <input type="text" id="wifiInput" class="form-input" value="📶 Free Wi-Fi · 💳 Mobile Banking · ☕ Fresh Daily" oninput="updateFooterChips()">
+                    <label class="form-label" for="wifiInput">Bottom Info Chips</label>
+                    <input type="text" id="wifiInput" class="form-input" value="📶 Free Wi-Fi · 💳 Mobile Banking · ☕ Fresh Daily" oninput="generateQR()">
+                    <div class="form-hint">Separate chips with a middle dot ( · ).</div>
                 </div>
 
                 <div class="btn-stack">
-                    <button class="btn-primary-qr" onclick="window.print()">🖨️ Print Table Stand</button>
-                    <button class="btn-secondary-qr" onclick="downloadQRImage()">📥 Download QR Image (PNG)</button>
-                    <button class="btn-secondary-qr" onclick="copyMenuUrl()">📋 Copy Menu Link</button>
+                    <button type="button" class="btn-primary-qr" onclick="printThisStand()">🖨️ Print This Stand</button>
+                    <div class="btn-row">
+                        <button type="button" class="btn-secondary-qr" onclick="downloadQR('png')">📥 PNG</button>
+                        <button type="button" class="btn-secondary-qr" onclick="downloadQR('svg')">📐 SVG</button>
+                        <button type="button" class="btn-secondary-qr" onclick="copyMenuUrl()">🔗 Copy Link</button>
+                    </div>
+                </div>
+
+                <div class="batch-card">
+                    <div class="batch-title">Print every table at once</div>
+                    <p>Each table gets its own code, so orders arrive with the right table number. Prints four A6 cards per A4 page, ready to cut.</p>
+                    <div class="batch-row">
+                        <label for="tableCount">Tables</label>
+                        <input type="number" id="tableCount" class="form-input" min="1" max="60" value="8" oninput="updateBatchButton()">
+                        <button type="button" class="btn-primary-qr" id="batchPrintBtn" onclick="printAllTables()">🖨️ Print 8 Stands</button>
+                    </div>
                 </div>
             </div>
 
             <div class="qr-preview-area">
-                <div style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px">Table Stand Preview · የጠረጴዛ ስታንድ</div>
-                <div class="stand-card" id="standCard">
-                    <div>
-                        <div class="stand-emblem">☕</div>
-                        <h2 class="stand-brand-title">MIKA COFFEE</h2>
-                        <div class="stand-brand-amharic">ሚካ ቡና</div>
-                        <div class="stand-table-badge" id="previewTableBadge">Table 01</div>
-                        <p class="stand-tagline">Authentic Flavors · Artisan Coffee · Fresh Food</p>
-                    </div>
-                    <div class="qr-canvas-holder">
-                        <canvas id="qrCanvas"></canvas>
-                    </div>
-                    <div>
-                        <div class="stand-scan-headline">Scan for Digital Menu</div>
-                        <div class="stand-scan-amharic">ሜኑን ለማየት በስልክዎ ይቃኙ</div>
-                        <div class="stand-subtext">Point your mobile camera at the QR code</div>
-                        <div class="stand-divider"></div>
-                        <div class="stand-footer-chips" id="previewChips">
-                            <span class="stand-chip">📶 Free Wi-Fi</span>
-                            <span class="stand-chip">💳 Mobile Banking</span>
-                            <span class="stand-chip">☕ Fresh Daily</span>
-                        </div>
-                    </div>
-                </div>
+                <div class="qr-preview-label">Table Stand Preview · የጠረጴዛ ስታንድ</div>
+                <div class="stand-card" id="standCard"></div>
+                <a class="qr-link" id="qrLink" href="#" target="_blank" rel="noopener">Opens <strong id="qrLinkText"></strong></a>
             </div>
         </div>
     </section>
@@ -1799,85 +1850,162 @@ function dismissOrder(id) {
 
 // ==================== QR GENERATOR ====================
 let currentQRColor = '#1C120C';
+const DEFAULT_MENU_URL = 'https://yetnora1.github.io/MIKA-Coffee/';
 
-function updateTableBadge() {
-    const val = document.getElementById('tableInput').value.trim();
-    const badge = document.getElementById('previewTableBadge');
-    if (val) {
-        badge.textContent = `✦ ${val.toUpperCase()} ✦`;
-        badge.style.display = 'inline-block';
-    } else {
-        badge.style.display = 'none';
-    }
-    generateQR();
-}
+const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const currentTable = () => document.getElementById('tableInput').value.trim();
+const chipList = () => document.getElementById('wifiInput').value.split('·').map(s => s.trim()).filter(Boolean);
+const tableCount = () => Math.min(60, Math.max(1, parseInt(document.getElementById('tableCount').value, 10) || 1));
 
-// Each table's QR opens the menu with its table filled in, e.g. ...?table=Table%2001
-function tableMenuUrl() {
-    const rawUrl = document.getElementById('menuUrlInput').value.trim() || 'https://yetnora1.github.io/MIKA-Coffee/';
-    const table = document.getElementById('tableInput').value.trim();
-    if (!table) return rawUrl;
+// The link a table's QR opens, e.g. ...?table=Table+01 (the menu fills in the table when ordering).
+// Returns null when the menu link is not a valid web address.
+function tableMenuUrl(table = currentTable()) {
+    const raw = document.getElementById('menuUrlInput').value.trim() || DEFAULT_MENU_URL;
     try {
-        const url = new URL(rawUrl);
-        url.searchParams.set('table', table);
+        const url = new URL(raw);
+        if (url.protocol !== 'https:' && url.protocol !== 'http:') return null;
+        if (table) url.searchParams.set('table', table);
         return url.toString();
     } catch (e) {
-        return rawUrl;
+        return null;
     }
 }
 
-function setTablePreset(preset) {
-    document.getElementById('tableInput').value = preset;
-    updateTableBadge();
-    document.querySelectorAll('.preset-pill').forEach(p => {
-        p.classList.toggle('active', p.textContent.includes(preset) && preset !== '');
-    });
+function qrMarkup(url) {
+    try {
+        return MikaQR.svg(url, { color: currentQRColor });
+    } catch (e) {
+        return null;
+    }
 }
 
-function setColorTheme(color, elem) {
-    currentQRColor = color;
-    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
-    elem.classList.add('active');
+function standMarkup(table, qrSvg) {
+    return `
+        <div>
+            <div class="stand-emblem">☕</div>
+            <h2 class="stand-brand-title">MIKA COFFEE</h2>
+            <div class="stand-brand-amharic">ሚካ ቡና</div>
+            ${table ? `<div class="stand-table-badge">${escapeHtml(table)}</div>` : ''}
+            <p class="stand-tagline">Authentic Flavors · Artisan Coffee · Fresh Food</p>
+        </div>
+        <div class="qr-holder">${qrSvg}</div>
+        <div>
+            <div class="stand-scan-headline">Scan to see the menu &amp; order</div>
+            <div class="stand-scan-amharic">ሜኑን ለማየት እና ለማዘዝ ይቃኙ</div>
+            <div class="stand-subtext">Point your phone camera at the code</div>
+            <div class="stand-divider"></div>
+            <div class="stand-footer-chips">${chipList().map(chip => `<span class="stand-chip">${escapeHtml(chip)}</span>`).join('')}</div>
+        </div>`;
+}
+
+// Redraws the preview. Every control on the QR page calls this.
+function generateQR() {
+    const card = document.getElementById('standCard');
+    if (!card) return;
+    const table = currentTable();
+    const url = tableMenuUrl(table);
+    const svg = url && qrMarkup(url);
+
+    const hint = document.getElementById('menuUrlHint');
+    hint.textContent = url ? 'The address where your menu is published.' : 'Enter a full link that starts with https://';
+    hint.classList.toggle('is-error', !url);
+
+    card.innerHTML = standMarkup(table, svg || '');
+    if (!svg) {
+        const holder = card.querySelector('.qr-holder');
+        holder.classList.add('is-error');
+        holder.textContent = url ? "The QR code couldn't be drawn. Reload the page and try again." : 'Fix the menu link to see the QR code.';
+    }
+
+    const link = document.getElementById('qrLink');
+    link.style.display = url ? '' : 'none';
+    if (url) {
+        link.href = url;
+        document.getElementById('qrLinkText').textContent = url.replace(/^https?:\/\//, '');
+    }
+    document.querySelectorAll('#tablePresets .preset-pill').forEach(pill => pill.classList.toggle('active', pill.dataset.table === table));
+}
+
+function setTablePreset(table) {
+    document.getElementById('tableInput').value = table;
     generateQR();
 }
 
-function updateFooterChips() {
-    const val = document.getElementById('wifiInput').value;
-    const container = document.getElementById('previewChips');
-    const parts = val.split('·').map(s => s.trim()).filter(Boolean);
-    container.innerHTML = parts.map(p => `<span class="stand-chip">${p}</span>`).join(' ');
+function setColorTheme(button) {
+    currentQRColor = button.dataset.color;
+    document.querySelectorAll('#qrColors .color-option').forEach(option => option.classList.toggle('active', option === button));
+    generateQR();
 }
 
-function generateQR() {
-    if (!document.getElementById('menuUrlInput')) return;
-    const canvas = document.getElementById('qrCanvas');
-    if (!canvas) return;
-    if (typeof QRCode !== 'undefined') {
-        QRCode.toCanvas(canvas, tableMenuUrl(), {
-            width: 220, margin: 2,
-            color: { dark: currentQRColor, light: '#FFFFFF' },
-            errorCorrectionLevel: 'H'
-        }, function(err) { if (err) console.error(err); });
+function updateBatchButton() {
+    const count = tableCount();
+    document.getElementById('batchPrintBtn').textContent = `🖨️ Print ${count} Stand${count === 1 ? '' : 's'}`;
+}
+
+// Fills the hidden print sheet with A6 stands, four to an A4 page.
+function buildPrintSheet(tables) {
+    const cards = [];
+    for (const table of tables) {
+        const url = tableMenuUrl(table);
+        const svg = url && qrMarkup(url);
+        if (!svg) return false;
+        cards.push(`<div class="stand-card is-print">${standMarkup(table, svg)}</div>`);
+    }
+    let pages = '';
+    for (let i = 0; i < cards.length; i += 4) pages += `<div class="print-page">${cards.slice(i, i + 4).join('')}</div>`;
+    document.getElementById('printSheet').innerHTML = pages;
+    return true;
+}
+
+function printStands(tables) {
+    if (!buildPrintSheet(tables)) {
+        showToast('Fix the menu link before printing.');
+        return;
+    }
+    window.print();
+}
+window.addEventListener('afterprint', () => { document.getElementById('printSheet').innerHTML = ''; });
+
+function printThisStand() {
+    printStands([currentTable()]);
+}
+
+function printAllTables() {
+    printStands(Array.from({ length: tableCount() }, (_, i) => `Table ${String(i + 1).padStart(2, '0')}`));
+}
+
+function qrFileName(table = currentTable()) {
+    const slug = table.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return slug ? `mika-qr-${slug}` : 'mika-qr-menu';
+}
+
+async function downloadQR(format) {
+    const url = tableMenuUrl();
+    if (!url) {
+        showToast('Fix the menu link first.');
+        return;
+    }
+    try {
+        await MikaQR.download(url, format, { color: currentQRColor, filename: qrFileName() });
+        showToast(format === 'svg' ? 'SVG downloaded. It stays sharp at any size.' : 'PNG downloaded (1200 × 1200).');
+    } catch (e) {
+        showToast("Couldn't create the file. Please try again.");
     }
 }
 
-function downloadQRImage() {
-    const canvas = document.getElementById('qrCanvas');
-    const link = document.createElement('a');
-    const tableVal = document.getElementById('tableInput').value.trim();
-    link.download = tableVal ? `mika-qr-${tableVal.toLowerCase().replace(/\s+/g,'-')}.png` : 'mika-coffee-menu-qr.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-    showToast('QR image downloaded!');
-}
-
-function copyMenuUrl() {
-    const url = document.getElementById('menuUrlInput').value;
-    navigator.clipboard.writeText(url).then(() => showToast('Menu URL copied!')).catch(() => {
-        document.getElementById('menuUrlInput').select();
-        document.execCommand('copy');
-        showToast('URL copied!');
-    });
+async function copyMenuUrl() {
+    const url = tableMenuUrl();
+    if (!url) {
+        showToast('Fix the menu link first.');
+        return;
+    }
+    const table = currentTable();
+    try {
+        await navigator.clipboard.writeText(url);
+        showToast(table ? `Link for ${table} copied!` : 'Menu link copied!');
+    } catch (e) {
+        window.prompt('Copy this link:', url);
+    }
 }
 
 // ==================== SETTINGS ====================
@@ -2000,5 +2128,8 @@ window.onload = function() {
     initDashboard();
 };
 </script>
+
+<!-- Filled only while printing table stands -->
+<div id="printSheet" aria-hidden="true"></div>
 </body>
 </html>
