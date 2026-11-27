@@ -516,6 +516,26 @@
             background:#FFFFFF;color:var(--text-heading);outline:none;cursor:pointer;
             box-shadow: inset 0 2px 4px rgba(28, 18, 12, 0.07), 0 1px 0 rgba(255, 255, 255, 0.9);
         }
+        .photo-picker {
+            width:100%;display:flex;align-items:center;gap:10px;
+            padding:4px 14px 4px 4px;border:1.5px solid var(--border-soft);
+            border-radius:var(--radius-sm);font-size:13px;font-weight:600;font-family:inherit;line-height:1.25;
+            background:#FFFFFF;color:var(--text-heading);text-align:left;cursor:pointer;
+            transition:border-color .2s, box-shadow .2s;
+            box-shadow: inset 0 2px 4px rgba(28, 18, 12, 0.07), 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+        .photo-picker:hover { border-color:var(--brand-caramel); }
+        .photo-picker:focus-visible {
+            outline:none;border-color:var(--brand-gold);
+            box-shadow: inset 0 1px 2px rgba(28, 18, 12, 0.06), 0 0 0 3px rgba(217, 119, 6, 0.2);
+        }
+        .photo-picker:disabled { cursor:progress;opacity:.7; }
+        .photo-picker-thumb {
+            position:relative;flex-shrink:0;width:31px;height:31px;border-radius:7px;overflow:hidden;
+            display:flex;align-items:center;justify-content:center;font-size:15px;background:var(--bg-subtle);
+        }
+        .photo-picker-thumb img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover; }
+        .photo-picker-thumb img:not([src]) { display:none; }
         .modal-actions { display:flex;gap:10px;margin-top:24px;justify-content:flex-end; }
         .modal-btn {
             padding:11px 24px;border-radius:var(--radius-full);font-size:13px;font-weight:700;
@@ -1217,8 +1237,13 @@
                 </select>
             </div>
             <div class="form-group">
-                <label class="form-label">Image URL (Optional)</label>
-                <input type="url" class="form-input" id="modalImage" placeholder="https://...">
+                <label class="form-label">Photo (Optional)</label>
+                <button type="button" class="photo-picker" id="photoPicker" onclick="document.getElementById('modalImageFile').click()">
+                    <span class="photo-picker-thumb" aria-hidden="true">📷<img id="modalImagePreview" alt=""></span>
+                    <span id="photoPickerText">Choose photo</span>
+                </button>
+                <input type="file" id="modalImageFile" accept="image/*" hidden onchange="handleImageFile(this)">
+                <input type="hidden" id="modalImage">
             </div>
         </div>
 
@@ -1253,62 +1278,62 @@
 // ==================== MENU DATA ====================
 const DEFAULT_MENU = [
     // --- Fast Food ---
-    {id:1,nameEn:"Mika Burger",nameAm:"ሚካ በርገር",desc:"Juicy grilled beef patty with cheddar, caramelized onions, crisp lettuce & house Mika sauce.",price:450,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&auto=format&fit=crop&q=80"},
-    {id:2,nameEn:"Cheese Burger",nameAm:"ቺዝ በርገር",desc:"Double melted cheese over grilled beef with crunchy lettuce, pickles, and creamy dressing.",price:450,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&auto=format&fit=crop&q=80"},
-    {id:3,nameEn:"Mika Original Wrap",nameAm:"ሚካ ኦርጅናል ራፕ",desc:"Warm toasted wrap with seasoned grilled meats, fresh salad, and garlic yogurt sauce.",price:300,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&auto=format&fit=crop&q=80"},
-    {id:4,nameEn:"Special Original Wrap",nameAm:"ስፔሻል ኦርጅናል ራፕ",desc:"Golden seasoned wrap with crispy fillings, fresh crunchy vegetables, and tangy sauce.",price:250,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=400&auto=format&fit=crop&q=80"},
-    {id:5,nameEn:"Egg Scramble",nameAm:"እንቁላል ስክራምብል",desc:"Silky farm eggs gently scrambled with butter and fresh herbs, served hot.",price:200,category:"fast-food",diet:"fasting",image:"https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&auto=format&fit=crop&q=80"},
-    {id:6,nameEn:"Normal Original Wrap",nameAm:"ኖርማል ኦርጅናል ራፕ",desc:"Healthy vegetarian wrap packed with sautéed peppers, onions, and herbs.",price:150,category:"fast-food",diet:"fasting",image:"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop&q=80"},
-    {id:7,nameEn:"Club Sandwich",nameAm:"ክለብ ሳንድዊች",desc:"Triple decker toasted sandwich with roasted chicken, egg, cheese, and fresh salad.",price:400,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&auto=format&fit=crop&q=80"},
+    {id:1,nameEn:"Mika Burger",nameAm:"ሚካ በርገር",price:450,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&auto=format&fit=crop&q=80"},
+    {id:2,nameEn:"Cheese Burger",nameAm:"ቺዝ በርገር",price:450,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&auto=format&fit=crop&q=80"},
+    {id:3,nameEn:"Mika Original Wrap",nameAm:"ሚካ ኦርጅናል ራፕ",price:300,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&auto=format&fit=crop&q=80"},
+    {id:4,nameEn:"Special Original Wrap",nameAm:"ስፔሻል ኦርጅናል ራፕ",price:250,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=400&auto=format&fit=crop&q=80"},
+    {id:5,nameEn:"Egg Scramble",nameAm:"እንቁላል ስክራምብል",price:200,category:"fast-food",diet:"fasting",image:"https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&auto=format&fit=crop&q=80"},
+    {id:6,nameEn:"Normal Original Wrap",nameAm:"ኖርማል ኦርጅናል ራፕ",price:150,category:"fast-food",diet:"fasting",image:"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop&q=80"},
+    {id:7,nameEn:"Club Sandwich",nameAm:"ክለብ ሳንድዊች",price:400,category:"fast-food",diet:"meat",image:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&auto=format&fit=crop&q=80"},
     // --- Breakfast ---
-    {id:8,nameEn:"Afuun",nameAm:"አፉኝ",desc:"Traditional hot breakfast sautéed with pure spiced butter (nitir kibe) and tender meat.",price:450,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1504973960431-1c467e159aa4?w=400&auto=format&fit=crop&q=80"},
-    {id:9,nameEn:"Normal Chechebsa",nameAm:"ኖርማል ጨጨብሳ",desc:"Freshly torn flatbread sautéed with berbere and aromatic herbal butter.",price:250,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=400&auto=format&fit=crop&q=80"},
-    {id:10,nameEn:"Special Chechebsa",nameAm:"ስፔሻል ጨጨብሳ",desc:"Torn bread in spiced butter, garnished with natural honey and fresh curd.",price:300,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&auto=format&fit=crop&q=80"},
-    {id:11,nameEn:"Quanta Firfir",nameAm:"ቋንጣ ፍርፍር",desc:"Dried cured beef stewed with onion, garlic, and berbere, tossed with fresh injera.",price:400,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1574484284002-952d92456975?w=400&auto=format&fit=crop&q=80"},
-    {id:12,nameEn:"Tibs Firfir",nameAm:"ጥብስ ፍርፍር",desc:"Hot seared beef cubes with caramelized onions, jalapeños, and berbere injera.",price:400,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=400&auto=format&fit=crop&q=80"},
-    {id:13,nameEn:"Special Ful",nameAm:"ስፔሻል ፉል",desc:"Creamy fava bean stew topped with veggies, boiled egg, cheese, and warm bread.",price:250,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1590301157890-4810ed352733?w=400&auto=format&fit=crop&q=80"},
-    {id:14,nameEn:"Enqulal Ful",nameAm:"እንቁላል ፉል",desc:"Hearty mashed fava beans pan-cooked with scrambled eggs and olive oil.",price:230,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1510693206972-df098062cb71?w=400&auto=format&fit=crop&q=80"},
-    {id:15,nameEn:"Ful",nameAm:"ፉል",desc:"Simmered fava beans with olive oil, raw onion, and fresh green chili.",price:200,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&auto=format&fit=crop&q=80"},
-    {id:16,nameEn:"Mika Firfir (Fasting)",nameAm:"ሚካ ፍርፍር | የፆም",desc:"Aromatic spicy vegan injera stew with onions, garlic, and berbere.",price:350,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop&q=80"},
-    {id:17,nameEn:"Mika Firfir (Non-Fasting)",nameAm:"ሚካ ፍርፍር | የፍስክ",desc:"Injera stewed in rich spiced beef gravy with clarified herbal butter.",price:450,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=400&auto=format&fit=crop&q=80"},
-    {id:18,nameEn:"Omelet",nameAm:"ኦምሌት",desc:"Fluffy rolled omelet with tomatoes, onions, green peppers, and cheese.",price:300,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&auto=format&fit=crop&q=80"},
-    {id:19,nameEn:"Honey Omelet",nameAm:"ማር ኦምሌት",desc:"Sweet fluffy omelet drizzled with pure natural honey.",price:350,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&auto=format&fit=crop&q=80"},
-    {id:20,nameEn:"Kinche",nameAm:"ቅንጨ",desc:"Coarsely cracked wheat cooked with spiced butter.",price:150,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1594998893017-36147cbcae05?w=400&auto=format&fit=crop&q=80"},
-    {id:21,nameEn:"Enqulal (Boiled Egg)",nameAm:"እንቁላል (የተቀቀለ)",desc:"Fresh farm-boiled eggs, served with mustard or pepper.",price:100,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&auto=format&fit=crop&q=80"},
-    {id:22,nameEn:"Genfo",nameAm:"ገንፎ",desc:"Traditional thick porridge drizzled with spiced butter and berbere.",price:150,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1547592180-85f173990554?w=400&auto=format&fit=crop&q=80"},
-    {id:23,nameEn:"Enkulal Sandwich",nameAm:"እንቁላል ሳንድዊች",desc:"Toasted bread sandwich stuffed with seasoned scrambled eggs.",price:180,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&auto=format&fit=crop&q=80"},
+    {id:8,nameEn:"Afuun",nameAm:"አፉኝ",price:450,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1504973960431-1c467e159aa4?w=400&auto=format&fit=crop&q=80"},
+    {id:9,nameEn:"Normal Chechebsa",nameAm:"ኖርማል ጨጨብሳ",price:250,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=400&auto=format&fit=crop&q=80"},
+    {id:10,nameEn:"Special Chechebsa",nameAm:"ስፔሻል ጨጨብሳ",price:300,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&auto=format&fit=crop&q=80"},
+    {id:11,nameEn:"Quanta Firfir",nameAm:"ቋንጣ ፍርፍር",price:400,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1574484284002-952d92456975?w=400&auto=format&fit=crop&q=80"},
+    {id:12,nameEn:"Tibs Firfir",nameAm:"ጥብስ ፍርፍር",price:400,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=400&auto=format&fit=crop&q=80"},
+    {id:13,nameEn:"Special Ful",nameAm:"ስፔሻል ፉል",price:250,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1590301157890-4810ed352733?w=400&auto=format&fit=crop&q=80"},
+    {id:14,nameEn:"Enqulal Ful",nameAm:"እንቁላል ፉል",price:230,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1510693206972-df098062cb71?w=400&auto=format&fit=crop&q=80"},
+    {id:15,nameEn:"Ful",nameAm:"ፉል",price:200,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&auto=format&fit=crop&q=80"},
+    {id:16,nameEn:"Mika Firfir (Fasting)",nameAm:"ሚካ ፍርፍር | የፆም",price:350,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop&q=80"},
+    {id:17,nameEn:"Mika Firfir (Non-Fasting)",nameAm:"ሚካ ፍርፍር | የፍስክ",price:450,category:"breakfast",diet:"meat",image:"https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=400&auto=format&fit=crop&q=80"},
+    {id:18,nameEn:"Omelet",nameAm:"ኦምሌት",price:300,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&auto=format&fit=crop&q=80"},
+    {id:19,nameEn:"Honey Omelet",nameAm:"ማር ኦምሌት",price:350,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&auto=format&fit=crop&q=80"},
+    {id:20,nameEn:"Kinche",nameAm:"ቅንጨ",price:150,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1594998893017-36147cbcae05?w=400&auto=format&fit=crop&q=80"},
+    {id:21,nameEn:"Enqulal (Boiled Egg)",nameAm:"እንቁላል (የተቀቀለ)",price:100,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&auto=format&fit=crop&q=80"},
+    {id:22,nameEn:"Genfo",nameAm:"ገንፎ",price:150,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1547592180-85f173990554?w=400&auto=format&fit=crop&q=80"},
+    {id:23,nameEn:"Enkulal Sandwich",nameAm:"እንቁላል ሳንድዊች",price:180,category:"breakfast",diet:"fasting",image:"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&auto=format&fit=crop&q=80"},
     // --- Lunch ---
-    {id:24,nameEn:"Special Tibs",nameAm:"ስፔሻል ጥብስ",desc:"Premium cubed beef sautéed with rosemary, onions, and jalapeño peppers.",price:550,category:"lunch",diet:"meat",image:"https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&auto=format&fit=crop&q=80"},
-    {id:25,nameEn:"Normal Tibs",nameAm:"ኖርማል ጥብስ",desc:"Classic pan-fried beef cubes with onions and green peppers.",price:450,category:"lunch",diet:"meat",image:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&auto=format&fit=crop&q=80"},
-    {id:26,nameEn:"Derek Tibs",nameAm:"ደረቅ ጥብስ",desc:"Dry-fried crispy beef tibs with minimal sauce, full of flavor.",price:500,category:"lunch",diet:"meat",image:"https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&auto=format&fit=crop&q=80"},
-    {id:27,nameEn:"Kitfo",nameAm:"ክትፎ",desc:"Traditional Ethiopian steak tartare minced with spiced butter and mitmita.",price:600,category:"lunch",diet:"meat",image:"https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=400&auto=format&fit=crop&q=80"},
-    {id:28,nameEn:"Special Shiro",nameAm:"ስፔሻል ሽሮ",desc:"Smooth ground chickpea stew with garlic, onions, and spiced butter.",price:300,category:"lunch",diet:"fasting",image:"https://images.unsplash.com/photo-1547496502-affa22d38842?w=400&auto=format&fit=crop&q=80"},
-    {id:29,nameEn:"Beyaynetu",nameAm:"በያይነቱ",desc:"Mixed fasting platter with shiro, gomen, misir, and fresh injera.",price:400,category:"lunch",diet:"fasting",image:"https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&auto=format&fit=crop&q=80"},
+    {id:24,nameEn:"Special Tibs",nameAm:"ስፔሻል ጥብስ",price:550,category:"lunch",diet:"meat",image:"https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&auto=format&fit=crop&q=80"},
+    {id:25,nameEn:"Normal Tibs",nameAm:"ኖርማል ጥብስ",price:450,category:"lunch",diet:"meat",image:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&auto=format&fit=crop&q=80"},
+    {id:26,nameEn:"Derek Tibs",nameAm:"ደረቅ ጥብስ",price:500,category:"lunch",diet:"meat",image:"https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&auto=format&fit=crop&q=80"},
+    {id:27,nameEn:"Kitfo",nameAm:"ክትፎ",price:600,category:"lunch",diet:"meat",image:"https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=400&auto=format&fit=crop&q=80"},
+    {id:28,nameEn:"Special Shiro",nameAm:"ስፔሻል ሽሮ",price:300,category:"lunch",diet:"fasting",image:"https://images.unsplash.com/photo-1547496502-affa22d38842?w=400&auto=format&fit=crop&q=80"},
+    {id:29,nameEn:"Beyaynetu",nameAm:"በያይነቱ",price:400,category:"lunch",diet:"fasting",image:"https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&auto=format&fit=crop&q=80"},
     // --- Pasta ---
-    {id:30,nameEn:"Mika Special Pasta",nameAm:"ሚካ ስፔሻል ፓስታ",desc:"House special pasta in creamy tomato sauce with fresh herbs.",price:350,category:"pasta",diet:"fasting",image:"https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&auto=format&fit=crop&q=80"},
-    {id:31,nameEn:"Pasta with Meat Sauce",nameAm:"ፓስታ ከስጋ ሶስ ጋር",desc:"Al dente pasta smothered in rich slow-cooked meat bolognese.",price:400,category:"pasta",diet:"meat",image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&auto=format&fit=crop&q=80"},
-    {id:32,nameEn:"Lasagna",nameAm:"ላዛኛ",desc:"Layered pasta baked with meat sauce, béchamel, and melted cheese.",price:500,category:"pasta",diet:"meat",image:"https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=400&auto=format&fit=crop&q=80"},
+    {id:30,nameEn:"Mika Special Pasta",nameAm:"ሚካ ስፔሻል ፓስታ",price:350,category:"pasta",diet:"fasting",image:"https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&auto=format&fit=crop&q=80"},
+    {id:31,nameEn:"Pasta with Meat Sauce",nameAm:"ፓስታ ከስጋ ሶስ ጋር",price:400,category:"pasta",diet:"meat",image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&auto=format&fit=crop&q=80"},
+    {id:32,nameEn:"Lasagna",nameAm:"ላዛኛ",price:500,category:"pasta",diet:"meat",image:"https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=400&auto=format&fit=crop&q=80"},
     // --- Juices ---
-    {id:33,nameEn:"Avocado Juice",nameAm:"አቮካዶ ጁስ",desc:"Thick creamy avocado blended with milk and a touch of honey.",price:150,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1546173159-315724a31696?w=400&auto=format&fit=crop&q=80"},
-    {id:34,nameEn:"Mango Juice",nameAm:"ማንጎ ጁስ",desc:"Sweet tropical mango blended fresh to order.",price:120,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=400&auto=format&fit=crop&q=80"},
-    {id:35,nameEn:"Papaya Juice",nameAm:"ፓፓያ ጁስ",desc:"Fresh ripe papaya blended smooth with a hint of lime.",price:120,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=400&auto=format&fit=crop&q=80"},
-    {id:36,nameEn:"Mixed Juice (Spris)",nameAm:"ስፕሪስ",desc:"Layered combination of avocado, mango, and papaya juices.",price:200,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=400&auto=format&fit=crop&q=80"},
-    {id:37,nameEn:"Detox Green Juice",nameAm:"ዲቶክስ ጁስ",desc:"Healthy blend of spinach, ginger, lemon, and apple.",price:180,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1556881286-fc6915169721?w=400&auto=format&fit=crop&q=80"},
+    {id:33,nameEn:"Avocado Juice",nameAm:"አቮካዶ ጁስ",price:150,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1546173159-315724a31696?w=400&auto=format&fit=crop&q=80"},
+    {id:34,nameEn:"Mango Juice",nameAm:"ማንጎ ጁስ",price:120,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=400&auto=format&fit=crop&q=80"},
+    {id:35,nameEn:"Papaya Juice",nameAm:"ፓፓያ ጁስ",price:120,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=400&auto=format&fit=crop&q=80"},
+    {id:36,nameEn:"Mixed Juice (Spris)",nameAm:"ስፕሪስ",price:200,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=400&auto=format&fit=crop&q=80"},
+    {id:37,nameEn:"Detox Green Juice",nameAm:"ዲቶክስ ጁስ",price:180,category:"juice",diet:"fasting",image:"https://images.unsplash.com/photo-1556881286-fc6915169721?w=400&auto=format&fit=crop&q=80"},
     // --- Mojitos ---
-    {id:38,nameEn:"Classic Mojito",nameAm:"ክላሲክ ሞጂቶ",desc:"Fresh mint, lime, sugar, and soda water over crushed ice.",price:200,category:"mojito",diet:"fasting",image:"https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&auto=format&fit=crop&q=80"},
-    {id:39,nameEn:"Strawberry Mojito",nameAm:"ስትሮቤሪ ሞጂቶ",desc:"Classic mojito infused with fresh muddled strawberries.",price:220,category:"mojito",diet:"fasting",image:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&auto=format&fit=crop&q=80"},
-    {id:40,nameEn:"Passion Fruit Mojito",nameAm:"ፓሽን ፍሩት ሞጂቶ",desc:"Tropical passion fruit blended into a refreshing mojito.",price:220,category:"mojito",diet:"fasting",image:"https://images.unsplash.com/photo-1546171753-97d7676e4602?w=400&auto=format&fit=crop&q=80"},
+    {id:38,nameEn:"Classic Mojito",nameAm:"ክላሲክ ሞጂቶ",price:200,category:"mojito",diet:"fasting",image:"https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&auto=format&fit=crop&q=80"},
+    {id:39,nameEn:"Strawberry Mojito",nameAm:"ስትሮቤሪ ሞጂቶ",price:220,category:"mojito",diet:"fasting",image:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&auto=format&fit=crop&q=80"},
+    {id:40,nameEn:"Passion Fruit Mojito",nameAm:"ፓሽን ፍሩት ሞጂቶ",price:220,category:"mojito",diet:"fasting",image:"https://images.unsplash.com/photo-1546171753-97d7676e4602?w=400&auto=format&fit=crop&q=80"},
     // --- Drinks & Coffee ---
-    {id:41,nameEn:"Macchiato",nameAm:"ማኪያቶ",desc:"Rich Ethiopian espresso topped with foamed milk.",price:80,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400&auto=format&fit=crop&q=80"},
-    {id:42,nameEn:"Cappuccino",nameAm:"ካፑቺኖ",desc:"Smooth espresso with steamed milk and velvety foam.",price:120,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&auto=format&fit=crop&q=80"},
-    {id:43,nameEn:"Jebena Coffee",nameAm:"ጀበና ቡና",desc:"Traditional Ethiopian coffee ceremony brew from clay pot.",price:60,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&auto=format&fit=crop&q=80"},
-    {id:44,nameEn:"Tea (Shai)",nameAm:"ሻይ",desc:"Fresh brewed black tea with optional milk and sugar.",price:50,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&auto=format&fit=crop&q=80"},
-    {id:45,nameEn:"Hot Chocolate",nameAm:"ሆት ቾኮሌት",desc:"Rich creamy hot chocolate topped with whipped cream.",price:150,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400&auto=format&fit=crop&q=80"},
-    {id:46,nameEn:"Fresh Milk",nameAm:"ወተት",desc:"Chilled fresh whole milk served cold.",price:80,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&auto=format&fit=crop&q=80"},
-    {id:47,nameEn:"Soft Drinks",nameAm:"ለስላሳ መጠጦች",desc:"Coca-Cola, Sprite, Fanta, and Mirinda.",price:60,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1581006852262-e4307cf6283a?w=400&auto=format&fit=crop&q=80"},
-    {id:48,nameEn:"Bottled Water (0.5L)",nameAm:"የታሸገ ዉሀ (0.5ሊ)",desc:"Pure, refreshingly chilled natural mountain spring bottled water 0.5 liter.",price:50,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=400&auto=format&fit=crop&q=80"},
-    {id:49,nameEn:"Bottled Water (1L)",nameAm:"የታሸገ ዉሀ (1ሊ)",desc:"Crisp and refreshing natural mountain spring bottled mineral water 1 liter.",price:60,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1523362628745-0c100150b504?w=400&auto=format&fit=crop&q=80"},
-    {id:50,nameEn:"Bottled Water (2L)",nameAm:"የታሸገ ዉሀ (2ሊ)",desc:"Chilled pure natural mountain spring bottled water 2 liters family table size.",price:70,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1560023907-5f339617ea30?w=400&auto=format&fit=crop&q=80"},
+    {id:41,nameEn:"Macchiato",nameAm:"ማኪያቶ",price:80,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400&auto=format&fit=crop&q=80"},
+    {id:42,nameEn:"Cappuccino",nameAm:"ካፑቺኖ",price:120,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&auto=format&fit=crop&q=80"},
+    {id:43,nameEn:"Jebena Coffee",nameAm:"ጀበና ቡና",price:60,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&auto=format&fit=crop&q=80"},
+    {id:44,nameEn:"Tea (Shai)",nameAm:"ሻይ",price:50,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&auto=format&fit=crop&q=80"},
+    {id:45,nameEn:"Hot Chocolate",nameAm:"ሆት ቾኮሌት",price:150,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400&auto=format&fit=crop&q=80"},
+    {id:46,nameEn:"Fresh Milk",nameAm:"ወተት",price:80,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&auto=format&fit=crop&q=80"},
+    {id:47,nameEn:"Soft Drinks",nameAm:"ለስላሳ መጠጦች",price:60,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1581006852262-e4307cf6283a?w=400&auto=format&fit=crop&q=80"},
+    {id:48,nameEn:"Bottled Water (0.5L)",nameAm:"የታሸገ ዉሀ (0.5ሊ)",price:50,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=400&auto=format&fit=crop&q=80"},
+    {id:49,nameEn:"Bottled Water (1L)",nameAm:"የታሸገ ዉሀ (1ሊ)",price:60,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1523362628745-0c100150b504?w=400&auto=format&fit=crop&q=80"},
+    {id:50,nameEn:"Bottled Water (2L)",nameAm:"የታሸገ ዉሀ (2ሊ)",price:70,category:"drinks",diet:"fasting",image:"https://images.unsplash.com/photo-1560023907-5f339617ea30?w=400&auto=format&fit=crop&q=80"},
 ];
 
 const CATEGORY_ICONS = {
@@ -1324,6 +1349,7 @@ const CATEGORY_NAMES = {
 let menuData = [];
 let orders = [];
 let nextId = 100;
+const DESC_CLEANUP_KEY = 'mika_default_desc_cleared';
 
 function loadData() {
     const saved = localStorage.getItem('mika_menu_data');
@@ -1349,6 +1375,15 @@ function loadData() {
                     }
                 }
             });
+            // One-time cleanup: the built-in items used to ship with placeholder descriptions.
+            if (!localStorage.getItem(DESC_CLEANUP_KEY)) {
+                menuData.forEach(item => {
+                    if (defaultMap.has(item.id) && item.desc) {
+                        item.desc = '';
+                        healed = true;
+                    }
+                });
+            }
             if (healed) {
                 localStorage.setItem('mika_menu_data', JSON.stringify(menuData));
             }
@@ -1358,6 +1393,7 @@ function loadData() {
     } else {
         menuData = [...DEFAULT_MENU];
     }
+    localStorage.setItem(DESC_CLEANUP_KEY, '1');
     nextId = Math.max(...menuData.map(i=>i.id), 99) + 1;
 
     const savedOrders = localStorage.getItem('mika_orders');
@@ -1384,7 +1420,15 @@ function loadData() {
     }
 }
 
-function saveMenu() { localStorage.setItem('mika_menu_data', JSON.stringify(menuData)); }
+// Returns false when the browser refuses the write (storage full).
+function saveMenu() {
+    try {
+        localStorage.setItem('mika_menu_data', JSON.stringify(menuData));
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
 function saveOrders() { localStorage.setItem('mika_orders', JSON.stringify(orders)); }
 
 // ==================== AUTH ====================
@@ -1501,10 +1545,10 @@ function renderMenuTable() {
 }
 
 function syncMenuImages() {
-    if (confirm('Sync all menu items and image links to the latest verified high-resolution images? (Custom items you added will be preserved)')) {
+    if (confirm('Sync all menu items and image links to the latest verified high-resolution images? (Custom items and photos you uploaded will be preserved)')) {
         const defaultMap = new Map(DEFAULT_MENU.map(i => [i.id, i]));
         menuData = menuData.map(item => {
-            if (defaultMap.has(item.id)) {
+            if (defaultMap.has(item.id) && !isUploadedPhoto(item.image)) {
                 return { ...item, image: defaultMap.get(item.id).image };
             }
             return item;
@@ -1532,6 +1576,7 @@ function openAddModal() {
     document.getElementById('modalCategory').value = 'fast-food';
     document.getElementById('modalDiet').value = 'meat';
     document.getElementById('modalImage').value = '';
+    updateImagePreview();
     document.getElementById('itemModal').classList.add('open');
 }
 
@@ -1542,15 +1587,70 @@ function openEditModal(id) {
     document.getElementById('editItemId').value = id;
     document.getElementById('modalNameEn').value = item.nameEn;
     document.getElementById('modalNameAm').value = item.nameAm;
-    document.getElementById('modalDesc').value = item.desc;
+    document.getElementById('modalDesc').value = item.desc || '';
     document.getElementById('modalPrice').value = item.price;
     document.getElementById('modalCategory').value = item.category;
     document.getElementById('modalDiet').value = item.diet;
     document.getElementById('modalImage').value = item.image || '';
+    updateImagePreview();
     document.getElementById('itemModal').classList.add('open');
 }
 
 function closeItemModal() { document.getElementById('itemModal').classList.remove('open'); }
+
+// ==================== PHOTO UPLOAD ====================
+// Photos are resized and stored as JPEG data URLs, so they fit in localStorage.
+const PHOTO_MAX_SIDE = 480;
+const PHOTO_QUALITY = 0.8;
+
+function isUploadedPhoto(src) { return typeof src === 'string' && src.startsWith('data:'); }
+
+function updateImagePreview() {
+    const src = document.getElementById('modalImage').value;
+    const preview = document.getElementById('modalImagePreview');
+    delete preview.dataset.failed;
+    if (src) preview.src = src;
+    else preview.removeAttribute('src');
+    document.getElementById('photoPickerText').textContent = src ? 'Change photo' : 'Choose photo';
+}
+
+function handleImageFile(input) {
+    const file = input.files && input.files[0];
+    input.value = ''; // let the same file be picked again
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+        showToast('Please choose an image file.');
+        return;
+    }
+
+    const picker = document.getElementById('photoPicker');
+    const objectUrl = URL.createObjectURL(file);
+    const img = new Image();
+    picker.disabled = true;
+    document.getElementById('photoPickerText').textContent = 'Processing…';
+
+    img.onload = () => {
+        const scale = Math.min(1, PHOTO_MAX_SIDE / Math.max(img.naturalWidth, img.naturalHeight));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.naturalWidth * scale);
+        canvas.height = Math.round(img.naturalHeight * scale);
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#FFFFFF'; // JPEG has no transparency
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        URL.revokeObjectURL(objectUrl);
+        document.getElementById('modalImage').value = canvas.toDataURL('image/jpeg', PHOTO_QUALITY);
+        picker.disabled = false;
+        updateImagePreview();
+    };
+    img.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        picker.disabled = false;
+        updateImagePreview();
+        showToast("Couldn't read that photo. Try a JPG or PNG.");
+    };
+    img.src = objectUrl;
+}
 
 function saveItem() {
     const editId = document.getElementById('editItemId').value;
@@ -1567,18 +1667,24 @@ function saveItem() {
         return;
     }
 
-    if (editId) {
-        const item = menuData.find(i => i.id === parseInt(editId));
-        if (item) {
-            Object.assign(item, {nameEn,nameAm,desc,price,category,diet,image});
-            addActivity('✏️','amber',`<strong>${nameEn}</strong> updated.`);
-        }
-    } else {
+    const item = editId ? menuData.find(i => i.id === parseInt(editId)) : null;
+    const previous = item ? {...item} : null;
+    if (item) {
+        Object.assign(item, {nameEn,nameAm,desc,price,category,diet,image});
+    } else if (!editId) {
         menuData.push({id:nextId++,nameEn,nameAm,desc,price,category,diet,image});
-        addActivity('➕','green',`<strong>${nameEn}</strong> added to the menu.`);
     }
 
-    saveMenu();
+    if (!saveMenu()) {
+        // Undo the change so what's on screen matches what's stored.
+        if (item) Object.assign(item, previous);
+        else if (!editId) { menuData.pop(); nextId--; }
+        showToast('Storage is full. Try a smaller photo or delete unused items.');
+        return;
+    }
+
+    if (item) addActivity('✏️','amber',`<strong>${nameEn}</strong> updated.`);
+    else if (!editId) addActivity('➕','green',`<strong>${nameEn}</strong> added to the menu.`);
     renderMenuTable();
     updateStats();
     closeItemModal();
